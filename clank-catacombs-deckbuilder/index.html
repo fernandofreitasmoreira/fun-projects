@@ -170,52 +170,7 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
 .modal .placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(135deg, #3a2d23 0%, #2a1810 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; color: var(--gold-dim); }
 .modal .placeholder .ph-name { color: var(--gold); font-size: 1.2em; margin-bottom: 8px; display: block; font-weight: 600; }
 
-/* ---- My Deck tab ---- */
-.deck-layout { display: grid; grid-template-columns: 320px 1fr; min-height: calc(100vh - 130px); }
-@media (max-width: 900px) { .deck-layout { grid-template-columns: 1fr; } }
-.deck-sidebar { background: var(--panel); border-right: 1px solid var(--border); padding: 20px; overflow-y: auto; position: sticky; top: 45px; max-height: calc(100vh - 130px); }
-.deck-sidebar h2 { color: var(--gold); margin: 0 0 14px; font-size: 0.95em; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
-.deck-name-input { width: 100%; background: #fff; border: 1px solid var(--border); color: var(--text); padding: 7px 9px; border-radius: 4px; font-size: 0.95em; margin-bottom: 12px; font-weight: 600; }
-.deck-name-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(184,134,46,0.15); }
-.deck-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
-.deck-actions button { flex: 1 1 calc(50% - 3px); background: var(--panel-2); border: 1px solid var(--border); color: var(--text); padding: 7px 10px; border-radius: 4px; cursor: pointer; font-size: 0.82em; transition: all 0.15s; }
-.deck-actions button:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
-.deck-actions button.danger:hover { background: var(--accent); border-color: var(--accent); }
-.deck-stats { background: var(--panel-2); border: 1px solid var(--border); border-radius: 4px; padding: 12px 14px; font-size: 0.85em; }
-.deck-stats .row { display: flex; justify-content: space-between; margin-bottom: 4px; }
-.deck-stats .row .label { color: var(--text-dim); }
-.deck-stats .row .value { color: var(--gold); font-weight: 600; }
-.deck-stats .row.section-head { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border); color: var(--gold); font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.5px; }
-.deck-stats .row.section-head .label { color: var(--gold); }
-
-.deck-main { padding: 16px 24px; }
-.deck-empty { text-align: center; padding: 60px 20px; color: var(--text-dim); }
-.deck-empty .icon { font-size: 3em; opacity: 0.4; margin-bottom: 12px; }
-.deck-empty h3 { color: var(--gold); margin: 0 0 8px; }
-.deck-empty p { margin: 0 0 4px; }
-.deck-group { margin-bottom: 20px; }
-.deck-group h3 { color: var(--gold); font-size: 0.95em; margin: 0 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
-.deck-group h3 .qty-info { color: var(--text-dim); font-size: 0.85em; font-weight: 400; }
-.deck-row { display: grid; grid-template-columns: 50px 1fr auto auto; align-items: center; gap: 12px; padding: 6px 10px; border-radius: 4px; background: var(--panel); border: 1px solid var(--border); margin-bottom: 4px; }
-.deck-row:hover { background: var(--panel-2); }
-.deck-row img { width: 50px; height: 68px; object-fit: cover; border-radius: 3px; background: #111; cursor: pointer; }
-.deck-row .info { min-width: 0; cursor: pointer; }
-.deck-row .info .name { font-weight: 600; font-size: 0.92em; color: var(--text); }
-.deck-row .info .meta { font-size: 0.78em; color: var(--text-dim); margin-top: 2px; }
-.deck-row .qty-controls { display: flex; align-items: center; gap: 6px; }
-.deck-row .qty-controls button { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border); background: var(--panel); color: var(--text); cursor: pointer; font-weight: 600; font-size: 0.95em; line-height: 1; }
-.deck-row .qty-controls button:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
-.deck-row .qty-controls button.danger:hover { background: var(--accent); border-color: var(--accent); }
-.deck-row .qty-controls .qty { min-width: 22px; text-align: center; font-weight: 600; color: var(--gold); }
-.deck-row .max-warn { color: var(--accent); font-size: 0.78em; font-weight: 600; margin-left: 6px; }
-
-.modal-deck-controls { margin-top: 14px; padding: 10px 12px; background: var(--panel-2); border-left: 3px solid var(--good); border-radius: 4px; display: flex; align-items: center; gap: 10px; }
-.modal-deck-controls .label { color: var(--text-dim); font-size: 0.82em; flex: 1; }
-.modal-deck-controls button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border); background: var(--panel); color: var(--text); cursor: pointer; font-size: 1.1em; font-weight: 600; line-height: 1; }
-.modal-deck-controls button:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
-.modal-deck-controls button:disabled { opacity: 0.4; cursor: not-allowed; }
-.modal-deck-controls .qty { min-width: 24px; text-align: center; color: var(--gold); font-weight: 700; font-size: 1.05em; }
-
+/* Toast notification (shared by all tabs) */
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #2a1810; color: var(--gold); padding: 10px 20px; border-radius: 22px; border: 1px solid var(--gold-dim); box-shadow: 0 4px 16px rgba(0,0,0,0.25); font-size: 0.88em; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
 .toast.show { opacity: 1; }
 
@@ -328,7 +283,6 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
 <nav class="tabs">
   <button class="active" data-tab="pool">Card Pool</button>
   <button data-tab="dungeon">Dungeon Deck</button>
-  <button data-tab="deck">My Deck <span class="tab-badge" id="deck-count-badge" style="display:none;">0</span></button>
   <button data-tab="analysis">Statistical Analysis</button>
   <button data-tab="combos">Combos &amp; Synergies</button>
   <button data-tab="targets">Targets vs Pool</button>
@@ -458,28 +412,6 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
   </div>
 </div>
 
-<!-- MY DECK TAB -->
-<div id="deck" class="tab-panel">
-  <div class="deck-layout">
-    <aside class="deck-sidebar">
-      <h2>Deck</h2>
-      <input type="text" id="deck-name" class="deck-name-input" placeholder="Deck name" value="My Clank deck">
-      <div class="deck-actions">
-        <button onclick="exportDeck()" title="Download deck as a JSON file">Export JSON</button>
-        <button onclick="document.getElementById('deck-import-file').click()" title="Load a deck from a JSON file">Import JSON</button>
-        <button onclick="copyDeckToClipboard()" title="Copy deck JSON to clipboard">Copy</button>
-        <button class="danger" onclick="clearDeck()" title="Remove all cards from the deck">Clear</button>
-        <input type="file" id="deck-import-file" accept="application/json" style="display:none;" onchange="importDeck(event)">
-      </div>
-      <h2 style="margin-top:18px;">Live stats</h2>
-      <div class="deck-stats" id="deck-stats"></div>
-    </aside>
-    <main class="deck-main">
-      <div id="deck-content"></div>
-    </main>
-  </div>
-</div>
-
 <!-- ANALYSIS TAB -->
 <div id="analysis" class="tab-panel">
   <div class="analysis">
@@ -605,31 +537,35 @@ const TYPE_COLORS = { Companion:'#c08040', Monster:'#c0392b', Device:'#2a4a5a', 
 const SET_COLORS = { Catacombs:'#d4a857', Adventure:'#c0392b', Lairs:'#6abf69', Underworld:'#5a3a6a' };
 
 // ============================================================
-//  Deck state — persisted in localStorage under DECK_STORAGE_KEY.
-//  Shape: { name: string, cards: { [cardName]: quantity }, updated: ISO }
-//  cardName is used as the key because it is stable and unique across the pool.
+//  Dungeon Deck state must be initialised BEFORE applyFilters() runs,
+//  because the Pool card template reads DD.pins / DD.bans. The rest of the
+//  Dungeon Deck logic (algorithm, rendering) is defined later, but
+//  hoisting these few constants here keeps everything else in order.
 // ============================================================
-const DECK_STORAGE_KEY = 'clank-catacombs-deck-v1';
-let DECK = loadDeck();
-
-function loadDeck() {
+const DD_STORAGE_KEY = 'clank-dungeon-build-v1';
+function _loadDungeonState() {
+  const def = {
+    weights: { combo: 50, trash: 50, ratio: 50 },
+    thresholds: { lockpicks: 0, teleports: 0, companions: 0 },
+    pins: [], bans: [], players: 4,
+  };
   try {
-    const raw = localStorage.getItem(DECK_STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed && typeof parsed === 'object' && parsed.cards) return parsed;
-    }
-  } catch (e) { console.warn('Failed to load deck from localStorage', e); }
-  return { name: 'My Clank deck', cards: {}, updated: new Date().toISOString() };
+    const raw = localStorage.getItem(DD_STORAGE_KEY);
+    if (!raw) return { ...def, pins: new Set(), bans: new Set() };
+    const p = JSON.parse(raw);
+    return {
+      weights: { ...def.weights, ...(p.weights || {}) },
+      thresholds: { ...def.thresholds, ...(p.thresholds || {}) },
+      pins: new Set(p.pins || []),
+      bans: new Set(p.bans || []),
+      players: p.players || 4,
+    };
+  } catch (e) {
+    return { ...def, pins: new Set(), bans: new Set() };
+  }
 }
-
-function saveDeck() {
-  DECK.updated = new Date().toISOString();
-  try { localStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(DECK)); }
-  catch (e) { console.warn('Failed to save deck to localStorage', e); }
-}
-
-function deckTotal() { return Object.values(DECK.cards).reduce((a,b)=>a+b, 0); }
+const DD = _loadDungeonState();
+let DD_BUILT = null;            // last built deck, populated by buildDungeonDeck()
 
 function sumQty(arr) { return arr.reduce((a,c)=>a+c.quantity,0); }
 function byType(cards) { const t={}; cards.forEach(c=>t[c.type]=(t[c.type]||0)+c.quantity); return t; }
@@ -647,7 +583,6 @@ document.querySelectorAll('nav.tabs button').forEach(b => {
     if (b.dataset.tab==='analysis') buildAnalysis();
     if (b.dataset.tab==='combos') buildCombos();
     if (b.dataset.tab==='targets') buildTargets();
-    if (b.dataset.tab==='deck') renderDeck();
     if (b.dataset.tab==='dungeon') renderDungeonTab();
   });
 });
@@ -711,16 +646,13 @@ function applyFilters() {
   document.getElementById('row-count').textContent = `${rows.length} unique · ${tot} copies`;
   document.getElementById('grid').innerHTML = rows.map(c => {
     const idx = CARDS.indexOf(c);
-    const inDeck = DECK.cards[c.name] || 0;
     const pinned = DD.pins.has(c.name);
     const banned = DD.bans.has(c.name);
     return `
-    <div class="card ${!c.verified ? 'tentative' : ''} ${inDeck ? 'in-deck' : ''} ${banned ? 'banned' : ''}" onclick="openModal(${idx})">
+    <div class="card ${!c.verified ? 'tentative' : ''} ${banned ? 'banned' : ''}" onclick="openModal(${idx})">
       ${c.image ? `<img src="${c.image}" alt="${c.name}" loading="lazy">` : `<div class="placeholder"><div><span class="ph-name">${c.name}</span>image pending</div></div>`}
       ${pinned ? `<span class="pin-badge" title="Pinned to dungeon deck">📌 Pin</span>` : ''}
       ${banned ? `<span class="ban-badge" title="Banned from dungeon deck">🚫 Ban</span>` : ''}
-      ${inDeck ? `<span class="deck-qty-badge" title="${inDeck} in deck">×${inDeck}</span>` : ''}
-      <button class="quick-add" onclick="event.stopPropagation(); addToDeck(${idx});" title="Add to deck">+ Deck</button>
       <div class="info">
         <div class="name">${c.name}</div>
         <div class="meta">
@@ -802,13 +734,6 @@ function openModal(idx) {
     ${combo.interactive && combo.interactive.length ? `<div class="combo-section"><span class="lbl">Interactive</span>${combo.interactive.map(p=>`<span class="combo-pill interactive">${p}</span>`).join('')}</div>` : ''}
     ${trashPills ? `<div class="combo-section"><span class="lbl">Trash type</span>${trashPills}</div>` : ''}
     ${c.mechanics && c.mechanics.length ? `<div class="mech-tags">${c.mechanics.map(m=>`<span class="mech-tag">${m}</span>`).join('')}</div>` : ''}
-    <div class="modal-deck-controls">
-      <span class="label">In your deck:</span>
-      <button onclick="addToDeck(${idx}, -1)" ${(DECK.cards[c.name]||0) <= 0 ? 'disabled' : ''}>−</button>
-      <span class="qty" id="modal-deck-qty">${DECK.cards[c.name] || 0}</span>
-      <button onclick="addToDeck(${idx}, 1)" ${(DECK.cards[c.name]||0) >= c.quantity ? 'disabled' : ''}>+</button>
-      <span style="font-size:0.78em;color:var(--text-dim);">max ${c.quantity}</span>
-    </div>
     <div class="modal-pin-controls">
       <span class="label">Dungeon deck:</span>
       <button class="pin-btn pin ${DD.pins.has(c.name) ? 'active' : ''}" onclick="togglePin('${c.name.replace(/'/g, "\\'")}')">📌 Pin</button>
@@ -820,17 +745,7 @@ function openModal(idx) {
   document.getElementById('modal').dataset.cardIdx = idx;
 }
 function closeModal() { document.getElementById('modal').classList.remove('active'); }
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeModal();
-  if (e.key === '+' && document.getElementById('modal').classList.contains('active')) {
-    const idx = parseInt(document.getElementById('modal').dataset.cardIdx);
-    if (!isNaN(idx)) addToDeck(idx, 1);
-  }
-  if (e.key === '-' && document.getElementById('modal').classList.contains('active')) {
-    const idx = parseInt(document.getElementById('modal').dataset.cardIdx);
-    if (!isNaN(idx)) addToDeck(idx, -1);
-  }
-});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 function resetFilters() {
   document.getElementById('f-search').value = '';
@@ -1289,9 +1204,9 @@ function renderResourceProjection(items) {
 applyFilters();
 
 // ============================================================
-//  My Deck tab — add/remove, render, stats, export/import
+//  DEAD CODE FENCE — start of removed My Deck block
 // ============================================================
-
+/*
 function addToDeck(idx, delta = 1) {
   const c = CARDS[idx];
   if (!c) return;
@@ -1543,11 +1458,10 @@ function refreshDeckUI() {
   }
 }
 
-document.getElementById('deck-name').addEventListener('input', e => {
-  DECK.name = e.target.value;
-  saveDeck();
-});
-document.getElementById('deck-name').value = DECK.name;
+*/
+// ============================================================
+//  END of removed My Deck block
+// ============================================================
 
 // ---- Toast helper ----
 let _toastTimer;
@@ -1581,38 +1495,13 @@ document.getElementById('header-stats').textContent =
   `${_totalUnique} unique · ${_totalCopies} copies · ${_verifiedN} verified` +
   (_tentativeN ? `, ${_tentativeN} tentative` : '');
 
-refreshDeckUI();
-
 // ============================================================
-//  Dungeon Deck builder — optimisation under constraints
+//  Dungeon Deck builder — algorithm, scoring, rendering
+//  (DD state already initialised near the top of the script)
 // ============================================================
 
-const DD_STORAGE_KEY = 'clank-dungeon-build-v1';
-const DD = loadDungeonState();
 const DD_BENCHMARKS = computeBenchmarks();   // baseline = retail Catacombs box
-let DD_BUILT = null;                          // last built deck (cache)
 
-function loadDungeonState() {
-  const def = {
-    weights: { combo: 50, trash: 50, ratio: 50 },
-    thresholds: { lockpicks: 0, teleports: 0, companions: 0 },
-    pins: [], bans: [], players: 4,
-  };
-  try {
-    const raw = localStorage.getItem(DD_STORAGE_KEY);
-    if (!raw) return { ...def, pins: new Set(), bans: new Set() };
-    const p = JSON.parse(raw);
-    return {
-      weights: { ...def.weights, ...(p.weights || {}) },
-      thresholds: { ...def.thresholds, ...(p.thresholds || {}) },
-      pins: new Set(p.pins || []),
-      bans: new Set(p.bans || []),
-      players: p.players || 4,
-    };
-  } catch (e) {
-    return { ...def, pins: new Set(), bans: new Set() };
-  }
-}
 function saveDungeonState() {
   try {
     localStorage.setItem(DD_STORAGE_KEY, JSON.stringify({
