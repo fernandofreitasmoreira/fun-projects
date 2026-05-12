@@ -71,15 +71,18 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
 .card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #111; }
 .card .info { padding: 7px 9px; font-size: 0.8em; }
 .card .name { color: var(--text); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.card .meta { color: var(--text-dim); font-size: 0.8em; display: flex; justify-content: space-between; margin-top: 2px; }
-.card .qty-badge { position: absolute; top: 6px; right: 6px; background: rgba(42,24,16,0.85); color: #d4a857; padding: 2px 7px; border-radius: 10px; font-size: 0.75em; font-weight: 600; }
-.card .deck-qty-badge { position: absolute; bottom: 6px; right: 6px; background: var(--good); color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 0.78em; font-weight: 700; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+.card .meta { color: var(--text-dim); font-size: 0.8em; display: flex; justify-content: space-between; margin-top: 2px; gap: 4px; }
+.card .badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; align-items: center; }
+.card .badges .set-tag { padding: 1px 7px; border-radius: 3px; font-size: 0.72em; font-weight: 600; line-height: 1.45; }
+.card .badges .qty-tag { background: var(--panel-2); color: var(--text-dim); padding: 1px 6px; border-radius: 10px; font-size: 0.72em; font-weight: 600; border: 1px solid var(--border); }
+.card .badges .combo-tag { background: rgba(184,134,46,0.12); color: var(--gold); padding: 1px 6px; border-radius: 10px; font-size: 0.72em; font-weight: 600; border: 1px solid rgba(184,134,46,0.3); }
+.card .badges .tentative-tag { background: rgba(217,119,87,0.15); color: #b85a3a; padding: 1px 6px; border-radius: 10px; font-size: 0.7em; font-weight: 700; border: 1px solid rgba(184,90,58,0.35); }
+.card .deck-qty-badge { position: absolute; top: 6px; right: 6px; background: var(--good); color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 0.78em; font-weight: 700; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 2; }
 .card.in-deck { border-color: var(--good); box-shadow: 0 0 0 2px rgba(42,138,58,0.25), var(--shadow); }
 .card .quick-add { position: absolute; bottom: 6px; left: 6px; opacity: 0; transition: opacity 0.15s; background: rgba(42,24,16,0.85); color: var(--gold); border: 1px solid var(--gold-dim); padding: 3px 9px; border-radius: 14px; font-size: 0.75em; font-weight: 600; cursor: pointer; }
 .card:hover .quick-add { opacity: 1; }
 .card .quick-add:hover { background: var(--gold); color: #2a1810; }
-.card .set-badge { position: absolute; top: 6px; left: 6px; padding: 2px 7px; border-radius: 3px; font-size: 0.7em; font-weight: 600; }
-.card .combo-pip { position: absolute; bottom: 50px; left: 6px; background: rgba(42,24,16,0.85); color: #d4a857; padding: 2px 7px; border-radius: 10px; font-size: 0.72em; font-weight: 600; }
+.card .set-badge { padding: 2px 7px; border-radius: 3px; font-size: 0.7em; font-weight: 600; }
 .set-Catacombs { background: #d4a857; color: #2a1810; }
 .set-Adventure { background: #c0392b; color: #fff; }
 .set-Lairs { background: #4a8a4a; color: #fff; }
@@ -161,7 +164,7 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
 
 .card.tentative img { opacity: 0.55; filter: grayscale(0.3); }
 .card.tentative { box-shadow: inset 0 0 0 2px rgba(184,90,58,0.55), var(--shadow); }
-.tentative-badge { position: absolute; bottom: 50px; right: 6px; background: rgba(217,119,87,0.92); color: #1a1410; padding: 2px 7px; border-radius: 10px; font-size: 0.68em; font-weight: 700; }
+/* (Old absolute-positioned overlays removed — info now lives in .card .badges) */
 .card .placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(135deg, #3a2d23 0%, #2a1810 100%); display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px; color: var(--gold-dim); font-size: 0.72em; font-weight: 500; }
 .card .placeholder .ph-name { color: var(--gold); font-size: 0.95em; font-weight: 600; margin-bottom: 6px; display: block; }
 .modal .placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(135deg, #3a2d23 0%, #2a1810 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; color: var(--gold-dim); }
@@ -540,10 +543,6 @@ function applyFilters() {
     const inDeck = DECK.cards[c.name] || 0;
     return `
     <div class="card ${!c.verified ? 'tentative' : ''} ${inDeck ? 'in-deck' : ''}" onclick="openModal(${idx})">
-      <span class="set-badge set-${c.set}">${c.set}</span>
-      ${c.quantity > 1 ? `<span class="qty-badge">×${c.quantity}</span>` : ''}
-      ${c.comboScore > 5 ? `<span class="combo-pip">⚡${c.comboScore}</span>` : ''}
-      ${!c.verified ? `<span class="tentative-badge">tentative</span>` : ''}
       ${c.image ? `<img src="${c.image}" alt="${c.name}" loading="lazy">` : `<div class="placeholder"><div><span class="ph-name">${c.name}</span>image pending</div></div>`}
       ${inDeck ? `<span class="deck-qty-badge" title="${inDeck} in deck">×${inDeck}</span>` : ''}
       <button class="quick-add" onclick="event.stopPropagation(); addToDeck(${idx});" title="Add to deck">+ Deck</button>
@@ -552,6 +551,12 @@ function applyFilters() {
         <div class="meta">
           <span>${c.cost!=null?(c.isMonster?c.cost:c.cost+'$'):''}</span>
           <span>${c.vp!=null?c.vp+' VP':''}${c.dragonAttack?' <span class="dragon-icon">★</span>':''}</span>
+        </div>
+        <div class="badges">
+          <span class="set-badge set-tag set-${c.set}">${c.set}</span>
+          ${c.quantity > 1 ? `<span class="qty-tag" title="${c.quantity} copies in the box">×${c.quantity}</span>` : ''}
+          ${c.comboScore > 5 ? `<span class="combo-tag" title="Combo score ${c.comboScore}">⚡${c.comboScore}</span>` : ''}
+          ${!c.verified ? `<span class="tentative-tag">tentative</span>` : ''}
         </div>
       </div>
     </div>`;
