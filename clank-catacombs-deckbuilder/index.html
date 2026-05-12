@@ -289,6 +289,14 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
 .dd-target .bar .fill { height: 100%; background: var(--gold-dim); transition: width 0.2s; }
 .dd-target .bar .marker { position: absolute; top: -2px; width: 2px; height: 10px; background: var(--text); opacity: 0.4; }
 
+/* Warnings panel */
+.dd-warnings-empty { padding: 8px 11px; background: rgba(42,138,58,0.10); color: var(--good); border-left: 3px solid var(--good); border-radius: 3px; font-size: 0.82em; }
+.dd-warn { padding: 8px 10px; margin-bottom: 6px; border-radius: 3px; font-size: 0.82em; line-height: 1.4; border-left: 3px solid; }
+.dd-warn.err  { background: rgba(192,57,43,0.08);  color: #8a2a1a; border-left-color: var(--accent); }
+.dd-warn.warn { background: rgba(184,134,46,0.10); color: #6a4a10; border-left-color: var(--gold); }
+.dd-warn.info { background: rgba(106,90,74,0.10);  color: var(--text-dim); border-left-color: var(--text-dim); }
+.dd-warn .ico { margin-right: 4px; }
+
 /* Pin / Ban controls on the card modal */
 .modal-pin-controls { margin-top: 10px; padding: 8px 12px; background: var(--panel-2); border-left: 3px solid var(--gold-dim); border-radius: 4px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .modal-pin-controls .label { color: var(--text-dim); font-size: 0.82em; flex: 1; }
@@ -404,6 +412,23 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
       </div>
 
       <div class="dd-section">
+        <label class="dd-lbl">Minimum copies (soft)</label>
+        <div class="dd-slider">
+          <div class="dd-slider-row"><span>Lockpicks</span><span class="dd-slider-val" id="dd-t-lock-val">0</span></div>
+          <input type="range" id="dd-t-lock" min="0" max="15" value="0">
+        </div>
+        <div class="dd-slider">
+          <div class="dd-slider-row"><span>Teleports</span><span class="dd-slider-val" id="dd-t-tele-val">0</span></div>
+          <input type="range" id="dd-t-tele" min="0" max="10" value="0">
+        </div>
+        <div class="dd-slider">
+          <div class="dd-slider-row"><span>Companions</span><span class="dd-slider-val" id="dd-t-comp-val">0</span></div>
+          <input type="range" id="dd-t-comp" min="0" max="30" value="0">
+        </div>
+        <div class="dd-note" style="font-size:0.72em;">Soft penalty if the deck has fewer than the chosen minimum. 0 = ignored.</div>
+      </div>
+
+      <div class="dd-section">
         <label class="dd-lbl">Pinned / banned</label>
         <div class="dd-pin-stats" id="dd-pin-stats"></div>
         <button class="reset-btn" onclick="clearPinsBans()" style="margin-top:6px;">Clear all pins &amp; bans</button>
@@ -416,6 +441,9 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
 
       <h2 style="margin-top:18px;">Deck summary</h2>
       <div class="dd-summary" id="dd-summary"></div>
+
+      <h2 style="margin-top:18px;">Warnings</h2>
+      <div id="dd-warnings"></div>
     </aside>
     <main class="dungeon-main">
       <div class="dd-banner-row">
@@ -1565,14 +1593,18 @@ const DD_BENCHMARKS = computeBenchmarks();   // baseline = retail Catacombs box
 let DD_BUILT = null;                          // last built deck (cache)
 
 function loadDungeonState() {
-  const def = { weights: { combo: 50, trash: 50, ratio: 50 },
-                pins: [], bans: [], players: 4 };
+  const def = {
+    weights: { combo: 50, trash: 50, ratio: 50 },
+    thresholds: { lockpicks: 0, teleports: 0, companions: 0 },
+    pins: [], bans: [], players: 4,
+  };
   try {
     const raw = localStorage.getItem(DD_STORAGE_KEY);
     if (!raw) return { ...def, pins: new Set(), bans: new Set() };
     const p = JSON.parse(raw);
     return {
       weights: { ...def.weights, ...(p.weights || {}) },
+      thresholds: { ...def.thresholds, ...(p.thresholds || {}) },
       pins: new Set(p.pins || []),
       bans: new Set(p.bans || []),
       players: p.players || 4,
@@ -1585,6 +1617,7 @@ function saveDungeonState() {
   try {
     localStorage.setItem(DD_STORAGE_KEY, JSON.stringify({
       weights: DD.weights,
+      thresholds: DD.thresholds,
       pins: [...DD.pins],
       bans: [...DD.bans],
       players: DD.players,
@@ -1594,7 +1627,6 @@ function saveDungeonState() {
 
 function computeBenchmarks() {
   // Baseline ratios derived from the retail Catacombs box (set==='Catacombs').
-  // Result: { Companion: 0.22, Monster: 0.20, ..., Dragon: 0.25, MeanCost: 3.6, ... }
   const base = CARDS.filter(c => c.set === 'Catacombs');
   const baseTotal = sumQty(base);
   const byType = (t) => sumQty(base.filter(c => c.type === t)) / baseTotal;
@@ -1605,6 +1637,19 @@ function computeBenchmarks() {
   const den = f => nonMonsterBase.reduce((a,c) => a + (c[f]||0)*c.quantity, 0) / nonMonsterQty;
   const trashActiveTotal = sumQty(base.filter(c => (c.combo?.trashTags || []).includes('Active-Trash')));
   const trashTotal = sumQty(base.filter(c => (c.combo?.trashTags || []).length > 0));
+
+  // Cost histogram (non-monster) — bucketed 0..8+
+  const costHist = { 0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0 };
+  nonMonsterBase.forEach(c => {
+    if (c.costNum != null) {
+      const k = Math.min(8, Math.floor(c.costNum));
+      costHist[k] += c.quantity;
+    }
+  });
+  // Normalise to fractions of total non-monster
+  const costShape = {};
+  Object.keys(costHist).forEach(k => costShape[k] = costHist[k] / nonMonsterQty);
+
   return {
     types: {
       Companion: byType('Companion'),
@@ -1621,7 +1666,19 @@ function computeBenchmarks() {
     vpDen:    den('vp'),
     trashActive: trashActiveTotal / baseTotal,
     trashTotal:  trashTotal / baseTotal,
+    costShape,
   };
+}
+
+// Helpers for the new constraint-aware scoring
+function hasMechanic(c, m) { return (c.mechanics || []).includes(m); }
+function countMechanic(deck, m) {
+  let n = 0;
+  for (const [name, qty] of Object.entries(deck)) {
+    const c = CARDS.find(cc => cc.name === name);
+    if (c && hasMechanic(c, m)) n += qty;
+  }
+  return n;
 }
 
 // ---- Hard-constraint helpers ----
@@ -1665,35 +1722,70 @@ function clearPinsBans() {
 const DD_MAX_COMBO_PER_CARD = 13;    // empirical max (see data)
 
 function deckStats(deck) {
-  // deck is { cardName: qty }
   const entries = Object.entries(deck)
     .map(([n, q]) => ({ card: CARDS.find(c => c.name === n), qty: q }))
     .filter(e => e.card && e.qty > 0);
   const tot = entries.reduce((a, e) => a + e.qty, 0);
   if (!tot) return null;
 
-  // Type ratios
   const typeQty = { Companion: 0, Monster: 0, Device: 0, Gem: 0, Other: 0 };
   entries.forEach(({ card, qty }) => { typeQty[card.type] = (typeQty[card.type] || 0) + qty; });
 
-  // Dragon, trash counts
-  let dragonQty = 0, trashActiveQty = 0, trashTotalQty = 0, comboSum = 0;
+  let dragonQty = 0, trashActiveQty = 0, trashTotalQty = 0, trashPayoffQty = 0, selfTrashQty = 0, comboSum = 0;
   let nonMonsterQty = 0, skillSum = 0, swordSum = 0, bootSum = 0, vpSum = 0, costSum = 0;
+  let lockpickQty = 0, teleportQty = 0, drawQty = 0;
+  const costHist = { 0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0 };
+
+  // Per-cluster pairing breakdown
+  const clusterStats = {};
+
   entries.forEach(({ card, qty }) => {
     if (card.dragonAttack) dragonQty += qty;
     const tags = card.combo?.trashTags || [];
     if (tags.includes('Active-Trash')) trashActiveQty += qty;
+    if (tags.includes('Trash-Payoff')) trashPayoffQty += qty;
+    if (tags.includes('Self-Trash')) selfTrashQty += qty;
     if (tags.length > 0) trashTotalQty += qty;
     comboSum += (card.comboScore || 0) * qty;
+    if (hasMechanic(card, 'Lockpick')) lockpickQty += qty;
+    if (hasMechanic(card, 'Teleport')) teleportQty += qty;
+    if (hasMechanic(card, 'Draw1') || hasMechanic(card, 'Draw2')) drawQty += qty;
+
+    // Cluster pairing
+    const provides = card.combo?.provides || [];
+    const triggers = card.combo?.triggers || [];
+    const interactive = card.combo?.interactive || [];
+    (card.combo?.clusters || []).forEach(cl => {
+      if (!clusterStats[cl]) clusterStats[cl] = { total: 0, providers: 0, triggers: 0, interactive: 0 };
+      clusterStats[cl].total += qty;
+      if (provides.length)    clusterStats[cl].providers   += qty;
+      if (triggers.length)    clusterStats[cl].triggers    += qty;
+      if (interactive.length) clusterStats[cl].interactive += qty;
+    });
+
     if (!card.isMonster) {
       nonMonsterQty += qty;
       skillSum += (card.skill || 0) * qty;
       swordSum += (card.swords || 0) * qty;
       bootSum  += (card.boots || 0) * qty;
       vpSum    += (card.vp || 0) * qty;
-      if (card.costNum != null) costSum += card.costNum * qty;
+      if (card.costNum != null) {
+        costSum += card.costNum * qty;
+        costHist[Math.min(8, Math.floor(card.costNum))] += qty;
+      }
     }
   });
+
+  const costShape = {};
+  Object.keys(costHist).forEach(k => costShape[k] = nonMonsterQty ? costHist[k] / nonMonsterQty : 0);
+
+  // Pairing score: for each cluster, sqrt(providers * triggers) — rewards two-sided clusters
+  let pairingScore = 0;
+  Object.values(clusterStats).forEach(cs => {
+    pairingScore += Math.sqrt(cs.providers * Math.max(cs.triggers + cs.interactive * 0.5, 0));
+  });
+  // Orphan trash-payoff penalty: payoff cards need active-trash partners to fire
+  const orphanPayoff = Math.max(0, trashPayoffQty - trashActiveQty);
 
   return {
     total: tot,
@@ -1702,6 +1794,7 @@ function deckStats(deck) {
     dragonQty, dragonRatio: dragonQty / tot,
     trashActiveQty, trashActiveRatio: trashActiveQty / tot,
     trashTotalQty,  trashTotalRatio:  trashTotalQty / tot,
+    trashPayoffQty, selfTrashQty, orphanPayoff,
     comboSum, comboAvg: comboSum / tot,
     meanCost: nonMonsterQty ? costSum / nonMonsterQty : 0,
     skillDen: nonMonsterQty ? skillSum / nonMonsterQty : 0,
@@ -1709,6 +1802,10 @@ function deckStats(deck) {
     bootDen:  nonMonsterQty ? bootSum / nonMonsterQty : 0,
     vpDen:    nonMonsterQty ? vpSum / nonMonsterQty : 0,
     nonMonsterQty,
+    lockpickQty, teleportQty, drawQty,
+    costShape,
+    clusterStats,
+    pairingScore,
   };
 }
 
@@ -1721,15 +1818,31 @@ function scoreDeck(deck, weights) {
   const wR = weights.ratio / 100;
   const wSum = wC + wT + wR || 1;
 
-  // Combo score (normalised 0..1)
-  const combo = Math.min(1, s.comboAvg / DD_MAX_COMBO_PER_CARD);
+  // ----- Combo score: avg comboScore + cluster pairing bonus -----
+  const comboAvgNorm = Math.min(1, s.comboAvg / DD_MAX_COMBO_PER_CARD);
+  // Pairing bonus normalised — empirically a "healthy" deck has pairing ~25-35.
+  const pairingNorm = Math.min(1, s.pairingScore / 30);
+  const combo = 0.55 * comboAvgNorm + 0.45 * pairingNorm;
 
-  // Trash score: reward active trash, penalise self-trash
-  const trash = Math.min(1, s.trashActiveRatio / 0.20)
-              - 0.5 * Math.max(0, s.trashTotalRatio - s.trashActiveRatio - 0.10);
+  // ----- Trash score: active trash %, penalise orphan trash-payoff and excess self-trash -----
+  const trashActiveScore = Math.min(1, s.trashActiveRatio / 0.20);
+  const orphanPenalty = Math.min(0.5, s.orphanPayoff * 0.05);  // 5% per orphan, capped at 0.5
+  const selfTrashPenalty = Math.min(0.3, Math.max(0, s.selfTrashQty - 4) * 0.02);  // first 4 are fine
+  const trash = Math.max(0, trashActiveScore - orphanPenalty - selfTrashPenalty);
 
-  // Ratio fidelity: 1 - sum of relative squared errors
+  // ----- Ratio fidelity: type mix, dragon, densities, AND cost curve shape -----
   const sqErr = (a, b) => { const e = (a - b) / Math.max(b, 0.01); return e * e; };
+  // Cost-curve shape error: sum of squared deviations across buckets
+  let costShapeErr = 0;
+  Object.keys(B.costShape).forEach(k => {
+    const a = s.costShape[k] || 0;
+    const b = B.costShape[k] || 0;
+    // Absolute (not relative) here — small fractions, relative blows up
+    costShapeErr += Math.pow(a - b, 2);
+  });
+  // Scale to match the other error terms (typical 0.02-0.05 raw → multiply by ~25)
+  costShapeErr *= 25;
+
   const ratioErr =
         sqErr(s.typeRatio.Companion, B.types.Companion)
       + sqErr(s.typeRatio.Monster,   B.types.Monster)
@@ -1737,14 +1850,22 @@ function scoreDeck(deck, weights) {
       + sqErr(s.typeRatio.Gem,       B.types.Gem)
       + sqErr(s.typeRatio.Other,     B.types.Other)
       + 0.5 * sqErr(s.dragonRatio,   B.dragon)
-      + 0.3 * sqErr(s.meanCost,      B.meanCost)
       + 0.3 * sqErr(s.skillDen,      B.skillDen)
       + 0.3 * sqErr(s.swordDen,      B.swordDen)
       + 0.3 * sqErr(s.bootDen,       B.bootDen)
-      + 0.3 * sqErr(s.vpDen,         B.vpDen);
+      + 0.3 * sqErr(s.vpDen,         B.vpDen)
+      + 0.8 * costShapeErr;  // cost curve shape replaces the simpler meanCost error
   const ratio = Math.max(0, 1 - ratioErr / 4);
 
-  return (wC * combo + wT * trash + wR * ratio) / wSum;
+  // ----- Soft min-threshold penalties — flat reduction if a count is below the chosen min -----
+  const t = DD.thresholds;
+  const thresholdPenalty =
+        Math.max(0, t.lockpicks  - s.lockpickQty)  * 0.04
+      + Math.max(0, t.teleports  - s.teleportQty)  * 0.04
+      + Math.max(0, t.companions - s.typeQty.Companion) * 0.02;
+
+  const baseScore = (wC * combo + wT * trash + wR * ratio) / wSum;
+  return Math.max(0, baseScore - thresholdPenalty);
 }
 
 // ---- Builder ----
@@ -1901,6 +2022,12 @@ function renderDungeonTab() {
   document.getElementById('dd-w-combo-val').textContent = DD.weights.combo;
   document.getElementById('dd-w-trash-val').textContent = DD.weights.trash;
   document.getElementById('dd-w-ratio-val').textContent = DD.weights.ratio;
+  document.getElementById('dd-t-lock').value = DD.thresholds.lockpicks;
+  document.getElementById('dd-t-tele').value = DD.thresholds.teleports;
+  document.getElementById('dd-t-comp').value = DD.thresholds.companions;
+  document.getElementById('dd-t-lock-val').textContent = DD.thresholds.lockpicks;
+  document.getElementById('dd-t-tele-val').textContent = DD.thresholds.teleports;
+  document.getElementById('dd-t-comp-val').textContent = DD.thresholds.companions;
 
   document.querySelectorAll('#dd-players .dd-pill').forEach(b => {
     b.classList.toggle('active', +b.dataset.players === DD.players);
@@ -1949,6 +2076,90 @@ function renderDungeonTab() {
 
   // Targets vs benchmarks
   document.getElementById('dd-targets').innerHTML = renderDungeonTargets(s);
+
+  // Warnings panel
+  document.getElementById('dd-warnings').innerHTML = renderDungeonWarnings(built.deck, s);
+}
+
+// Detect potential problems in the built deck and return HTML for the warnings panel
+function validateDeck(deck, s) {
+  const warnings = [];
+  const B = DD_BENCHMARKS;
+
+  // Lockpick coverage
+  if (s.lockpickQty === 0) {
+    warnings.push({ level: 'warn', text: 'No Lockpick cards — you only have the 3 starter lockpicks. Opening chests / libraries / prisons via cards will be hard.' });
+  } else if (s.lockpickQty < 3) {
+    warnings.push({ level: 'info', text: `Only ${s.lockpickQty} Lockpick card${s.lockpickQty === 1 ? '' : 's'} — locked features rely heavily on starter picks.` });
+  }
+
+  // Teleport coverage — vital for Crystal Caves and Magic Barriers
+  if (s.teleportQty === 0) {
+    warnings.push({ level: 'warn', text: 'No Teleport cards — exiting Crystal Caves and crossing Magic Barriers with an Artifact will be impossible.' });
+  } else if (s.teleportQty < 3) {
+    warnings.push({ level: 'info', text: `Only ${s.teleportQty} Teleport card${s.teleportQty === 1 ? '' : 's'} — mobility may be tight.` });
+  }
+
+  // Trash-Payoff orphans (cards that fire only when trashed but no Active-Trash partners)
+  if (s.orphanPayoff > 0) {
+    warnings.push({ level: 'err', text: `${s.orphanPayoff} Trash-Payoff cop${s.orphanPayoff === 1 ? 'y has' : 'ies have'} no Active-Trash partner — they may never fire.` });
+  }
+
+  // Self-Trash excess
+  if (s.selfTrashQty > 6) {
+    warnings.push({ level: 'info', text: `${s.selfTrashQty} Self-Trash copies — many cards remove themselves. Consider Active-Trash instead.` });
+  }
+
+  // Companion-Chain triggers need companions
+  const companionTriggers = (s.clusterStats['Companion-Chain']?.triggers) || 0;
+  if (companionTriggers > 0 && s.typeQty.Companion < 8) {
+    warnings.push({ level: 'warn', text: `Only ${s.typeQty.Companion} Companions but ${companionTriggers} cards trigger off "another companion". Companion-Chain may underfire.` });
+  }
+
+  // Threshold misses
+  const t = DD.thresholds;
+  if (t.lockpicks > 0 && s.lockpickQty < t.lockpicks) {
+    warnings.push({ level: 'warn', text: `Lockpicks: ${s.lockpickQty}/${t.lockpicks} (below your minimum).` });
+  }
+  if (t.teleports > 0 && s.teleportQty < t.teleports) {
+    warnings.push({ level: 'warn', text: `Teleports: ${s.teleportQty}/${t.teleports} (below your minimum).` });
+  }
+  if (t.companions > 0 && s.typeQty.Companion < t.companions) {
+    warnings.push({ level: 'warn', text: `Companions: ${s.typeQty.Companion}/${t.companions} (below your minimum).` });
+  }
+
+  // Cluster health — flag clusters with strong triggers but no providers (and vice-versa)
+  const oneSided = [];
+  Object.entries(s.clusterStats).forEach(([cl, cs]) => {
+    if (cs.total >= 4 && cs.providers === 0 && cs.triggers > 0) {
+      oneSided.push(`${cl} (${cs.triggers} triggers, 0 providers)`);
+    } else if (cs.total >= 4 && cs.triggers + cs.interactive === 0 && cs.providers > 0) {
+      oneSided.push(`${cl} (${cs.providers} providers, 0 triggers)`);
+    }
+  });
+  if (oneSided.length) {
+    warnings.push({ level: 'info', text: `One-sided clusters: ${oneSided.slice(0, 3).join(' · ')}${oneSided.length > 3 ? ` · +${oneSided.length - 3} more` : ''}` });
+  }
+
+  // Dragon ratio sanity
+  const dragonDelta = s.dragonRatio - B.dragon;
+  if (Math.abs(dragonDelta) > 0.08) {
+    warnings.push({
+      level: dragonDelta > 0 ? 'warn' : 'info',
+      text: `Dragon attack ratio ${(s.dragonRatio * 100).toFixed(1)}% (target ${(B.dragon * 100).toFixed(0)}%) — ${dragonDelta > 0 ? 'game may end faster than usual' : 'dragon may be too tame'}.`,
+    });
+  }
+
+  return warnings;
+}
+
+function renderDungeonWarnings(deck, s) {
+  const warnings = validateDeck(deck, s);
+  if (!warnings.length) {
+    return '<div class="dd-warnings-empty">✓ No issues detected. Deck looks balanced.</div>';
+  }
+  const icon = { err: '✕', warn: '⚠', info: 'ℹ' };
+  return warnings.map(w => `<div class="dd-warn ${w.level}"><span class="ico">${icon[w.level]}</span>${w.text}</div>`).join('');
 }
 
 function renderDungeonCards(deck) {
@@ -2039,6 +2250,22 @@ function renderDungeonTargets(s) {
     const v = parseInt(e.target.value);
     const key = id === 'dd-w-combo' ? 'combo' : id === 'dd-w-trash' ? 'trash' : 'ratio';
     DD.weights[key] = v;
+    document.getElementById(id + '-val').textContent = v;
+    saveDungeonState();
+  });
+  el.addEventListener('change', () => { DD_BUILT = null; buildDungeonDeck(); });
+});
+
+// Threshold sliders
+[
+  ['dd-t-lock', 'lockpicks'],
+  ['dd-t-tele', 'teleports'],
+  ['dd-t-comp', 'companions'],
+].forEach(([id, key]) => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', e => {
+    const v = parseInt(e.target.value);
+    DD.thresholds[key] = v;
     document.getElementById(id + '-val').textContent = v;
     saveDungeonState();
   });
