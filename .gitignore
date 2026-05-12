@@ -42,6 +42,7 @@ tmp/
 # (kept locally if needed, re-derive `cards/*.jpg` from them as new sets arrive)
 **/raw-photos/
 **/_intermediate/
+**/cards-original/
 *.HEIC
 IMG_*_full.jpg
 IMG_*_r*c*.jpg
