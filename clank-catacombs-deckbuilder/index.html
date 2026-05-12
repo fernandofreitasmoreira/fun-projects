@@ -219,6 +219,89 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #2a1810; color: var(--gold); padding: 10px 20px; border-radius: 22px; border: 1px solid var(--gold-dim); box-shadow: 0 4px 16px rgba(0,0,0,0.25); font-size: 0.88em; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
 .toast.show { opacity: 1; }
 
+/* ---- Dungeon Deck tab ---- */
+.dungeon-layout { display: grid; grid-template-columns: 320px 1fr; min-height: calc(100vh - 130px); }
+@media (max-width: 900px) { .dungeon-layout { grid-template-columns: 1fr; } }
+.dungeon-sidebar { background: var(--panel); border-right: 1px solid var(--border); padding: 20px; overflow-y: auto; position: sticky; top: 45px; max-height: calc(100vh - 130px); }
+.dungeon-sidebar h2 { color: var(--gold); margin: 0 0 14px; font-size: 0.95em; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.dungeon-main { padding: 16px 24px; }
+
+.dd-section { margin-bottom: 18px; }
+.dd-lbl { display: block; font-size: 0.78em; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.dd-pills { display: flex; gap: 4px; }
+.dd-pill { flex: 1; background: var(--panel-2); border: 1px solid var(--border); color: var(--text); padding: 7px 10px; border-radius: 4px; cursor: pointer; font-size: 0.84em; transition: all 0.15s; }
+.dd-pill.active { background: var(--gold); color: #fff; border-color: var(--gold); }
+.dd-pill:hover:not(.active) { background: var(--panel); border-color: var(--gold-dim); }
+
+.dd-slider { margin-bottom: 12px; }
+.dd-slider-row { display: flex; justify-content: space-between; font-size: 0.85em; color: var(--text); margin-bottom: 3px; }
+.dd-slider-val { color: var(--gold); font-weight: 700; font-variant-numeric: tabular-nums; }
+.dd-slider input[type="range"] { width: 100%; accent-color: var(--gold); }
+
+.dd-note { font-size: 0.76em; color: var(--text-dim); margin-top: 8px; padding: 8px 10px; background: var(--panel-2); border-left: 3px solid var(--gold-dim); border-radius: 3px; line-height: 1.45; }
+.dd-pin-stats { font-size: 0.84em; color: var(--text-dim); display: flex; gap: 8px; }
+.dd-pin-stats .pinned { color: var(--good); font-weight: 600; }
+.dd-pin-stats .banned { color: var(--accent); font-weight: 600; }
+
+.dd-rebuild { width: 100%; background: var(--gold); color: #fff; border: none; padding: 9px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.92em; margin-bottom: 6px; }
+.dd-rebuild:hover { background: #a07728; }
+.dd-export { width: 100%; background: var(--panel-2); border: 1px solid var(--border); color: var(--text); padding: 7px; border-radius: 4px; cursor: pointer; font-size: 0.84em; }
+.dd-export:hover { background: var(--panel); border-color: var(--gold-dim); }
+
+.dd-summary { background: var(--panel-2); border: 1px solid var(--border); border-radius: 4px; padding: 11px 13px; font-size: 0.84em; }
+.dd-summary .row { display: flex; justify-content: space-between; margin-bottom: 3px; }
+.dd-summary .row .label { color: var(--text-dim); }
+.dd-summary .row .value { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; }
+.dd-summary .row.head { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border); color: var(--gold); font-size: 0.76em; text-transform: uppercase; letter-spacing: 0.5px; }
+.dd-summary .row.head .label { color: var(--gold); }
+
+.dd-banner-row { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.dd-banner { flex: 1; min-width: 200px; padding: 11px 14px; background: var(--panel); border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: 4px; font-size: 0.85em; color: var(--text); box-shadow: var(--shadow); }
+.dd-banner strong { color: var(--gold); }
+
+.dd-section-title { color: var(--gold); margin: 24px 0 12px; font-size: 1em; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+
+.dd-group { margin-bottom: 18px; }
+.dd-group .header { display: flex; align-items: center; justify-content: space-between; margin: 0 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+.dd-group .header h4 { margin: 0; color: var(--gold); font-size: 0.94em; display: flex; align-items: center; gap: 8px; }
+.dd-group .header .stats { color: var(--text-dim); font-size: 0.82em; }
+
+.dd-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+.dd-card { position: relative; cursor: pointer; transition: transform 0.15s; }
+.dd-card img { width: 100%; aspect-ratio: 0.72; object-fit: cover; border-radius: 4px; background: #111; display: block; }
+.dd-card .placeholder { width: 100%; aspect-ratio: 0.72; background: linear-gradient(135deg, #3a2d23 0%, #2a1810 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; padding: 6px; color: var(--gold-dim); font-size: 0.65em; text-align: center; }
+.dd-card .qty-corner { position: absolute; top: 4px; right: 4px; background: rgba(42,24,16,0.92); color: var(--gold); padding: 1px 7px; border-radius: 10px; font-size: 0.72em; font-weight: 700; }
+.dd-card .mandatory-mark { position: absolute; top: 4px; left: 4px; background: rgba(192,57,43,0.92); color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 0.62em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+.dd-card .pin-mark { position: absolute; bottom: 4px; left: 4px; background: rgba(42,138,58,0.92); color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 0.62em; font-weight: 700; }
+.dd-card .name { font-size: 0.74em; color: var(--text); margin-top: 4px; text-align: center; line-height: 1.25; min-height: 1.8em; }
+.dd-card:hover { transform: translateY(-1px); }
+
+.dd-targets { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.dd-target { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; font-size: 0.85em; box-shadow: var(--shadow); }
+.dd-target .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.dd-target .label { color: var(--text); font-weight: 600; }
+.dd-target .target { color: var(--text-dim); font-size: 0.86em; }
+.dd-target .actual { font-weight: 700; font-variant-numeric: tabular-nums; }
+.dd-target .actual.ok { color: var(--good); }
+.dd-target .actual.low { color: var(--bad); }
+.dd-target .actual.high { color: var(--accent); }
+.dd-target .bar { background: var(--panel-2); border-radius: 4px; height: 6px; position: relative; overflow: hidden; }
+.dd-target .bar .fill { height: 100%; background: var(--gold-dim); transition: width 0.2s; }
+.dd-target .bar .marker { position: absolute; top: -2px; width: 2px; height: 10px; background: var(--text); opacity: 0.4; }
+
+/* Pin / Ban controls on the card modal */
+.modal-pin-controls { margin-top: 10px; padding: 8px 12px; background: var(--panel-2); border-left: 3px solid var(--gold-dim); border-radius: 4px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.modal-pin-controls .label { color: var(--text-dim); font-size: 0.82em; flex: 1; }
+.modal-pin-controls .pin-btn { background: var(--panel); border: 1px solid var(--border); color: var(--text); padding: 5px 11px; border-radius: 14px; cursor: pointer; font-size: 0.8em; font-weight: 600; }
+.modal-pin-controls .pin-btn.active.pin { background: var(--good); color: #fff; border-color: var(--good); }
+.modal-pin-controls .pin-btn.active.ban { background: var(--accent); color: #fff; border-color: var(--accent); }
+.modal-pin-controls .pin-btn:hover:not(.active) { background: var(--panel-2); }
+
+/* Pin / Ban indicators on the Pool cards */
+.card .pin-badge { position: absolute; top: 6px; left: 6px; background: var(--good); color: #fff; padding: 2px 7px; border-radius: 10px; font-size: 0.7em; font-weight: 700; z-index: 2; }
+.card.banned { opacity: 0.5; filter: grayscale(0.6); }
+.card .ban-badge { position: absolute; top: 6px; left: 6px; background: var(--accent); color: #fff; padding: 2px 7px; border-radius: 10px; font-size: 0.7em; font-weight: 700; z-index: 2; }
+
 /* Pending expansions placeholder */
 .pending-banner { background: linear-gradient(135deg, #fdf5e0 0%, #fbecc8 100%); border: 1px solid var(--gold-dim); border-left: 4px solid var(--gold); padding: 12px 16px; margin: 12px 24px 0; border-radius: 6px; font-size: 0.88em; color: var(--text); }
 .pending-banner .label { color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8em; display: block; margin-bottom: 4px; }
@@ -236,6 +319,7 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
 
 <nav class="tabs">
   <button class="active" data-tab="pool">Card Pool</button>
+  <button data-tab="dungeon">Dungeon Deck</button>
   <button data-tab="deck">My Deck <span class="tab-badge" id="deck-count-badge" style="display:none;">0</span></button>
   <button data-tab="analysis">Statistical Analysis</button>
   <button data-tab="combos">Combos &amp; Synergies</button>
@@ -284,6 +368,64 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
         </select>
       </div>
       <div class="grid" id="grid"></div>
+    </main>
+  </div>
+</div>
+
+<!-- DUNGEON DECK TAB -->
+<div id="dungeon" class="tab-panel">
+  <div class="dungeon-layout">
+    <aside class="dungeon-sidebar">
+      <h2>Build settings</h2>
+
+      <div class="dd-section">
+        <label class="dd-lbl">Player count</label>
+        <div class="dd-pills" id="dd-players">
+          <button class="dd-pill active" data-players="4">2-4 (100 cards)</button>
+          <button class="dd-pill" data-players="6">5-6 (125 cards)</button>
+        </div>
+      </div>
+
+      <div class="dd-section">
+        <label class="dd-lbl">Priorities</label>
+        <div class="dd-slider">
+          <div class="dd-slider-row"><span>Combos</span><span class="dd-slider-val" id="dd-w-combo-val">50</span></div>
+          <input type="range" id="dd-w-combo" min="0" max="100" value="50">
+        </div>
+        <div class="dd-slider">
+          <div class="dd-slider-row"><span>Active trash</span><span class="dd-slider-val" id="dd-w-trash-val">50</span></div>
+          <input type="range" id="dd-w-trash" min="0" max="100" value="50">
+        </div>
+        <div class="dd-slider">
+          <div class="dd-slider-row"><span>Fidelity to base ratios</span><span class="dd-slider-val" id="dd-w-ratio-val">50</span></div>
+          <input type="range" id="dd-w-ratio" min="0" max="100" value="50">
+        </div>
+        <div class="dd-note">Hard constraints: every React and every Trophy card is always included (16 + 5 copies). Pinned cards (📌) are also forced in; banned cards (🚫) are excluded.</div>
+      </div>
+
+      <div class="dd-section">
+        <label class="dd-lbl">Pinned / banned</label>
+        <div class="dd-pin-stats" id="dd-pin-stats"></div>
+        <button class="reset-btn" onclick="clearPinsBans()" style="margin-top:6px;">Clear all pins &amp; bans</button>
+      </div>
+
+      <div class="dd-section">
+        <button class="dd-rebuild" onclick="buildDungeonDeck()">Rebuild deck</button>
+        <button class="dd-export" onclick="exportDungeonDeck()">Export JSON</button>
+      </div>
+
+      <h2 style="margin-top:18px;">Deck summary</h2>
+      <div class="dd-summary" id="dd-summary"></div>
+    </aside>
+    <main class="dungeon-main">
+      <div class="dd-banner-row">
+        <div id="dd-banner-deck" class="dd-banner"></div>
+      </div>
+      <div id="dd-deck-content"></div>
+      <h2 class="dd-section-title" id="dd-extras-title" style="display:none;">+25 extras for 5-6 players</h2>
+      <div id="dd-extras-content"></div>
+      <h2 class="dd-section-title">Ratios vs Catacombs benchmarks</h2>
+      <div id="dd-targets"></div>
     </main>
   </div>
 </div>
@@ -478,6 +620,7 @@ document.querySelectorAll('nav.tabs button').forEach(b => {
     if (b.dataset.tab==='combos') buildCombos();
     if (b.dataset.tab==='targets') buildTargets();
     if (b.dataset.tab==='deck') renderDeck();
+    if (b.dataset.tab==='dungeon') renderDungeonTab();
   });
 });
 
@@ -541,9 +684,13 @@ function applyFilters() {
   document.getElementById('grid').innerHTML = rows.map(c => {
     const idx = CARDS.indexOf(c);
     const inDeck = DECK.cards[c.name] || 0;
+    const pinned = DD.pins.has(c.name);
+    const banned = DD.bans.has(c.name);
     return `
-    <div class="card ${!c.verified ? 'tentative' : ''} ${inDeck ? 'in-deck' : ''}" onclick="openModal(${idx})">
+    <div class="card ${!c.verified ? 'tentative' : ''} ${inDeck ? 'in-deck' : ''} ${banned ? 'banned' : ''}" onclick="openModal(${idx})">
       ${c.image ? `<img src="${c.image}" alt="${c.name}" loading="lazy">` : `<div class="placeholder"><div><span class="ph-name">${c.name}</span>image pending</div></div>`}
+      ${pinned ? `<span class="pin-badge" title="Pinned to dungeon deck">📌 Pin</span>` : ''}
+      ${banned ? `<span class="ban-badge" title="Banned from dungeon deck">🚫 Ban</span>` : ''}
       ${inDeck ? `<span class="deck-qty-badge" title="${inDeck} in deck">×${inDeck}</span>` : ''}
       <button class="quick-add" onclick="event.stopPropagation(); addToDeck(${idx});" title="Add to deck">+ Deck</button>
       <div class="info">
@@ -633,6 +780,12 @@ function openModal(idx) {
       <span class="qty" id="modal-deck-qty">${DECK.cards[c.name] || 0}</span>
       <button onclick="addToDeck(${idx}, 1)" ${(DECK.cards[c.name]||0) >= c.quantity ? 'disabled' : ''}>+</button>
       <span style="font-size:0.78em;color:var(--text-dim);">max ${c.quantity}</span>
+    </div>
+    <div class="modal-pin-controls">
+      <span class="label">Dungeon deck:</span>
+      <button class="pin-btn pin ${DD.pins.has(c.name) ? 'active' : ''}" onclick="togglePin('${c.name.replace(/'/g, "\\'")}')">📌 Pin</button>
+      <button class="pin-btn ban ${DD.bans.has(c.name) ? 'active' : ''}" onclick="toggleBan('${c.name.replace(/'/g, "\\'")}')">🚫 Ban</button>
+      <span style="font-size:0.76em;color:var(--text-dim);">${isMandatoryForDungeon(c) ? '(always included — React/Trophy)' : ''}</span>
     </div>
   `;
   document.getElementById('modal').classList.add('active');
@@ -1401,6 +1554,507 @@ document.getElementById('header-stats').textContent =
   (_tentativeN ? `, ${_tentativeN} tentative` : '');
 
 refreshDeckUI();
+
+// ============================================================
+//  Dungeon Deck builder — optimisation under constraints
+// ============================================================
+
+const DD_STORAGE_KEY = 'clank-dungeon-build-v1';
+const DD = loadDungeonState();
+const DD_BENCHMARKS = computeBenchmarks();   // baseline = retail Catacombs box
+let DD_BUILT = null;                          // last built deck (cache)
+
+function loadDungeonState() {
+  const def = { weights: { combo: 50, trash: 50, ratio: 50 },
+                pins: [], bans: [], players: 4 };
+  try {
+    const raw = localStorage.getItem(DD_STORAGE_KEY);
+    if (!raw) return { ...def, pins: new Set(), bans: new Set() };
+    const p = JSON.parse(raw);
+    return {
+      weights: { ...def.weights, ...(p.weights || {}) },
+      pins: new Set(p.pins || []),
+      bans: new Set(p.bans || []),
+      players: p.players || 4,
+    };
+  } catch (e) {
+    return { ...def, pins: new Set(), bans: new Set() };
+  }
+}
+function saveDungeonState() {
+  try {
+    localStorage.setItem(DD_STORAGE_KEY, JSON.stringify({
+      weights: DD.weights,
+      pins: [...DD.pins],
+      bans: [...DD.bans],
+      players: DD.players,
+    }));
+  } catch (e) {}
+}
+
+function computeBenchmarks() {
+  // Baseline ratios derived from the retail Catacombs box (set==='Catacombs').
+  // Result: { Companion: 0.22, Monster: 0.20, ..., Dragon: 0.25, MeanCost: 3.6, ... }
+  const base = CARDS.filter(c => c.set === 'Catacombs');
+  const baseTotal = sumQty(base);
+  const byType = (t) => sumQty(base.filter(c => c.type === t)) / baseTotal;
+  const dragonRatio = sumQty(base.filter(c => c.dragonAttack)) / baseTotal;
+  const nonMonsterBase = base.filter(c => !c.isMonster);
+  const nonMonsterQty = sumQty(nonMonsterBase);
+  const meanCost = nonMonsterBase.reduce((a,c) => a + (c.costNum||0)*c.quantity, 0) / nonMonsterQty;
+  const den = f => nonMonsterBase.reduce((a,c) => a + (c[f]||0)*c.quantity, 0) / nonMonsterQty;
+  const trashActiveTotal = sumQty(base.filter(c => (c.combo?.trashTags || []).includes('Active-Trash')));
+  const trashTotal = sumQty(base.filter(c => (c.combo?.trashTags || []).length > 0));
+  return {
+    types: {
+      Companion: byType('Companion'),
+      Monster:   byType('Monster'),
+      Device:    byType('Device'),
+      Gem:       byType('Gem'),
+      Other:     byType('Other'),
+    },
+    dragon: dragonRatio,
+    meanCost,
+    skillDen: den('skill'),
+    swordDen: den('swords'),
+    bootDen:  den('boots'),
+    vpDen:    den('vp'),
+    trashActive: trashActiveTotal / baseTotal,
+    trashTotal:  trashTotal / baseTotal,
+  };
+}
+
+// ---- Hard-constraint helpers ----
+function isReactCard(c)   { return (c.mechanics || []).includes('React'); }
+function isTrophyCard(c)  { return (c.combo?.clusters || []).includes('Trophy'); }
+function isMandatoryForDungeon(c) { return isReactCard(c) || isTrophyCard(c); }
+function isPinned(c) { return DD.pins.has(c.name); }
+function isBanned(c) { return DD.bans.has(c.name); }
+
+function togglePin(name) {
+  if (DD.pins.has(name)) DD.pins.delete(name);
+  else { DD.pins.add(name); DD.bans.delete(name); }
+  saveDungeonState();
+  // Live re-render
+  if (document.getElementById('pool').classList.contains('active')) applyFilters();
+  if (document.getElementById('dungeon').classList.contains('active')) renderDungeonTab();
+  // Refresh modal if open
+  const modal = document.getElementById('modal');
+  if (modal.classList.contains('active')) openModal(parseInt(modal.dataset.cardIdx));
+}
+function toggleBan(name) {
+  if (DD.bans.has(name)) DD.bans.delete(name);
+  else { DD.bans.add(name); DD.pins.delete(name); }
+  saveDungeonState();
+  if (document.getElementById('pool').classList.contains('active')) applyFilters();
+  if (document.getElementById('dungeon').classList.contains('active')) renderDungeonTab();
+  const modal = document.getElementById('modal');
+  if (modal.classList.contains('active')) openModal(parseInt(modal.dataset.cardIdx));
+}
+function clearPinsBans() {
+  if (!DD.pins.size && !DD.bans.size) { toast('Nothing to clear'); return; }
+  if (!confirm(`Clear ${DD.pins.size} pin(s) and ${DD.bans.size} ban(s)?`)) return;
+  DD.pins.clear(); DD.bans.clear();
+  saveDungeonState();
+  if (document.getElementById('pool').classList.contains('active')) applyFilters();
+  if (document.getElementById('dungeon').classList.contains('active')) renderDungeonTab();
+  toast('Pins and bans cleared');
+}
+
+// ---- Scoring ----
+const DD_MAX_COMBO_PER_CARD = 13;    // empirical max (see data)
+
+function deckStats(deck) {
+  // deck is { cardName: qty }
+  const entries = Object.entries(deck)
+    .map(([n, q]) => ({ card: CARDS.find(c => c.name === n), qty: q }))
+    .filter(e => e.card && e.qty > 0);
+  const tot = entries.reduce((a, e) => a + e.qty, 0);
+  if (!tot) return null;
+
+  // Type ratios
+  const typeQty = { Companion: 0, Monster: 0, Device: 0, Gem: 0, Other: 0 };
+  entries.forEach(({ card, qty }) => { typeQty[card.type] = (typeQty[card.type] || 0) + qty; });
+
+  // Dragon, trash counts
+  let dragonQty = 0, trashActiveQty = 0, trashTotalQty = 0, comboSum = 0;
+  let nonMonsterQty = 0, skillSum = 0, swordSum = 0, bootSum = 0, vpSum = 0, costSum = 0;
+  entries.forEach(({ card, qty }) => {
+    if (card.dragonAttack) dragonQty += qty;
+    const tags = card.combo?.trashTags || [];
+    if (tags.includes('Active-Trash')) trashActiveQty += qty;
+    if (tags.length > 0) trashTotalQty += qty;
+    comboSum += (card.comboScore || 0) * qty;
+    if (!card.isMonster) {
+      nonMonsterQty += qty;
+      skillSum += (card.skill || 0) * qty;
+      swordSum += (card.swords || 0) * qty;
+      bootSum  += (card.boots || 0) * qty;
+      vpSum    += (card.vp || 0) * qty;
+      if (card.costNum != null) costSum += card.costNum * qty;
+    }
+  });
+
+  return {
+    total: tot,
+    typeQty,
+    typeRatio: Object.fromEntries(Object.entries(typeQty).map(([k,v]) => [k, v/tot])),
+    dragonQty, dragonRatio: dragonQty / tot,
+    trashActiveQty, trashActiveRatio: trashActiveQty / tot,
+    trashTotalQty,  trashTotalRatio:  trashTotalQty / tot,
+    comboSum, comboAvg: comboSum / tot,
+    meanCost: nonMonsterQty ? costSum / nonMonsterQty : 0,
+    skillDen: nonMonsterQty ? skillSum / nonMonsterQty : 0,
+    swordDen: nonMonsterQty ? swordSum / nonMonsterQty : 0,
+    bootDen:  nonMonsterQty ? bootSum / nonMonsterQty : 0,
+    vpDen:    nonMonsterQty ? vpSum / nonMonsterQty : 0,
+    nonMonsterQty,
+  };
+}
+
+function scoreDeck(deck, weights) {
+  const s = deckStats(deck);
+  if (!s) return -Infinity;
+  const B = DD_BENCHMARKS;
+  const wC = weights.combo / 100;
+  const wT = weights.trash / 100;
+  const wR = weights.ratio / 100;
+  const wSum = wC + wT + wR || 1;
+
+  // Combo score (normalised 0..1)
+  const combo = Math.min(1, s.comboAvg / DD_MAX_COMBO_PER_CARD);
+
+  // Trash score: reward active trash, penalise self-trash
+  const trash = Math.min(1, s.trashActiveRatio / 0.20)
+              - 0.5 * Math.max(0, s.trashTotalRatio - s.trashActiveRatio - 0.10);
+
+  // Ratio fidelity: 1 - sum of relative squared errors
+  const sqErr = (a, b) => { const e = (a - b) / Math.max(b, 0.01); return e * e; };
+  const ratioErr =
+        sqErr(s.typeRatio.Companion, B.types.Companion)
+      + sqErr(s.typeRatio.Monster,   B.types.Monster)
+      + sqErr(s.typeRatio.Device,    B.types.Device)
+      + sqErr(s.typeRatio.Gem,       B.types.Gem)
+      + sqErr(s.typeRatio.Other,     B.types.Other)
+      + 0.5 * sqErr(s.dragonRatio,   B.dragon)
+      + 0.3 * sqErr(s.meanCost,      B.meanCost)
+      + 0.3 * sqErr(s.skillDen,      B.skillDen)
+      + 0.3 * sqErr(s.swordDen,      B.swordDen)
+      + 0.3 * sqErr(s.bootDen,       B.bootDen)
+      + 0.3 * sqErr(s.vpDen,         B.vpDen);
+  const ratio = Math.max(0, 1 - ratioErr / 4);
+
+  return (wC * combo + wT * trash + wR * ratio) / wSum;
+}
+
+// ---- Builder ----
+function buildDungeonDeck() {
+  const total = DD.players >= 5 ? 125 : 100;
+  const weights = DD.weights;
+
+  // 1. Pool excludes banned cards
+  const pool = CARDS.filter(c => !isBanned(c));
+
+  // 2. Force-include all React + Trophy + Pinned cards (every copy)
+  const mandatory = pool.filter(c => isMandatoryForDungeon(c) || isPinned(c));
+  const deck = {};
+  let used = 0;
+  for (const c of mandatory) {
+    deck[c.name] = c.quantity;
+    used += c.quantity;
+  }
+
+  // If mandatory already exceeds the target, the user has too many pins.
+  // Trim by removing pinned (non-React/Trophy) copies from the end.
+  if (used > total) {
+    const trimmable = mandatory.filter(c => isPinned(c) && !isReactCard(c) && !isTrophyCard(c))
+                               .sort((a,b) => (a.comboScore||0) - (b.comboScore||0));
+    while (used > total && trimmable.length) {
+      const c = trimmable[0];
+      if (deck[c.name] > 0) { deck[c.name]--; used--; }
+      else trimmable.shift();
+    }
+    if (used > total) toast(`Too many mandatory cards (${used} > ${total}) — drop some pins or expand player count`);
+  }
+
+  // 3. Greedy fill — best marginal score per remaining copy
+  const remaining = pool.filter(c => !mandatory.includes(c));
+  while (used < total) {
+    let best = null, bestGain = -Infinity;
+    for (const c of remaining) {
+      const cur = deck[c.name] || 0;
+      if (cur >= c.quantity) continue;
+      // Try adding one copy
+      deck[c.name] = cur + 1;
+      const score = scoreDeck(deck, weights);
+      deck[c.name] = cur;     // rollback
+      if (score > bestGain) { bestGain = score; best = c; }
+    }
+    if (!best) break;
+    deck[best.name] = (deck[best.name] || 0) + 1;
+    used++;
+  }
+
+  // 4. Local search — swap one copy for another to climb the score
+  const SWAP_ITERS = 30;
+  let curScore = scoreDeck(deck, weights);
+  for (let iter = 0; iter < SWAP_ITERS; iter++) {
+    let improved = false;
+    // Try every (out, in) swap; pick the first that improves
+    const inDeckCards = Object.keys(deck).filter(n => deck[n] > 0);
+    outer:
+    for (const outName of inDeckCards) {
+      const out = CARDS.find(c => c.name === outName);
+      // Don't remove mandatory cards (React/Trophy/Pinned)
+      if (isMandatoryForDungeon(out) || isPinned(out)) continue;
+      for (const inC of pool) {
+        if (inC.name === outName) continue;
+        const inCur = deck[inC.name] || 0;
+        if (inCur >= inC.quantity) continue;
+        // Perform virtual swap
+        deck[outName]--; deck[inC.name] = inCur + 1;
+        const sc = scoreDeck(deck, weights);
+        if (sc > curScore + 1e-6) {
+          curScore = sc; improved = true;
+          if (deck[outName] === 0) delete deck[outName];
+          break outer;
+        }
+        // Rollback
+        deck[outName]++; deck[inC.name] = inCur;
+        if (deck[inC.name] === 0) delete deck[inC.name];
+      }
+    }
+    if (!improved) break;
+  }
+
+  DD_BUILT = { deck, stats: deckStats(deck), score: curScore, total, generatedAt: new Date().toISOString() };
+
+  // For 5-6 players, also compute 25 extras = the next best 25 copies after the 100
+  if (DD.players >= 5) {
+    // Trim deck back to 100, capture which 25 were extras
+    const sorted = inDeckMarginalRanking(deck, weights);
+    const extras = sorted.slice(0, 25);
+    const core = { ...deck };
+    extras.forEach(({ name }) => { core[name]--; if (!core[name]) delete core[name]; });
+    DD_BUILT.coreDeck = core;
+    DD_BUILT.extras = extras;
+  } else {
+    DD_BUILT.coreDeck = deck;
+    DD_BUILT.extras = null;
+  }
+
+  renderDungeonTab();
+}
+
+// For a built deck of 125, return copies sorted by marginal removal cost
+// (lowest first = the ones to remove first to get a 100 deck).
+function inDeckMarginalRanking(deck, weights) {
+  const ranking = [];
+  for (const [name, qty] of Object.entries(deck)) {
+    const c = CARDS.find(cc => cc.name === name);
+    // Don't allow removing mandatory copies
+    let removableCopies = qty;
+    if (isMandatoryForDungeon(c)) removableCopies = 0;
+    if (isPinned(c)) removableCopies = 0;
+    for (let k = 0; k < removableCopies; k++) {
+      // Score after removing one copy (approx — actually evaluating)
+      deck[name]--;
+      const lossScore = scoreDeck(deck, weights);
+      deck[name]++;
+      ranking.push({ name, score: lossScore });
+    }
+  }
+  ranking.sort((a, b) => b.score - a.score);  // higher score AFTER removing = removing was good
+  return ranking;
+}
+
+function exportDungeonDeck() {
+  if (!DD_BUILT) { toast('Build a deck first'); return; }
+  const payload = {
+    generatedAt: DD_BUILT.generatedAt,
+    players: DD.players,
+    weights: DD.weights,
+    pins: [...DD.pins],
+    bans: [...DD.bans],
+    core: DD_BUILT.coreDeck,
+    extras: DD_BUILT.extras ? DD_BUILT.extras.map(e => e.name) : null,
+    stats: DD_BUILT.stats,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `dungeon_deck_${DD.players >= 5 ? '125' : '100'}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  toast('Dungeon deck exported');
+}
+
+// ---- Render ----
+function renderDungeonTab() {
+  // Auto-build if we have no cached deck
+  if (!DD_BUILT) buildDungeonDeck();
+
+  // Sidebar values
+  document.getElementById('dd-w-combo').value = DD.weights.combo;
+  document.getElementById('dd-w-trash').value = DD.weights.trash;
+  document.getElementById('dd-w-ratio').value = DD.weights.ratio;
+  document.getElementById('dd-w-combo-val').textContent = DD.weights.combo;
+  document.getElementById('dd-w-trash-val').textContent = DD.weights.trash;
+  document.getElementById('dd-w-ratio-val').textContent = DD.weights.ratio;
+
+  document.querySelectorAll('#dd-players .dd-pill').forEach(b => {
+    b.classList.toggle('active', +b.dataset.players === DD.players);
+  });
+
+  // Pin/ban stats
+  document.getElementById('dd-pin-stats').innerHTML =
+    `<span class="pinned">📌 ${DD.pins.size} pinned</span> · <span class="banned">🚫 ${DD.bans.size} banned</span>`;
+
+  // Summary
+  const built = DD_BUILT;
+  const s = built.stats;
+  document.getElementById('dd-summary').innerHTML = `
+    <div class="row"><span class="label">Total copies</span><span class="value">${s.total}</span></div>
+    <div class="row"><span class="label">Unique cards</span><span class="value">${Object.keys(built.deck).length}</span></div>
+    <div class="row"><span class="label">Score</span><span class="value">${(built.score*100).toFixed(1)}/100</span></div>
+    <div class="row head"><span class="label">Composition</span></div>
+    <div class="row"><span class="label">Avg combo score</span><span class="value">${s.comboAvg.toFixed(2)}</span></div>
+    <div class="row"><span class="label">Active trash</span><span class="value">${s.trashActiveQty} (${(s.trashActiveRatio*100).toFixed(1)}%)</span></div>
+    <div class="row"><span class="label">Total trash</span><span class="value">${s.trashTotalQty} (${(s.trashTotalRatio*100).toFixed(1)}%)</span></div>
+    <div class="row"><span class="label">Dragon attack</span><span class="value">${s.dragonQty} (${(s.dragonRatio*100).toFixed(1)}%)</span></div>
+    <div class="row"><span class="label">Mean cost</span><span class="value">$${s.meanCost.toFixed(2)}</span></div>
+  `;
+
+  // Banner
+  const reactN = CARDS.filter(c => isReactCard(c) && !isBanned(c)).reduce((a,c) => a + c.quantity, 0);
+  const trophyN = CARDS.filter(c => isTrophyCard(c) && !isBanned(c)).reduce((a,c) => a + c.quantity, 0);
+  document.getElementById('dd-banner-deck').innerHTML =
+    `<strong>Dungeon Deck</strong> — ${s.total} copies / ${Object.keys(built.deck).length} unique. Always includes ${reactN} React + ${trophyN} Trophy copies. ${DD.pins.size ? `${DD.pins.size} pin(s) honoured.` : ''} ${DD.bans.size ? `${DD.bans.size} card(s) banned.` : ''}`;
+
+  // Core deck cards (or 100 if extras separated)
+  document.getElementById('dd-deck-content').innerHTML = renderDungeonCards(built.coreDeck);
+
+  // Extras (if 5-6 players)
+  const extrasTitle = document.getElementById('dd-extras-title');
+  const extrasContent = document.getElementById('dd-extras-content');
+  if (built.extras && built.extras.length) {
+    extrasTitle.style.display = '';
+    const extraDeck = {};
+    built.extras.forEach(e => { extraDeck[e.name] = (extraDeck[e.name] || 0) + 1; });
+    extrasContent.innerHTML = renderDungeonCards(extraDeck);
+  } else {
+    extrasTitle.style.display = 'none';
+    extrasContent.innerHTML = '';
+  }
+
+  // Targets vs benchmarks
+  document.getElementById('dd-targets').innerHTML = renderDungeonTargets(s);
+}
+
+function renderDungeonCards(deck) {
+  // Group by set
+  const groups = {};
+  Object.entries(deck).forEach(([name, qty]) => {
+    const card = CARDS.find(c => c.name === name);
+    if (!card) return;
+    if (!groups[card.set]) groups[card.set] = [];
+    groups[card.set].push({ card, qty });
+  });
+  const setOrder = ['Catacombs','Adventure','Lairs','Underworld'];
+  return Object.entries(groups)
+    .sort(([a],[b]) => (setOrder.indexOf(a)+99) - (setOrder.indexOf(b)+99))
+    .map(([set, items]) => {
+      items.sort((a,b) => (a.card.costNum??99) - (b.card.costNum??99) || a.card.name.localeCompare(b.card.name));
+      const uniq = items.length;
+      const qtySum = items.reduce((a,b) => a + b.qty, 0);
+      return `
+        <div class="dd-group">
+          <div class="header">
+            <h4><span class="set-badge set-${set}" style="position:static;">${set}</span></h4>
+            <span class="stats">${uniq} unique · ${qtySum} copies</span>
+          </div>
+          <div class="dd-cards">
+            ${items.map(({ card, qty }) => {
+              const idx = CARDS.indexOf(card);
+              const mandatory = isMandatoryForDungeon(card);
+              const pinned = isPinned(card);
+              return `
+                <div class="dd-card" onclick="openModal(${idx})" title="${card.name}">
+                  ${card.image ? `<img src="${card.image}" alt="${card.name}" loading="lazy">` : `<div class="placeholder">${card.name}</div>`}
+                  ${qty > 1 ? `<span class="qty-corner">×${qty}</span>` : ''}
+                  ${mandatory ? `<span class="mandatory-mark">${isReactCard(card) ? 'React' : 'Trophy'}</span>` : ''}
+                  ${pinned && !mandatory ? `<span class="pin-mark">📌 pin</span>` : ''}
+                  <div class="name">${card.name}</div>
+                </div>`;
+            }).join('')}
+          </div>
+        </div>`;
+    }).join('');
+}
+
+function renderDungeonTargets(s) {
+  const B = DD_BENCHMARKS;
+  const rows = [
+    ['Companion %', s.typeRatio.Companion, B.types.Companion, 'pct'],
+    ['Monster %',   s.typeRatio.Monster,   B.types.Monster, 'pct'],
+    ['Device %',    s.typeRatio.Device,    B.types.Device, 'pct'],
+    ['Gem %',       s.typeRatio.Gem,       B.types.Gem, 'pct'],
+    ['Other %',     s.typeRatio.Other,     B.types.Other, 'pct'],
+    ['Dragon %',    s.dragonRatio,         B.dragon, 'pct'],
+    ['Active trash %', s.trashActiveRatio, B.trashActive, 'pct'],
+    ['Total trash %',  s.trashTotalRatio,  B.trashTotal, 'pct'],
+    ['Mean cost',   s.meanCost,            B.meanCost, 'num'],
+    ['Skill density', s.skillDen,          B.skillDen, 'num'],
+    ['Sword density', s.swordDen,          B.swordDen, 'num'],
+    ['Boot density',  s.bootDen,           B.bootDen, 'num'],
+    ['VP density',  s.vpDen,               B.vpDen, 'num'],
+  ];
+  return `<div class="dd-targets">${rows.map(([label, actual, target, kind]) => {
+    const fmt = v => kind === 'pct' ? `${(v*100).toFixed(1)}%` : v.toFixed(2);
+    const diff = actual - target;
+    const relDiff = target ? diff / target : 0;
+    const cls = Math.abs(relDiff) < 0.10 ? 'ok' : (diff < 0 ? 'low' : 'high');
+    const scaleMax = Math.max(actual, target) * 1.4;
+    const actualPct = Math.min(100, (actual / scaleMax) * 100);
+    const targetPct = Math.min(100, (target / scaleMax) * 100);
+    return `
+      <div class="dd-target">
+        <div class="row">
+          <span class="label">${label}</span>
+          <span class="actual ${cls}" title="Target: ${fmt(target)}">${fmt(actual)}</span>
+        </div>
+        <div class="bar">
+          <div class="fill" style="width: ${actualPct}%"></div>
+          <div class="marker" style="left: ${targetPct}%"></div>
+        </div>
+        <div class="row" style="margin-top:3px;"><span class="target">target ${fmt(target)}</span><span class="target">diff ${diff >= 0 ? '+' : ''}${kind === 'pct' ? (diff*100).toFixed(1) + '%' : diff.toFixed(2)}</span></div>
+      </div>`;
+  }).join('')}</div>`;
+}
+
+// ---- Wire up sliders + player count ----
+['dd-w-combo','dd-w-trash','dd-w-ratio'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', e => {
+    const v = parseInt(e.target.value);
+    const key = id === 'dd-w-combo' ? 'combo' : id === 'dd-w-trash' ? 'trash' : 'ratio';
+    DD.weights[key] = v;
+    document.getElementById(id + '-val').textContent = v;
+    saveDungeonState();
+  });
+  el.addEventListener('change', () => { DD_BUILT = null; buildDungeonDeck(); });
+});
+
+document.querySelectorAll('#dd-players .dd-pill').forEach(b => {
+  b.addEventListener('click', () => {
+    DD.players = parseInt(b.dataset.players);
+    saveDungeonState();
+    DD_BUILT = null;
+    document.querySelectorAll('#dd-players .dd-pill').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    buildDungeonDeck();
+  });
+});
 </script>
 </body>
 </html>
