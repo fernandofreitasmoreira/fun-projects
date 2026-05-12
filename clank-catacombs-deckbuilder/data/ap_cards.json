@@ -1,0 +1,461 @@
+{
+  "cards": [
+    {
+      "name": "Cutpurse",
+      "set": "Adventure",
+      "type": "Companion",
+      "cost": 2,
+      "skill": 2,
+      "swords": 0,
+      "boots": 0,
+      "vp": 5,
+      "dragonAttack": false,
+      "quantity": 2,
+      "text": "REACT: An opponent enters a market room. [Lockpick] -OR- 2 coin. You may discard a card to get both.",
+      "synergy": "React, Lockpick, Coin",
+      "flavor": "Watch your money in the market.",
+      "mechanics": [
+        "React"
+      ]
+    },
+    {
+      "name": "Spiritual Healer",
+      "set": "Adventure",
+      "type": "Companion",
+      "cost": 2,
+      "skill": 2,
+      "swords": 0,
+      "boots": 0,
+      "vp": 3,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "If you have a Gem in your play area or discard pile, heart and +1 Clank!",
+      "arrive": "You may make +2 Clank! to heart (heal 1).",
+      "synergy": "Arrive Choice, Gem, Heal",
+      "flavor": "If you doubt the crystal is necessary, just wait for the loud chanting.",
+      "mechanics": [
+        "Arrive Choice"
+      ]
+    },
+    {
+      "name": "Virtuoso Burglar",
+      "set": "Adventure",
+      "type": "Companion",
+      "cost": 2,
+      "skill": 2,
+      "swords": 0,
+      "boots": 0,
+      "vp": 5,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "-2 Clank! Trash a Burgle in your play area or discard pile.",
+      "arrive": "You may make +1 Clank! to trash a Burgle from your hand or discard pile.",
+      "synergy": "Arrive Choice, Trash",
+      "flavor": "Want it done right? Call her.",
+      "mechanics": [
+        "Arrive Choice",
+        "Trash"
+      ]
+    },
+    {
+      "name": "Rebel Herald",
+      "set": "Adventure",
+      "type": "Companion",
+      "cost": 1,
+      "skill": 1,
+      "swords": 0,
+      "boots": 1,
+      "vp": 4,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "If you have another companion in your play area, draw a card.",
+      "reactCondition": "There are two or more companions in the dungeon row.",
+      "synergy": "React, Companion-chain, Draw",
+      "flavor": "The most enduring friendships begin with a proper introduction.",
+      "mechanics": [
+        "React",
+        "Companion-chain"
+      ]
+    },
+    {
+      "name": "Tactician",
+      "set": "Adventure",
+      "type": "Companion",
+      "cost": 3,
+      "skill": 3,
+      "swords": 2,
+      "boots": 0,
+      "vp": 6,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "You can't really disrupt his plan. He'll just devise a new one.",
+      "reactCondition": "There are three or more empty spaces in the dungeon row.",
+      "synergy": "React",
+      "mechanics": [
+        "React"
+      ]
+    },
+    {
+      "name": "Berserker",
+      "set": "Adventure",
+      "type": "Companion",
+      "cost": 2,
+      "skill": 1,
+      "swords": 1,
+      "boots": 0,
+      "vp": 3,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "For each Clank! you make this turn, 1 coin.",
+      "reactCondition": "An opponent defeats the Goblin.",
+      "synergy": "React, Clank, Coin",
+      "flavor": "The screaming is a plus, you see. It draws more enemies to the fight.",
+      "mechanics": [
+        "React"
+      ]
+    },
+    {
+      "name": "Assassin",
+      "set": "Adventure",
+      "type": "Companion",
+      "cost": 2,
+      "skill": 0,
+      "swords": 2,
+      "boots": 0,
+      "vp": 4,
+      "dragonAttack": false,
+      "quantity": 2,
+      "text": "-2 Clank!",
+      "reactCondition": "A monster arrives in the dungeon row.",
+      "synergy": "React, Dungeon Row, Clank-",
+      "flavor": "Her clientele consists mostly of dungeon delvers and politicians.",
+      "mechanics": [
+        "React"
+      ]
+    },
+    {
+      "name": "Royal Brat",
+      "set": "Adventure",
+      "type": "Companion",
+      "cost": 2,
+      "skill": 2,
+      "swords": 0,
+      "boots": 0,
+      "vp": 5,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "If you have a crown, take a minor secret.",
+      "reactCondition": "An opponent takes a major secret, or any two secrets in a single turn.",
+      "synergy": "React, Crown, Secret",
+      "flavor": "It's mine! I want it now!",
+      "mechanics": [
+        "React"
+      ]
+    },
+    {
+      "name": "Flawed Ruby",
+      "set": "Adventure",
+      "type": "Gem",
+      "cost": 5,
+      "skill": 0,
+      "swords": 0,
+      "boots": 0,
+      "vp": 6,
+      "dragonAttack": true,
+      "quantity": 1,
+      "text": "Draw a card.",
+      "acquire": "+2 Clank!, each other player gets +1 Clank!",
+      "synergy": "Gem, Draw",
+      "mechanics": [
+        "Anti-player Clank"
+      ]
+    },
+    {
+      "name": "Flawed Sapphire",
+      "set": "Adventure",
+      "type": "Gem",
+      "cost": 3,
+      "skill": 0,
+      "swords": 0,
+      "boots": 0,
+      "vp": 4,
+      "dragonAttack": true,
+      "quantity": 1,
+      "text": "Draw a card.",
+      "acquire": "+2 Clank!, each other player gets +1 Clank!",
+      "synergy": "Gem, Draw",
+      "mechanics": [
+        "Anti-player Clank"
+      ]
+    },
+    {
+      "name": "Flawed Emerald",
+      "set": "Adventure",
+      "type": "Gem",
+      "cost": 4,
+      "skill": 0,
+      "swords": 0,
+      "boots": 0,
+      "vp": 5,
+      "dragonAttack": true,
+      "quantity": 1,
+      "text": "Draw a card.",
+      "acquire": "+2 Clank!, each other player gets +1 Clank!",
+      "synergy": "Gem, Draw",
+      "mechanics": [
+        "Anti-player Clank"
+      ]
+    },
+    {
+      "name": "Scouting Ahead",
+      "set": "Adventure",
+      "type": "Other",
+      "cost": 1,
+      "skill": 0,
+      "swords": 0,
+      "boots": 1,
+      "vp": 4,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "You don't have to stop in Crystal Caves this turn.",
+      "reactCondition": "An opponent ends their turn in a Crystal Cave.",
+      "synergy": "React, Crystal Cave",
+      "flavor": "Stay here. Catch your breath. I'll see what's in the next passage.",
+      "mechanics": [
+        "React"
+      ]
+    },
+    {
+      "name": "Too Bad for You",
+      "set": "Adventure",
+      "type": "Other",
+      "cost": 1,
+      "skill": 1,
+      "swords": 0,
+      "boots": 0,
+      "vp": 1,
+      "dragonAttack": false,
+      "quantity": 2,
+      "text": "(no main effect — just stats)",
+      "reactCondition": "An opponent ends their turn with 2 or more of their Clank! in the Clank! area.",
+      "synergy": "React",
+      "flavor": "Maybe the next time you try that, you should limber up first.",
+      "mechanics": [
+        "React"
+      ]
+    },
+    {
+      "name": "One With Everything",
+      "set": "Adventure",
+      "type": "Other",
+      "cost": 1,
+      "skill": 1,
+      "swords": 1,
+      "boots": 1,
+      "vp": 3,
+      "dragonAttack": false,
+      "quantity": 2,
+      "text": "(no main effect — stats only)",
+      "acquire": "1 coin",
+      "reactCondition": "An opponent uses a device.",
+      "synergy": "React",
+      "flavor": "Open your mind to little opportunities and they'll add up to a big windfall.",
+      "mechanics": [
+        "React"
+      ]
+    },
+    {
+      "name": "Time Warp",
+      "set": "Adventure",
+      "type": "Other",
+      "cost": 1,
+      "skill": 0,
+      "swords": 0,
+      "boots": 0,
+      "vp": 5,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "Teleport to an adjacent room.",
+      "reactCondition": "An opponent doesn't move during their turn.",
+      "synergy": "React, Teleport",
+      "flavor": "This form of magical travel begins with a jump to the left.",
+      "mechanics": [
+        "React",
+        "Teleport"
+      ]
+    },
+    {
+      "name": "Walk It Off",
+      "set": "Adventure",
+      "type": "Other",
+      "cost": 1,
+      "skill": 0,
+      "swords": 0,
+      "boots": 1,
+      "vp": 3,
+      "dragonAttack": false,
+      "quantity": 2,
+      "text": "(no main effect — stats only)",
+      "acquire": "Heal 1 (heart)",
+      "reactCondition": "There is a dragon attack in which you take damage.",
+      "synergy": "React, Heal",
+      "flavor": "'Tis but a scratch. I've had worse.",
+      "mechanics": [
+        "React"
+      ]
+    },
+    {
+      "name": "Elven Satchel",
+      "set": "Adventure",
+      "type": "Device",
+      "cost": 2,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 5,
+      "dragonAttack": false,
+      "quantity": 2,
+      "text": "USE: Draw a card.",
+      "arrive": "1 coin -OR- +1 Clank!, draw a card.",
+      "synergy": "Arrive Choice, Draw",
+      "flavor": "Great for carrying a travel cloak, dagger, and spare boots.",
+      "mechanics": [
+        "Arrive Choice"
+      ]
+    },
+    {
+      "name": "Hiding Place",
+      "set": "Adventure",
+      "type": "Device",
+      "cost": 2,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 2,
+      "dragonAttack": false,
+      "quantity": 2,
+      "text": "USE: -2 Clank!",
+      "arrive": "You may discard a Burgle to get -2 Clank!",
+      "synergy": "Arrive Choice, Clank-",
+      "flavor": "It's camouflage AND a weapons cache!",
+      "mechanics": [
+        "Arrive Choice",
+        "Clank reduction"
+      ]
+    },
+    {
+      "name": "Secret Passage",
+      "set": "Adventure",
+      "type": "Device",
+      "cost": 5,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 5,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "USE: -2 Clank!, [Lockpick] [Lockpick]",
+      "arrive": "You may spend 5 coin to acquire a Secret Tome.",
+      "synergy": "Arrive Choice, Lockpick, Secret Tome",
+      "flavor": "Never judge a bookcase by what it covers.",
+      "mechanics": [
+        "Arrive Choice"
+      ]
+    },
+    {
+      "name": "Pixie Swarm",
+      "set": "Adventure",
+      "type": "Monster",
+      "cost": "1S",
+      "swordCost": 1,
+      "vp": 0,
+      "dragonAttack": false,
+      "quantity": 2,
+      "text": "DEFEAT: 1 coin",
+      "arrive": "Each player who reveals a [Burgle] from their hand gets 1 coin.",
+      "synergy": "Arrive, Burgle, Coin",
+      "flavor": "Nobody invades our territory. Let's get 'em!",
+      "mechanics": [
+        "Arrive"
+      ]
+    },
+    {
+      "name": "Spotter",
+      "set": "Adventure",
+      "type": "Monster",
+      "cost": "2S",
+      "swordCost": 2,
+      "vp": 0,
+      "dragonAttack": true,
+      "quantity": 2,
+      "text": "DEFEAT: Each player may make +1 Clank! to get 2 coin. You also get -2 Clank!",
+      "danger": "Pull +1 cube for dragon attacks.",
+      "synergy": "Danger, Anti-player, Coin",
+      "flavor": "Even a dragon with six heads can use extra eyes in his dungeon.",
+      "mechanics": [
+        "Danger"
+      ]
+    },
+    {
+      "name": "Leprechaun",
+      "set": "Adventure",
+      "type": "Monster",
+      "cost": "2S",
+      "swordCost": 2,
+      "vp": 0,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "DEFEAT: 2 coin +1 Clank! -OR- 5 coin +3 Clank!",
+      "arrive": "2 coin +1 Clank! -OR- 5 coin +3 Clank! (Arrive Choice)",
+      "synergy": "Arrive Choice, Coin, Clank",
+      "flavor": "Not especially tough, but they do hiss loudly when you get near.",
+      "mechanics": [
+        "Arrive Choice"
+      ]
+    },
+    {
+      "name": "Scuffler",
+      "set": "Adventure",
+      "type": "Monster",
+      "cost": "2S",
+      "swordCost": 2,
+      "vp": 0,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "DEFEAT: Each opponent chooses: -2 Clank! -OR- 2 coin -OR- Trash a Burgle in your discard pile. You get all three.",
+      "synergy": "Anti-player, Trash, Coin",
+      "flavor": "Don't waste a good weapon battling a scuffler.",
+      "mechanics": [
+        "Trash"
+      ]
+    },
+    {
+      "name": "Succubus",
+      "set": "Adventure",
+      "type": "Monster",
+      "cost": "3S",
+      "swordCost": 3,
+      "vp": 0,
+      "dragonAttack": false,
+      "quantity": 2,
+      "text": "DEFEAT: Each opponent chooses: 3 coin -OR- heart. You get both.",
+      "synergy": "Anti-player, Coin, Heal",
+      "flavor": "Even if you don't see the allure, you'll reap the rewards."
+    },
+    {
+      "name": "Ape Lord Phantasm",
+      "set": "Adventure",
+      "type": "Monster",
+      "cost": "3S",
+      "swordCost": 3,
+      "vp": 0,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "DEFEAT: Draw two cards. Players may return any monkey idols to the monkey shrine room to take a Secret Tome for each.",
+      "synergy": "Draw, Monkey Idol, Secret Tome",
+      "flavor": "Some treasure isn't worth the nightmare that follows."
+    }
+  ],
+  "total_qty": 35,
+  "unique": 25
+}

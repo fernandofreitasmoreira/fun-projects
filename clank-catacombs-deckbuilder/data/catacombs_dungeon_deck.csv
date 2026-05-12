@@ -1,0 +1,109 @@
+Name,Cost,Skill,Swords,Boots,VP,Text,Acquire,Type,Dragon Attack,Arrive/Danger,Quantity,exclude,CostNum,IsMonster
+Empurror,1,0,0.0,0.0,1,"Chose one (or all three, if you have an artifact):
+-2 Clank! -OR- $1 -OR- You don't have to stop in Crystal Caves this turn.",,Companion,,,1,False,1,False
+Golden Flute,1,0,0.0,0.0,1,"$1, +1 Clank!
+You may buy one item from the Market this turn for $5 (even if you're not in a Market room).",,,,,1,False,1,False
+Payoff,1,3,0.0,0.0,0,Trash this card.,,,,,2,False,1,False
+Rebel Scribe,1,1,0.0,0.0,1,"If you have another companion in your play area, draw a card.",,Companion,,,1,False,1,False
+Waystone,1,0,0.0,1.0,1,You may trash this to teleport from one Wayshrine to another.,,,,,1,False,1,False
+Flamboyance,2,0+,0.0,0.0,1,"Draw a card.
+If you make 2 or more Clank! this turn, +2 Skill.",,,,,2,False,2,False
+Imp Familiar,2,0,0.0,0.0,1,Take a lockpick -OR- Spend a lockpick to draw two cards.,,Companion,Yes,,1,False,2,False
+Pillage,2,0,2.0,1.0,0,"If you gain at least $3 this turn, draw a card.",,,,,2,False,2,False
+Remove Traps,2,1,2.0,0.0,1,"Replace a card in the dungeon row.
+(If the new card has a dragon attack symbol, ignore it.)",,,,,2,False,2,False
+Shadow Walk,2,0,0.0,1.0,1,Trash a Burgle in your play area or discard pile.,,,,,2,False,2,False
+Astral Projection,3,2,0.0,0.0,1,"If you generate 6 Skill or more this turn, mark a Wayshrine (as though you were there).",,,,,1,False,3,False
+Boots of the Ape Lord,3,0,0.0,3.0,3,"+3 Clank!
+If you have a monkey idol, you don't have to stop in Crystal Caves this turn.",,,,,1,False,3,False
+Bard,3,2,0.0,0.0,1,"+1 Clank!
+If you make 2 or more Clank! this turn, ♥♥.",,Companion,,,2,False,3,False
+Breakout! (Promo),3,1,1.0,1.0,1,"If you freed any prisoners this turn, $3 and +1 Clank!",,,,,1,False,3,False
+Lie in Wait,3,2,1.0,0.0,1,"If you're in a Crystal Cave, -2 Clank!",You may put this on top of your deck.,,,,2,False,3,False
+Lightstick,3,3,0.0,0.0,1,+1 Clank!,,,,,2,False,3,False
+Rebel Thief,3,0,0.0,0.0,2,"Take a lockpick.
+If you have another companion in your play area, draw a card.",,Companion,,,1,False,3,False
+Riot,3,0,1.0,1.0,0,"+1 Clank!
+If you have freed three or more prisoners, you may trash a card in your play area or discard pile.",Free a prisoner.,,,,2,False,3,False
+Scavenger,3,2,0.0,0.0,1,,Take a minor secret.,Companion,,,2,False,3,False
+Smash and Grab,3,0,0.0,0.0,2,"+2 Clank!
+Draw two cards.",,,,,2,False,3,False
+Sneak Attack,3,0,3.0,0.0,1,-2 Clank!,1 Sword,,,,2,False,3,False
+Sudden Movement,3,1,0.0,2.0,1,,,,,Each player alone on a square tile must rotate that tile to a new orientation.,2,False,3,False
+Swindle,3,0,0.0,0.0,1,3,,,,,2,False,3,False
+Bandit,4,1,1.0,1.0,2,,"1 Sword, 1 Boot",Companion,,,2,False,4,False
+Charlatan,4,0,0.0,0.0,2,Discard a card to draw two cards.,,Companion,,,2,False,4,False
+Corrupt Advisor,4,2,0.0,0.0,2,"Each other player gets +1 Clank!
+If you have a crown, they get +2 Clank! instead.",,Companion,Yes,DANGER Pull +1 cube for dragon attacks.,1,False,4,False
+Divining Rod,4,2,0.0,0.0,2,"If you generate 6 Skill or more this turn, ♥.",,,,,1,False,4,False
+Elven Sword,4,0,2.0,0.0,2,Draw a card.,,,,,1,False,4,False
+Librarian,4,2,0.0,0.0,1,"-2 Clank!
+If you have a Secret Tome in your play area or discard pile, draw two cards.",,,,,1,False,4,False
+Mister Wizkers,4,1,1.0,1.0,1,"If you placed one of your cubes in the dungeon this turn, draw a card.",,Companion,,Put 3 dragon cubes back in the bag.,1,False,4,False
+Rebel Paladin,4,1,1.0,0.0,1,"If you have another companion in your play area, draw a card.
+If you have an artifact, draw a card.",,Companion,,,1,False,4,False
+Skulker,4,0,0.0,2.0,1,Ignore monsters in tunnels this turn.,Ignore monsters in tunnels this turn.,Companion,,,1,False,4,False
+Smoky Quartz,4,0,0.0,0.0,3,"-2 Clank!
+Draw a card.", +2 Clank!,Gem,Yes,,1,False,4,False
+Spectral Rider,4,2,0.0,1.0,2,"If you're on a haunted tile, you may teleport to any room on a different haunted tile.",,Companion,,,1,False,4,False
+White Tourmaline,4,0,0.0,0.0,3,"Draw a card.
+When a Ghost would damage you, you may discard this to prevent that and draw a card.", +2 Clank!,Gem,Yes,,2,False,4,False
+Brave Hero,5,2,1.0,1.0,?,Worth 5 VP if you have freed three or more Prisoners.,,Companion,,,1,False,5,False
+Curator,5,2,0.0,1.0,2,Draw a card for each artifact you have.,,Companion,,,1,False,5,False
+Diversion,5,2,0.0,0.0,2,,Free a prisoner.,,,Put 3 dragon cubes back in the bag.,1,False,5,False
+Expert Guide,5,2,0.0,2.0,2,,,Companion,,,2,False,5,False
+Rebel General,5,2,1.0,1.0,2,"If you have another companion in your play area, draw a card.",,Companion,,,1,False,5,False
+Robbery,5,0,2.0,0.0,1,"$2
+If you're in a Market room, teleport to an adjacent room.",You may put this on top of your deck.,,,,2,False,5,False
+Rose Quartz,5,0,0.0,0.0,4,"-2 Clank!
+Draw a card.", +2 Clank!,Gem,Yes,,2,False,5,False
+Black Tourmaline,6,0,0.0,0.0,5,"Draw a card.
+When a Ghost would damage you, you may discard this to prevent that and draw a card.", +2 Clank!,Gem,Yes,,1,False,6,False
+Crystal Compass,6,0,0.0,0.0,3,"Draw two cards.
+You don't have to stop in Crystal Caves this turn.",,,,,1,False,6,False
+Double Cross,6,2,0.0,0.0,3,-2 Clank!,Each other player gets +2 Clank!,,,,1,False,6,False
+Expensive Taste,6,3,0.0,0.0,?,"$2
+Worth 5 VP if you have a crown and a gem.",,,,,1,False,6,False
+Fiery Quartz,6,0,0.0,0.0,5,"-2 Clank!
+Draw a card.",+2 Clank!,Gem,Yes,,1,False,6,False
+Floating Skull,6,2,1.0,0.0,2,"If you have a crown, teleport to an adjacent room.",Teleport to an adjacent room.,Companion,,,1,False,6,False
+Grand Theft,6,0,0.0,0.0,3,Take a lockpick —OR— Spend a lockpick yo use a device or acquire a card in the dungeon row.,You may put this on top of your deck.,,,,1,False,6,False
+Lute,6,0,0.0,0.0,3,"+1 Clank!
+Draw two cards.
+For each Clank! you make this turn, $1.",,,,,1,False,6,False
+Souldrinker,6,0,4.0,0.0,3,"If you defeat a monster in the dungeon row this turn, ♥.",,,,,1,False,6,False
+Thirst for Adventure,7,0,0.0,3.0,?,Worth 2 VP for each artifact and each mokey idol you have.,3 Boots,,Yes,,1,False,7,False
+Blink Spell,8,3,0.0,0.0,3,Teleport to an adjacent room -OR- Teleport to another player in the Depths.,,,Yes,,1,False,8,False
+Wishing Well,0,,,,,"You must spend $3 to use.
+USE:
+Draw two cards.",,Device,Yes,DANGER Pull +1 cube for dragon attacks.,1,False,0,False
+Darkened Alcove,2,,,,,"USE:
+-2 Clank!",,Device,Yes,,2,False,2,False
+Dusty Map (Promo),2,,,,,"USE:
+Place a new tile anywhere.
+(Choose a new location for the tile before revealing it, but THEN choose its orientation as usual.)",,Device,Yes,,1,False,2,False
+Underground River,2,,,,,"USE:
+♥ or Boot",,Device,Yes,,2,False,2,False
+Locked Trunk,3,,,,,"You must spend a lockpick to use.
+USE:
+Take a major secret.",,Device,Yes,,1,False,3,False
+Thieves' Shrine,4,,,,,"USE:
+$2 -OR- Trash up to two Burgles, each from your play area or discard pile.",,Device,,Put 3 dragon cubes back in the bag.,2,False,4,False
+Black Market,5,,,,,"USE:
+Choose TWO:
+$2 -OR- Trash a card in your play area or discard pile -OR- Take a lockpick.",,Device,,,1,False,5,False
+Skeleton,1S,,,,,"DEFEAT: $2, +1 Clank!",,Monster,,,3,False,1,True
+Animated Wall,2S,,,,,"DEFEAT: 1 Boot
+If you use a portal this turn, +1 Boot.",,Monster,,Rotate each square tile with any players on it 180 degrees.,2,False,2,True
+Crystal Kobold,2S,,,,,"Fight this only in a Crystal Cave or Wayshrine.
+DEFEAT: 2 Skill",,Monster,Yes,,2,False,2,True
+Keymaster,2S,,,,,DEFEAT: Take a Lockpick,,Monster,,,2,False,2,True
+Skeleton Priest,2S,,,,,"DEFEAT: ♥, +1 Clank!",,Monster,,All players get +1 Clank!,2,False,2,True
+Archoverlord,3S,,,,,"DEFEAT: Draw two cards, each other player gets +1 Clank!",,Monster,,All players get +1 Clank!,3,False,3,True
+Marble Guardian,3S,,,,,"DEFEAT: Place a new tile next to your current one. Choose:
+Teleport to any room on the new tile -OR- $2",,Monster,Yes,,1,False,3,True
+Skeletal Ape,3S,,,,,"DEFEAT: $3, 3 Skill, +3 Clank!",,Monster,Yes,,1,False,3,True
+Skeleton Warlock,3S,,,,,"DEFEAT: Take a Secret Tome, +1 Clank!",,Monster,Yes,,1,False,3,True
+The Warden,3S,,,,,"Deep (Fight only in the Depths.)
+DEFEAT: Free two Prisoners",,Monster,Yes,DANGER Pull +1 cube for dragon attacks.,1,False,3,True
+Ogre Merchant,4S,,,,,"DEFEAT: $5 -OR- If you're in a Market room, take a Market item (at no cost).",,Monster,Yes,,2,False,4,True

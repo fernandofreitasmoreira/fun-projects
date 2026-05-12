@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Clank! Custom Deck Builder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --bg: #f7f4ec;
+  --panel: #ffffff;
+  --panel-2: #f0ebdc;
+  --gold: #b8862e;
+  --gold-dim: #d4a857;
+  --text: #2a1810;
+  --text-dim: #6a5a4a;
+  --accent: #c0392b;
+  --good: #2a8a3a;
+  --bad: #b85a3a;
+  --border: #d4c9b0;
+  --shadow: 0 1px 3px rgba(42,24,16,0.08);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.4; }
+header { background: linear-gradient(135deg, #2a1810 0%, #3a2818 100%); padding: 16px 24px; border-bottom: 2px solid var(--gold-dim); }
+header h1 { color: #d4a857; margin: 0 0 4px; font-size: 1.4em; }
+header .subtitle { color: #c9b890; font-size: 0.88em; }
+nav.tabs { display: flex; background: var(--panel); border-bottom: 1px solid var(--border); padding: 0 24px; gap: 4px; position: sticky; top: 0; z-index: 50; overflow-x: auto; box-shadow: var(--shadow); }
+nav.tabs button { background: transparent; border: none; color: var(--text-dim); padding: 12px 18px; font-size: 0.95em; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; font-weight: 500; }
+nav.tabs button:hover { color: var(--text); }
+nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.pool-layout { display: grid; grid-template-columns: 280px 1fr; min-height: calc(100vh - 130px); }
+@media (max-width: 900px) { .pool-layout { grid-template-columns: 1fr; } }
+.sidebar { background: var(--panel); border-right: 1px solid var(--border); padding: 20px; overflow-y: auto; position: sticky; top: 45px; max-height: calc(100vh - 130px); }
+.sidebar h2 { color: var(--gold); margin: 0 0 14px; font-size: 0.95em; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.filter-group { margin-bottom: 16px; }
+.filter-group label.lbl { display: block; font-size: 0.78em; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.filter-group input, .filter-group select { width: 100%; background: #fff; border: 1px solid var(--border); color: var(--text); padding: 7px 9px; border-radius: 4px; font-size: 0.9em; }
+.filter-group input:focus, .filter-group select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(184,134,46,0.15); }
+.checkbox-list { display: flex; flex-direction: column; gap: 2px; font-size: 0.85em; max-height: 250px; overflow-y: auto; }
+.checkbox-list label {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 3px;
+  color: var(--text);
+}
+.checkbox-list label:hover { background: var(--panel-2); }
+.checkbox-list label input[type="checkbox"] { margin: 0; width: 14px; height: 14px; accent-color: var(--gold); }
+.checkbox-list label .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.checkbox-list label .count { color: var(--text-dim); font-size: 0.85em; text-align: right; }
+.stats { background: var(--panel-2); border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; font-size: 0.85em; }
+.stats .row { display: flex; justify-content: space-between; margin-bottom: 3px; }
+.stats .row .label { color: var(--text-dim); }
+.stats .row .value { color: var(--gold); font-weight: 600; }
+.main { padding: 16px 24px; }
+.main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+.row-count { color: var(--text-dim); font-size: 0.9em; }
+.sort-select { background: #fff; border: 1px solid var(--border); color: var(--text); padding: 5px 8px; border-radius: 4px; font-size: 0.85em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; cursor: pointer; transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s; position: relative; box-shadow: var(--shadow); }
+.card:hover { transform: translateY(-2px); border-color: var(--gold); box-shadow: 0 4px 12px rgba(42,24,16,0.15); }
+.card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #111; }
+.card .info { padding: 7px 9px; font-size: 0.8em; }
+.card .name { color: var(--text); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card .meta { color: var(--text-dim); font-size: 0.8em; display: flex; justify-content: space-between; margin-top: 2px; }
+.card .qty-badge { position: absolute; top: 6px; right: 6px; background: rgba(42,24,16,0.85); color: #d4a857; padding: 2px 7px; border-radius: 10px; font-size: 0.75em; font-weight: 600; }
+.card .set-badge { position: absolute; top: 6px; left: 6px; padding: 2px 7px; border-radius: 3px; font-size: 0.7em; font-weight: 600; }
+.card .combo-pip { position: absolute; bottom: 50px; left: 6px; background: rgba(42,24,16,0.85); color: #d4a857; padding: 2px 7px; border-radius: 10px; font-size: 0.72em; font-weight: 600; }
+.set-Catacombs { background: #d4a857; color: #2a1810; }
+.set-Adventure { background: #c0392b; color: #fff; }
+.set-Lairs { background: #4a8a4a; color: #fff; }
+.set-Underworld { background: #5a3a6a; color: #fff; }
+
+.modal { display: none; position: fixed; inset: 0; background: rgba(42,24,16,0.6); z-index: 100; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
+.modal.active { display: flex; }
+.modal-content { background: var(--panel); border: 1px solid var(--gold-dim); border-radius: 8px; padding: 20px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; display: grid; grid-template-columns: 320px 1fr; gap: 24px; position: relative; box-shadow: 0 10px 40px rgba(42,24,16,0.3); }
+@media (max-width: 700px) { .modal-content { grid-template-columns: 1fr; } }
+.modal-content img { width: 100%; border-radius: 6px; background: #111; }
+.modal-details h2 { color: var(--gold); margin: 0 0 10px; }
+.modal-details .badge { display: inline-block; padding: 3px 9px; border-radius: 3px; font-size: 0.78em; margin-right: 4px; }
+.modal-details .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 14px; margin: 14px 0; font-size: 0.9em; }
+.modal-details .stats-grid .label { color: var(--text-dim); }
+.modal-details .text-block { background: var(--panel-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 4px; margin: 10px 0; font-size: 0.9em; white-space: pre-line; color: var(--text); }
+.modal-details .text-block .lbl { color: var(--gold); font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+.modal-details .mech-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.modal-details .mech-tag { background: var(--panel-2); color: var(--gold); padding: 2px 8px; border-radius: 10px; font-size: 0.75em; border: 1px solid var(--border); }
+.modal-details .combo-section { margin-top: 12px; padding: 10px; background: #fdf5e0; border-radius: 4px; border-left: 3px solid var(--gold); }
+.modal-details .combo-section .lbl { color: var(--gold); font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 5px; }
+.modal-details .combo-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.72em; margin: 2px; font-weight: 600; }
+.combo-pill.cluster { background: #fdf5e0; color: #8a6620; border: 1px solid #d4a857; }
+.combo-pill.provides { background: #e9f5e9; color: #2a6a3a; border: 1px solid #6abf69; }
+.combo-pill.triggers { background: #f8e5e0; color: #8a2a1a; border: 1px solid #c0392b; }
+.combo-pill.interactive { background: #ece0f0; color: #5a2a6a; border: 1px solid #8a5a9a; }
+.combo-pill.trash-good { background: #e9f5e9; color: #2a6a3a; border: 1px solid #6abf69; }
+.combo-pill.trash-bad { background: #f8e5d6; color: #8a4a2a; border: 1px solid #b85a3a; }
+.modal-close { position: absolute; top: 12px; right: 18px; color: var(--gold); cursor: pointer; font-size: 1.5em; user-select: none; }
+.dragon-icon { color: var(--accent); font-weight: 700; }
+.reset-btn { background: var(--panel-2); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85em; }
+.reset-btn:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
+.reset-btn:hover { border-color: var(--gold); }
+
+.analysis { padding: 20px 24px; max-width: 1300px; margin: 0 auto; }
+.analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; margin-bottom: 16px; }
+.an-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; box-shadow: var(--shadow); }
+.an-panel h3 { color: var(--gold); margin: 0 0 12px; font-size: 1em; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.an-panel .subtitle { color: var(--text-dim); font-size: 0.82em; margin-top: -8px; margin-bottom: 10px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.kpi { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; box-shadow: var(--shadow); }
+.kpi .label { color: var(--text-dim); font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi .value { color: var(--gold); font-size: 1.5em; font-weight: 600; margin-top: 2px; }
+.kpi .sub { color: var(--text-dim); font-size: 0.78em; margin-top: 2px; }
+.benchmark-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+.benchmark-table th { text-align: left; padding: 8px; color: var(--gold); border-bottom: 1px solid var(--border); }
+.benchmark-table td { padding: 7px 8px; border-bottom: 1px solid var(--border); }
+.benchmark-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.status-ok { color: var(--good); font-weight: 600; }
+.status-low { color: var(--bad); font-weight: 600; }
+.status-high { color: var(--accent); font-weight: 600; }
+.svg-chart svg { width: 100%; height: auto; display: block; }
+.notice { background: #fdf5e0; border-left: 3px solid var(--gold); padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 0.88em; color: var(--text); }
+
+.cluster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.cluster-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 14px; cursor: pointer; transition: all 0.15s; box-shadow: var(--shadow); }
+.cluster-card:hover { border-color: var(--gold); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(42,24,16,0.12); }
+.cluster-card h4 { color: var(--gold); margin: 0 0 6px; font-size: 1em; display: flex; justify-content: space-between; align-items: center; }
+.cluster-card h4 .qty { background: var(--panel-2); padding: 2px 8px; border-radius: 10px; font-size: 0.75em; }
+.cluster-card .desc { color: var(--text-dim); font-size: 0.82em; margin-bottom: 8px; }
+.cluster-card .samples { color: var(--text); font-size: 0.85em; }
+.cluster-card .samples span { display: inline-block; background: var(--panel-2); border: 1px solid var(--border); padding: 1px 7px; border-radius: 8px; margin: 2px 2px; font-size: 0.82em; color: var(--text); }
+
+.cluster-detail { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+.cluster-detail h3 { color: var(--gold); margin: 0 0 6px; }
+.cluster-detail .meta { color: var(--text-dim); font-size: 0.88em; margin-bottom: 10px; }
+.cluster-detail .cluster-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.cluster-detail .cluster-cards .mini-card { cursor: pointer; }
+.cluster-detail .cluster-cards .mini-card img { width: 100%; border-radius: 4px; aspect-ratio: 3/4; object-fit: cover; }
+.cluster-detail .cluster-cards .mini-card .nm { font-size: 0.8em; color: var(--text); margin-top: 4px; text-align: center; }
+
+.combo-top { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.combo-top .combo-row { background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.15s; }
+.combo-top .combo-row:hover { background: #fdf5e0; border-color: var(--gold); }
+.combo-top .combo-row img { width: 36px; height: 50px; object-fit: cover; border-radius: 3px; }
+.combo-top .combo-row .info { flex: 1; min-width: 0; }
+.combo-top .combo-row .name { font-weight: 600; font-size: 0.9em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.combo-top .combo-row .clusters { font-size: 0.72em; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.combo-top .combo-row .score { color: var(--gold); font-weight: 700; font-size: 1.1em; }
+
+.card.tentative img { opacity: 0.55; filter: grayscale(0.3); }
+.card.tentative { box-shadow: inset 0 0 0 2px rgba(184,90,58,0.55), var(--shadow); }
+.tentative-badge { position: absolute; bottom: 50px; right: 6px; background: rgba(217,119,87,0.92); color: #1a1410; padding: 2px 7px; border-radius: 10px; font-size: 0.68em; font-weight: 700; }
+.card .placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(135deg, #3a2d23 0%, #2a1810 100%); display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px; color: var(--gold-dim); font-size: 0.72em; font-weight: 500; }
+.card .placeholder .ph-name { color: var(--gold); font-size: 0.95em; font-weight: 600; margin-bottom: 6px; display: block; }
+.modal .placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(135deg, #3a2d23 0%, #2a1810 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; color: var(--gold-dim); }
+.modal .placeholder .ph-name { color: var(--gold); font-size: 1.2em; margin-bottom: 8px; display: block; font-weight: 600; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Clank! Custom Deck — Card Pool, Stats &amp; Combos</h1>
+  <div class="subtitle">138 unique cards · 180 copies · benchmarks from exact 100-card retail Catacombs · 116 verified, 22 tentative</div>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-tab="pool">Card Pool</button>
+  <button data-tab="analysis">Statistical Analysis</button>
+  <button data-tab="combos">Combos &amp; Synergies</button>
+  <button data-tab="targets">Targets vs Pool</button>
+</nav>
+
+<!-- POOL TAB -->
+<div id="pool" class="tab-panel active">
+  <div class="pool-layout">
+    <aside class="sidebar">
+      <h2>Filters</h2>
+      <div class="filter-group"><label class="lbl">Search</label><input type="text" id="f-search" placeholder="name or text..."></div>
+      <div class="filter-group"><label class="lbl">Set</label><div class="checkbox-list" id="f-set"></div></div>
+      <div class="filter-group"><label class="lbl">Type</label><div class="checkbox-list" id="f-type"></div></div>
+      <div class="filter-group"><label class="lbl">Cost range</label>
+        <div style="display:flex;gap:6px;"><input type="number" id="f-min" min="0" max="9" placeholder="min"><input type="number" id="f-max" min="0" max="9" placeholder="max"></div>
+      </div>
+      <div class="filter-group"><label class="lbl">Dragon attack</label>
+        <select id="f-dragon"><option value="">Any</option><option value="yes">Yes only</option><option value="no">No only</option></select>
+      </div>
+      <div class="filter-group"><label class="lbl">Combo cluster (any of)</label><div class="checkbox-list" id="f-cluster"></div></div>
+      <div class="filter-group"><label class="lbl">Trash type</label><div class="checkbox-list" id="f-trash"></div></div>
+      <div class="filter-group"><label class="lbl">Verification</label>
+        <select id="f-verified"><option value="">All</option><option value="yes">Verified only</option><option value="no">Tentative only</option></select>
+      </div>
+      <div class="filter-group"><button class="reset-btn" onclick="resetFilters()">Reset filters</button></div>
+      <h2 style="margin-top:24px;">Live stats (filtered)</h2>
+      <div class="stats" id="live-stats"></div>
+    </aside>
+    <main class="main">
+      <div class="main-header">
+        <div class="row-count" id="row-count"></div>
+        <select class="sort-select" id="f-sort">
+          <option value="set">Sort: by Set</option>
+          <option value="name">Sort: by Name</option>
+          <option value="cost">Sort: by Cost</option>
+          <option value="vp">Sort: by VP</option>
+          <option value="qty">Sort: by Quantity</option>
+          <option value="combo">Sort: by Combo Score</option>
+        </select>
+      </div>
+      <div class="grid" id="grid"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ANALYSIS TAB -->
+<div id="analysis" class="tab-panel">
+  <div class="analysis">
+    <div class="kpis" id="kpis"></div>
+    <div class="analysis-grid">
+      <div class="an-panel"><h3>Type distribution (qty)</h3><div class="svg-chart" id="chart-types"></div></div>
+      <div class="an-panel"><h3>Cost histogram (non-monster)</h3><div class="svg-chart" id="chart-cost"></div></div>
+      <div class="an-panel"><h3>Sword cost (monsters)</h3><div class="svg-chart" id="chart-sword"></div></div>
+      <div class="an-panel"><h3>Dragon attack % per set</h3><div class="svg-chart" id="chart-dragon"></div></div>
+    </div>
+    <div class="analysis-grid">
+      <div class="an-panel" style="grid-column: span 2;"><h3>Mechanics distribution (top 16)</h3><div class="svg-chart" id="chart-mech"></div></div>
+      <div class="an-panel"><h3>Per-set type breakdown</h3><div class="svg-chart" id="chart-set-types"></div></div>
+      <div class="an-panel"><h3>Resource totals</h3><div class="svg-chart" id="chart-resources"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- COMBOS TAB -->
+<div id="combos" class="tab-panel">
+  <div class="analysis">
+    <div class="notice">
+      <strong>How combos work in Clank!:</strong> a combo card reads from the board (have a crown? have a companion?) or from your play state (made 6 skill? trashed a card?). Cards that <em>provide</em> a resource (a Companion type, a freed prisoner, a Burgle to trash) enable other cards to <em>trigger</em>. The clusters below group cards by combo theme.
+    </div>
+
+    <div class="kpis" id="combo-kpis"></div>
+
+    <h2 style="color:var(--gold);margin:24px 0 12px;">Combo participation overview</h2>
+    <div class="notice" style="border-left-color:var(--good);">
+      <strong>Goal:</strong> in the final 100-card deck, maximize the % of cards that participate in 2+ combo clusters while still hitting the type/ratio/dragon targets. Below: <em>distribution</em> (how many cards have N cluster memberships), <em>cluster health</em> (each cluster needs providers AND triggers to fire), and <em>orphans</em> (cards in 0 clusters — combo deadweight, avoid unless they bring raw stats you need).
+    </div>
+    <div class="analysis-grid">
+      <div class="an-panel">
+        <h3>Cluster-count distribution (qty)</h3>
+        <div class="subtitle">How many cards participate in 0, 1, 2, 3, 4+ clusters</div>
+        <div class="svg-chart" id="chart-cluster-dist"></div>
+      </div>
+      <div class="an-panel">
+        <h3>Cluster health (providers vs triggers)</h3>
+        <div class="subtitle">A cluster needs both to combo. Status: ✓ active, ◐ passive (no triggers), ◑ trigger-only (no providers), ✗ dead</div>
+        <div class="svg-chart" id="cluster-health-table"></div>
+      </div>
+    </div>
+
+    <h2 style="color:var(--gold);margin:24px 0 12px;">Combo clusters</h2>
+    <div class="cluster-grid" id="cluster-grid"></div>
+
+    <div id="cluster-detail-container" style="display:none;">
+      <div class="cluster-detail" id="cluster-detail"></div>
+    </div>
+
+    <h2 style="color:var(--gold);margin:24px 0 12px;">Combo orphans (0 clusters)</h2>
+    <div class="notice" style="border-left-color:var(--bad);">
+      <strong>These cards don't combo with anything.</strong> They can still be useful for raw stats (e.g., a 3-skill card buys you a 3-cost card), but if you have a choice, prefer a card that participates in clusters.
+    </div>
+    <div id="orphans-list" class="combo-top"></div>
+
+    <h2 style="color:var(--gold);margin:24px 0 12px;">Trash policy breakdown</h2>
+    <div class="notice" style="border-left-color:var(--bad);">
+      <strong>Your preference:</strong> active trash (trash a card from your deck/discard/play) is preferred over self-trash (cards that trash themselves). The Underworld will add <em>Trash-payoff</em> cards — cards that reward you when something else trashes them. The current pool has very little active trash; this should expand significantly with Lairs and Underworld.
+    </div>
+    <div class="analysis-grid">
+      <div class="an-panel"><h3>Trash breakdown by type</h3><div class="svg-chart" id="chart-trash-types"></div></div>
+      <div class="an-panel"><h3>Burgle-removal availability</h3><div class="svg-chart" id="chart-burgle"></div></div>
+    </div>
+
+    <h2 style="color:var(--gold);margin:24px 0 12px;">Top combo cards</h2>
+    <div class="notice" style="border-left-color:var(--good);">
+      <strong>Combo score</strong> = 2× cluster count + 3× trigger count + 2× interactive (React/Arrive Choice) + 2× trash-payoff + 2× active-trash − 1× self-trash. Higher score = more combo potential.
+    </div>
+    <div class="combo-top" id="combo-top"></div>
+  </div>
+</div>
+
+<!-- TARGETS TAB -->
+<div id="targets" class="tab-panel">
+  <div class="analysis">
+    <div class="notice">
+      <strong>Targets vs Pool</strong> shows how close the current pool is to your deckbuilding goals. Benchmarks computed from the <strong>exact 100-card retail Catacombs box</strong> (excluding promos). The "Trash" target distinguishes <em>active trash</em> (your preference) from total trash. React + Trophy are anchors (include all available). <em>Resource density</em> is per non-monster card — projects what the final 100-card deck will look like if the current densities hold.
+    </div>
+    <div class="an-panel" style="margin-bottom:16px;">
+      <h3>Target metrics</h3>
+      <table class="benchmark-table">
+        <thead><tr><th>Metric</th><th class="num">Catacombs base</th><th class="num">Target band</th><th class="num">Current pool</th><th class="num">Status</th></tr></thead>
+        <tbody id="benchmark-tbody"></tbody>
+      </table>
+    </div>
+    <div class="analysis-grid">
+      <div class="an-panel"><h3>Trash availability (qty)</h3><div class="svg-chart" id="chart-trash"></div></div>
+      <div class="an-panel"><h3>Clank balance</h3><div class="svg-chart" id="chart-clank"></div></div>
+      <div class="an-panel"><h3>Resource densities (per non-monster card)</h3>
+        <div class="subtitle">How dense is the pool in each resource type — compare to base Catacombs (dashed lines)</div>
+        <div class="svg-chart" id="chart-resource-density"></div>
+      </div>
+      <div class="an-panel"><h3>Projected totals @ 100-card deck</h3>
+        <div class="subtitle">If the final deck preserves current densities, projected absolute totals</div>
+        <div class="svg-chart" id="chart-resource-projection"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal" onclick="if(event.target===this) closeModal()">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <div id="modal-img-container"></div>
+    <div class="modal-details" id="modal-details"></div>
+  </div>
+</div>
+
+<script>
+const CARDS = [{"name": "Empurror", "set": "Catacombs", "type": "Companion", "cost": 1, "costNum": 1, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 1, "text": "Chose one (or all three, if you have an artifact):\n-2 Clank! -OR- $1 -OR- You don't have to stop in Crystal Caves this turn.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Clank-", "Crystal-Cave", "Artifact"], "image": "cards/empurror.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": ["Artifact"], "interactive": [], "trashTags": [], "clusters": ["Artifact", "Companion-Chain", "Position-Cave"]}, "comboScore": 9, "verified": true, "source": "verified"}, {"name": "Golden Flute", "set": "Catacombs", "type": "Other", "cost": 1, "costNum": 1, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 1, "text": "$1, +1 Clank!\nYou may buy one item from the Market this turn for $5 (even if you're not in a Market room).", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Clank+"], "image": "cards/golden_flute.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Position-Market"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Payoff", "set": "Catacombs", "type": "Other", "cost": 1, "costNum": 1, "isMonster": false, "skill": 3, "swords": 0, "boots": 0, "vp": 0, "text": "Trash this card.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Trash-self"], "image": "cards/payoff.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": ["Self-Trash"], "clusters": []}, "comboScore": -1, "verified": true, "source": "verified"}, {"name": "Rebel Scribe", "set": "Catacombs", "type": "Companion", "cost": 1, "costNum": 1, "isMonster": false, "skill": 1, "swords": 0, "boots": 0, "vp": 1, "text": "If you have another companion in your play area, draw a card.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Draw1", "Companion-synergy"], "image": "cards/rebel_scribe.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": ["Another Companion"], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Draw-Engine"]}, "comboScore": 7, "verified": true, "source": "verified"}, {"name": "Waystone", "set": "Catacombs", "type": "Other", "cost": 1, "costNum": 1, "isMonster": false, "skill": 0, "swords": 0, "boots": 1, "vp": 1, "text": "You may trash this to teleport from one Wayshrine to another.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Trash-self", "Teleport", "Wayshrine"], "image": "cards/waystone.jpg", "flavor": "", "combo": {"provides": ["Teleport"], "triggers": [], "interactive": [], "trashTags": ["Self-Trash"], "clusters": ["Position-Wayshrine", "Teleport"]}, "comboScore": 3, "verified": true, "source": "verified"}, {"name": "Flamboyance", "set": "Catacombs", "type": "Other", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 1, "text": "Draw a card.\nIf you make 2 or more Clank! this turn, +2 Skill.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Draw1"], "image": "cards/flamboyance.jpg", "flavor": "", "combo": {"provides": [], "triggers": ["Clank-trigger"], "interactive": [], "trashTags": [], "clusters": ["Clank-Trigger", "Draw-Engine"]}, "comboScore": 7, "verified": true, "source": "verified"}, {"name": "Imp Familiar", "set": "Catacombs", "type": "Companion", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 1, "text": "Take a lockpick -OR- Spend a lockpick to draw two cards.", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Draw2", "Lockpick"], "image": "cards/imp_familiar.jpg", "flavor": "", "combo": {"provides": ["Companion", "Lockpick-Gen"], "triggers": ["Lockpick-Spend"], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Draw-Engine", "Lockpick"]}, "comboScore": 9, "verified": true, "source": "verified"}, {"name": "Pillage", "set": "Catacombs", "type": "Other", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": 2, "boots": 1, "vp": 0, "text": "If you gain at least $3 this turn, draw a card.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Draw1"], "image": "cards/pillage.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Remove Traps", "set": "Catacombs", "type": "Other", "cost": 2, "costNum": 2, "isMonster": false, "skill": 1, "swords": 2, "boots": 0, "vp": 1, "text": "Replace a card in the dungeon row.\n(If the new card has a dragon attack symbol, ignore it.)", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": [], "image": "cards/remove_traps.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Shadow Walk", "set": "Catacombs", "type": "Other", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": 0, "boots": 1, "vp": 1, "text": "Trash a Burgle in your play area or discard pile.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Trash-active"], "image": "cards/shadow_walk.jpg", "flavor": "", "combo": {"provides": ["Burgle-Trash"], "triggers": [], "interactive": [], "trashTags": ["Active-Trash", "Burgle-Trash"], "clusters": ["Burgle-Removal"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Astral Projection", "set": "Catacombs", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 1, "text": "If you generate 6 Skill or more this turn, mark a Wayshrine (as though you were there).", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Wayshrine"], "image": "cards/astral_projection.jpg", "flavor": "", "combo": {"provides": [], "triggers": ["Skill-threshold"], "interactive": [], "trashTags": [], "clusters": ["Position-Wayshrine", "Skill-Threshold"]}, "comboScore": 7, "verified": true, "source": "verified"}, {"name": "Boots of the Ape Lord", "set": "Catacombs", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": 0, "boots": 3, "vp": 3, "text": "+3 Clank!\nIf you have a monkey idol, you don't have to stop in Crystal Caves this turn.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Clank+", "Monkey-idol", "Crystal-Cave"], "image": "cards/boots_of_the_ape_lord.jpg", "flavor": "", "combo": {"provides": [], "triggers": ["Monkey-Idol"], "interactive": [], "trashTags": [], "clusters": ["Monkey-Idol", "Position-Cave"]}, "comboScore": 7, "verified": true, "source": "verified"}, {"name": "Bard", "set": "Catacombs", "type": "Companion", "cost": 3, "costNum": 3, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 1, "text": "+1 Clank!\nIf you make 2 or more Clank! this turn, ♥♥.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Clank+"], "image": "cards/bard.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": ["Clank-trigger"], "interactive": [], "trashTags": [], "clusters": ["Clank-Trigger", "Companion-Chain"]}, "comboScore": 7, "verified": true, "source": "verified"}, {"name": "Lie in Wait", "set": "Catacombs", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 2, "swords": 1, "boots": 0, "vp": 1, "text": "If you're in a Crystal Cave, -2 Clank!", "acquire": "You may put this on top of your deck.", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Clank-", "Crystal-Cave", "Has-Acquire"], "image": "cards/lie_in_wait.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Position-Cave"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Lightstick", "set": "Catacombs", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 3, "swords": 0, "boots": 0, "vp": 1, "text": "+1 Clank!", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Clank+"], "image": "cards/lightstick.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Rebel Thief", "set": "Catacombs", "type": "Companion", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 2, "text": "Take a lockpick.\nIf you have another companion in your play area, draw a card.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Draw1", "Lockpick", "Companion-synergy"], "image": "cards/rebel_thief.jpg", "flavor": "", "combo": {"provides": ["Companion", "Lockpick-Gen"], "triggers": ["Another Companion"], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Draw-Engine", "Lockpick"]}, "comboScore": 9, "verified": true, "source": "verified"}, {"name": "Riot", "set": "Catacombs", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": 1, "boots": 1, "vp": 0, "text": "+1 Clank!\nIf you have freed three or more prisoners, you may trash a card in your play area or discard pile.", "acquire": "Free a prisoner.", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Trash-active", "Clank+", "Prisoner", "Has-Acquire"], "image": "cards/riot.jpg", "flavor": "", "combo": {"provides": ["Free-Prisoner"], "triggers": ["Prisoner count"], "interactive": [], "trashTags": ["Active-Trash"], "clusters": ["Prisoner"]}, "comboScore": 7, "verified": true, "source": "verified"}, {"name": "Scavenger", "set": "Catacombs", "type": "Companion", "cost": 3, "costNum": 3, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 1, "text": "", "acquire": "Take a minor secret.", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Has-Acquire"], "image": "cards/scavenger.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Smash and Grab", "set": "Catacombs", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 2, "text": "+2 Clank!\nDraw two cards.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Draw2", "Clank+"], "image": "cards/smash_and_grab.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Sneak Attack", "set": "Catacombs", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": 3, "boots": 0, "vp": 1, "text": "-2 Clank!", "acquire": "1 Sword", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Clank-", "Has-Acquire"], "image": "cards/sneak_attack.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Sudden Movement", "set": "Catacombs", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 1, "swords": 0, "boots": 2, "vp": 1, "text": "", "acquire": "", "arriveDanger": "Each player alone on a square tile must rotate that tile to a new orientation.", "dragonAttack": false, "quantity": 2, "mechanics": [], "image": "cards/sudden_movement.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Tile-Manipulation"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Swindle", "set": "Catacombs", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 1, "text": "3", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": [], "image": "cards/swindle.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Bandit", "set": "Catacombs", "type": "Companion", "cost": 4, "costNum": 4, "isMonster": false, "skill": 1, "swords": 1, "boots": 1, "vp": 2, "text": "", "acquire": "1 Sword, 1 Boot", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Has-Acquire"], "image": "cards/bandit.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Charlatan", "set": "Catacombs", "type": "Companion", "cost": 4, "costNum": 4, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 2, "text": "Discard a card to draw two cards.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Draw2"], "image": "cards/charlatan.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Draw-Engine"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Corrupt Advisor", "set": "Catacombs", "type": "Companion", "cost": 4, "costNum": 4, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 2, "text": "Each other player gets +1 Clank!\nIf you have a crown, they get +2 Clank! instead.", "acquire": "", "arriveDanger": "DANGER Pull +1 cube for dragon attacks.", "dragonAttack": true, "quantity": 1, "mechanics": ["Clank+", "Crown", "Danger-marker"], "image": "cards/corrupt_advisor.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": ["Crown"], "interactive": ["Anti-Player"], "trashTags": [], "clusters": ["Anti-Player", "Companion-Chain", "Crown"]}, "comboScore": 11, "verified": true, "source": "verified"}, {"name": "Divining Rod", "set": "Catacombs", "type": "Other", "cost": 4, "costNum": 4, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 2, "text": "If you generate 6 Skill or more this turn, ♥.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "cards/divining_rod.jpg", "flavor": "", "combo": {"provides": [], "triggers": ["Skill-threshold"], "interactive": [], "trashTags": [], "clusters": ["Skill-Threshold"]}, "comboScore": 5, "verified": true, "source": "verified"}, {"name": "Elven Sword", "set": "Catacombs", "type": "Other", "cost": 4, "costNum": 4, "isMonster": false, "skill": 0, "swords": 2, "boots": 0, "vp": 2, "text": "Draw a card.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Draw1"], "image": "cards/elven_sword.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Librarian", "set": "Catacombs", "type": "Other", "cost": 4, "costNum": 4, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 1, "text": "-2 Clank!\nIf you have a Secret Tome in your play area or discard pile, draw two cards.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Draw2", "Clank-", "Secret-Tome"], "image": "cards/librarian.jpg", "flavor": "", "combo": {"provides": [], "triggers": ["Secret-Tome trigger"], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine", "Secret-Tome"]}, "comboScore": 7, "verified": true, "source": "verified"}, {"name": "Rebel Paladin", "set": "Catacombs", "type": "Companion", "cost": 4, "costNum": 4, "isMonster": false, "skill": 1, "swords": 1, "boots": 0, "vp": 1, "text": "If you have another companion in your play area, draw a card.\nIf you have an artifact, draw a card.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Draw1", "Companion-synergy", "Artifact"], "image": "cards/rebel_paladin.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": ["Another Companion", "Artifact"], "interactive": [], "trashTags": [], "clusters": ["Artifact", "Companion-Chain", "Draw-Engine"]}, "comboScore": 12, "verified": true, "source": "verified"}, {"name": "Skulker", "set": "Catacombs", "type": "Companion", "cost": 4, "costNum": 4, "isMonster": false, "skill": 0, "swords": 0, "boots": 2, "vp": 1, "text": "Ignore monsters in tunnels this turn.", "acquire": "Ignore monsters in tunnels this turn.", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Has-Acquire"], "image": "cards/skulker.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Smoky Quartz", "set": "Catacombs", "type": "Gem", "cost": 4, "costNum": 4, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 3, "text": "-2 Clank!\nDraw a card.", "acquire": " +2 Clank!", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Draw1", "Clank+", "Clank-", "Has-Acquire"], "image": "cards/smoky_quartz.jpg", "flavor": "", "combo": {"provides": ["Gem"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine", "Gem-Synergy"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Spectral Rider", "set": "Catacombs", "type": "Companion", "cost": 4, "costNum": 4, "isMonster": false, "skill": 2, "swords": 0, "boots": 1, "vp": 2, "text": "If you're on a haunted tile, you may teleport to any room on a different haunted tile.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Teleport", "Ghost-defense"], "image": "cards/spectral_rider.jpg", "flavor": "", "combo": {"provides": ["Companion", "Teleport"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Haunted-Ghost", "Teleport", "Tile-Manipulation"]}, "comboScore": 8, "verified": true, "source": "verified"}, {"name": "White Tourmaline", "set": "Catacombs", "type": "Gem", "cost": 4, "costNum": 4, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 3, "text": "Draw a card.\nWhen a Ghost would damage you, you may discard this to prevent that and draw a card.", "acquire": " +2 Clank!", "arriveDanger": "", "dragonAttack": true, "quantity": 2, "mechanics": ["Draw1", "Clank+", "Ghost-defense", "Has-Acquire"], "image": "cards/white_tourmaline.jpg", "flavor": "", "combo": {"provides": ["Gem"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine", "Gem-Synergy", "Haunted-Ghost"]}, "comboScore": 6, "verified": true, "source": "verified"}, {"name": "Brave Hero", "set": "Catacombs", "type": "Companion", "cost": 5, "costNum": 5, "isMonster": false, "skill": 2, "swords": 1, "boots": 1, "vp": 0, "text": "Worth 5 VP if you have freed three or more Prisoners.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Prisoner"], "image": "cards/brave_hero.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": ["Prisoner count"], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Prisoner"]}, "comboScore": 7, "verified": true, "source": "verified"}, {"name": "Curator", "set": "Catacombs", "type": "Companion", "cost": 5, "costNum": 5, "isMonster": false, "skill": 2, "swords": 0, "boots": 1, "vp": 2, "text": "Draw a card for each artifact you have.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Draw1", "Artifact"], "image": "cards/curator.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": ["Artifact"], "interactive": [], "trashTags": [], "clusters": ["Artifact", "Companion-Chain", "Draw-Engine"]}, "comboScore": 9, "verified": true, "source": "verified"}, {"name": "Diversion", "set": "Catacombs", "type": "Other", "cost": 5, "costNum": 5, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 2, "text": "", "acquire": "Free a prisoner.", "arriveDanger": "Put 3 dragon cubes back in the bag.", "dragonAttack": false, "quantity": 1, "mechanics": ["Prisoner", "Has-Acquire"], "image": "cards/diversion.jpg", "flavor": "", "combo": {"provides": ["Free-Prisoner"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Prisoner"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Expert Guide", "set": "Catacombs", "type": "Companion", "cost": 5, "costNum": 5, "isMonster": false, "skill": 2, "swords": 0, "boots": 2, "vp": 2, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": [], "image": "cards/expert_guide.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Rebel General", "set": "Catacombs", "type": "Companion", "cost": 5, "costNum": 5, "isMonster": false, "skill": 2, "swords": 1, "boots": 1, "vp": 2, "text": "If you have another companion in your play area, draw a card.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Draw1", "Companion-synergy"], "image": "cards/rebel_general.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": ["Another Companion"], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Draw-Engine"]}, "comboScore": 7, "verified": true, "source": "verified"}, {"name": "Robbery", "set": "Catacombs", "type": "Other", "cost": 5, "costNum": 5, "isMonster": false, "skill": 0, "swords": 2, "boots": 0, "vp": 1, "text": "$2\nIf you're in a Market room, teleport to an adjacent room.", "acquire": "You may put this on top of your deck.", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Teleport", "Has-Acquire"], "image": "cards/robbery.jpg", "flavor": "", "combo": {"provides": ["Teleport"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Position-Market", "Teleport"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Rose Quartz", "set": "Catacombs", "type": "Gem", "cost": 5, "costNum": 5, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 4, "text": "-2 Clank!\nDraw a card.", "acquire": " +2 Clank!", "arriveDanger": "", "dragonAttack": true, "quantity": 2, "mechanics": ["Draw1", "Clank+", "Clank-", "Has-Acquire"], "image": "cards/rose_quartz.jpg", "flavor": "", "combo": {"provides": ["Gem"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine", "Gem-Synergy"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Black Tourmaline", "set": "Catacombs", "type": "Gem", "cost": 6, "costNum": 6, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 5, "text": "Draw a card.\nWhen a Ghost would damage you, you may discard this to prevent that and draw a card.", "acquire": " +2 Clank!", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Draw1", "Clank+", "Ghost-defense", "Has-Acquire"], "image": "cards/black_tourmaline.jpg", "flavor": "", "combo": {"provides": ["Gem"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine", "Gem-Synergy", "Haunted-Ghost"]}, "comboScore": 6, "verified": true, "source": "verified"}, {"name": "Crystal Compass", "set": "Catacombs", "type": "Other", "cost": 6, "costNum": 6, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 3, "text": "Draw two cards.\nYou don't have to stop in Crystal Caves this turn.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Draw2", "Crystal-Cave"], "image": "cards/crystal_compass.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine", "Position-Cave"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Double Cross", "set": "Catacombs", "type": "Other", "cost": 6, "costNum": 6, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 3, "text": "-2 Clank!", "acquire": "Each other player gets +2 Clank!", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Clank+", "Clank-", "Has-Acquire"], "image": "cards/double_cross.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": ["Anti-Player"], "trashTags": [], "clusters": ["Anti-Player"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Expensive Taste", "set": "Catacombs", "type": "Other", "cost": 6, "costNum": 6, "isMonster": false, "skill": 3, "swords": 0, "boots": 0, "vp": 0, "text": "$2\nWorth 5 VP if you have a crown and a gem.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Gem-synergy", "Crown"], "image": "cards/expensive_taste.jpg", "flavor": "", "combo": {"provides": [], "triggers": ["Crown"], "interactive": [], "trashTags": [], "clusters": ["Crown"]}, "comboScore": 5, "verified": true, "source": "verified"}, {"name": "Fiery Quartz", "set": "Catacombs", "type": "Gem", "cost": 6, "costNum": 6, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 5, "text": "-2 Clank!\nDraw a card.", "acquire": "+2 Clank!", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Draw1", "Clank+", "Clank-", "Has-Acquire"], "image": "cards/fiery_quartz.jpg", "flavor": "", "combo": {"provides": ["Gem"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine", "Gem-Synergy"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Floating Skull", "set": "Catacombs", "type": "Companion", "cost": 6, "costNum": 6, "isMonster": false, "skill": 2, "swords": 1, "boots": 0, "vp": 2, "text": "If you have a crown, teleport to an adjacent room.", "acquire": "Teleport to an adjacent room.", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Teleport", "Crown", "Has-Acquire"], "image": "cards/floating_skull.jpg", "flavor": "", "combo": {"provides": ["Companion", "Teleport"], "triggers": ["Crown"], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Crown", "Teleport"]}, "comboScore": 9, "verified": true, "source": "verified"}, {"name": "Grand Theft", "set": "Catacombs", "type": "Other", "cost": 6, "costNum": 6, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 3, "text": "Take a lockpick —OR— Spend a lockpick yo use a device or acquire a card in the dungeon row.", "acquire": "You may put this on top of your deck.", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Lockpick", "Has-Acquire"], "image": "cards/grand_theft.jpg", "flavor": "", "combo": {"provides": ["Lockpick-Gen"], "triggers": ["Lockpick-Spend"], "interactive": [], "trashTags": [], "clusters": ["Lockpick"]}, "comboScore": 5, "verified": true, "source": "verified"}, {"name": "Lute", "set": "Catacombs", "type": "Other", "cost": 6, "costNum": 6, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 3, "text": "+1 Clank!\nDraw two cards.\nFor each Clank! you make this turn, $1.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Draw2", "Clank+"], "image": "cards/lute.jpg", "flavor": "", "combo": {"provides": [], "triggers": ["Clank-trigger"], "interactive": [], "trashTags": [], "clusters": ["Clank-Trigger", "Coin-Engine", "Draw-Engine"]}, "comboScore": 9, "verified": true, "source": "verified"}, {"name": "Souldrinker", "set": "Catacombs", "type": "Other", "cost": 6, "costNum": 6, "isMonster": false, "skill": 0, "swords": 4, "boots": 0, "vp": 3, "text": "If you defeat a monster in the dungeon row this turn, ♥.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "cards/souldrinker.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Thirst for Adventure", "set": "Catacombs", "type": "Other", "cost": 7, "costNum": 7, "isMonster": false, "skill": 0, "swords": 0, "boots": 3, "vp": 0, "text": "Worth 2 VP for each artifact and each mokey idol you have.", "acquire": "3 Boots", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Artifact", "Has-Acquire"], "image": "cards/thirst_for_adventure.jpg", "flavor": "", "combo": {"provides": [], "triggers": ["Artifact"], "interactive": [], "trashTags": [], "clusters": ["Artifact"]}, "comboScore": 5, "verified": true, "source": "verified"}, {"name": "Blink Spell", "set": "Catacombs", "type": "Other", "cost": 8, "costNum": 8, "isMonster": false, "skill": 3, "swords": 0, "boots": 0, "vp": 3, "text": "Teleport to an adjacent room -OR- Teleport to another player in the Depths.", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Teleport"], "image": "cards/blink_spell.jpg", "flavor": "", "combo": {"provides": ["Teleport"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Teleport"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Wishing Well", "set": "Catacombs", "type": "Device", "cost": 0, "costNum": 0, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 0, "text": "You must spend $3 to use.\nUSE:\nDraw two cards.", "acquire": "", "arriveDanger": "DANGER Pull +1 cube for dragon attacks.", "dragonAttack": true, "quantity": 1, "mechanics": ["Draw2", "Danger-marker"], "image": "cards/wishing_well.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Darkened Alcove", "set": "Catacombs", "type": "Device", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 0, "text": "USE:\n-2 Clank!", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 2, "mechanics": ["Clank-"], "image": "cards/darkened_alcove.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Underground River", "set": "Catacombs", "type": "Device", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 0, "text": "USE:\n♥ or Boot", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 2, "mechanics": [], "image": "cards/underground_river.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Locked Trunk", "set": "Catacombs", "type": "Device", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 0, "text": "You must spend a lockpick to use.\nUSE:\nTake a major secret.", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Lockpick"], "image": "cards/locked_trunk.jpg", "flavor": "", "combo": {"provides": [], "triggers": ["Lockpick-Spend"], "interactive": [], "trashTags": [], "clusters": ["Lockpick"]}, "comboScore": 5, "verified": true, "source": "verified"}, {"name": "Thieves' Shrine", "set": "Catacombs", "type": "Device", "cost": 4, "costNum": 4, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 0, "text": "USE:\n$2 -OR- Trash up to two Burgles, each from your play area or discard pile.", "acquire": "", "arriveDanger": "Put 3 dragon cubes back in the bag.", "dragonAttack": false, "quantity": 2, "mechanics": ["Trash-active"], "image": "cards/thieves_shrine.jpg", "flavor": "", "combo": {"provides": ["Burgle-Trash"], "triggers": [], "interactive": [], "trashTags": ["Active-Trash", "Burgle-Trash"], "clusters": ["Burgle-Removal"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Black Market", "set": "Catacombs", "type": "Device", "cost": 5, "costNum": 5, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 0, "text": "USE:\nChoose TWO:\n$2 -OR- Trash a card in your play area or discard pile -OR- Take a lockpick.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Trash-active", "Lockpick"], "image": "cards/black_market.jpg", "flavor": "", "combo": {"provides": ["Lockpick-Gen"], "triggers": [], "interactive": [], "trashTags": ["Active-Trash"], "clusters": ["Lockpick"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Skeleton", "set": "Catacombs", "type": "Monster", "cost": "1S", "costNum": 1, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: $2, +1 Clank!", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 3, "mechanics": ["Clank+"], "image": "cards/skeleton.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Animated Wall", "set": "Catacombs", "type": "Monster", "cost": "2S", "costNum": 2, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: 1 Boot\nIf you use a portal this turn, +1 Boot.", "acquire": "", "arriveDanger": "Rotate each square tile with any players on it 180 degrees.", "dragonAttack": false, "quantity": 2, "mechanics": [], "image": "cards/animated_wall.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Tile-Manipulation"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Crystal Kobold", "set": "Catacombs", "type": "Monster", "cost": "2S", "costNum": 2, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "Fight this only in a Crystal Cave or Wayshrine.\nDEFEAT: 2 Skill", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 2, "mechanics": ["Crystal-Cave", "Wayshrine"], "image": "cards/crystal_kobold.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Position-Cave", "Position-Wayshrine"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Keymaster", "set": "Catacombs", "type": "Monster", "cost": "2S", "costNum": 2, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: Take a Lockpick", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["Lockpick"], "image": "cards/keymaster.jpg", "flavor": "", "combo": {"provides": ["Lockpick-Gen"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Lockpick"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Skeleton Priest", "set": "Catacombs", "type": "Monster", "cost": "2S", "costNum": 2, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: ♥, +1 Clank!", "acquire": "", "arriveDanger": "All players get +1 Clank!", "dragonAttack": false, "quantity": 2, "mechanics": ["Clank+"], "image": "cards/skeleton_priest.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": ["Anti-Player"], "trashTags": [], "clusters": ["Anti-Player"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Archoverlord", "set": "Catacombs", "type": "Monster", "cost": "3S", "costNum": 3, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: Draw two cards, each other player gets +1 Clank!", "acquire": "", "arriveDanger": "All players get +1 Clank!", "dragonAttack": false, "quantity": 3, "mechanics": ["Draw2", "Clank+"], "image": "cards/archoverlord.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": ["Anti-Player"], "trashTags": [], "clusters": ["Anti-Player", "Draw-Engine"]}, "comboScore": 6, "verified": true, "source": "verified"}, {"name": "Marble Guardian", "set": "Catacombs", "type": "Monster", "cost": "3S", "costNum": 3, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: Place a new tile next to your current one. Choose:\nTeleport to any room on the new tile -OR- $2", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Teleport"], "image": "cards/marble_guardian.jpg", "flavor": "", "combo": {"provides": ["Teleport"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Teleport", "Tile-Manipulation"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Skeletal Ape", "set": "Catacombs", "type": "Monster", "cost": "3S", "costNum": 3, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: $3, 3 Skill, +3 Clank!", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Clank+"], "image": "cards/skeletal_ape.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Skeleton Warlock", "set": "Catacombs", "type": "Monster", "cost": "3S", "costNum": 3, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: Take a Secret Tome, +1 Clank!", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Clank+", "Secret-Tome"], "image": "cards/skeleton_warlock.jpg", "flavor": "", "combo": {"provides": ["Tome-Acquire"], "triggers": ["Secret-Tome trigger"], "interactive": [], "trashTags": [], "clusters": ["Secret-Tome"]}, "comboScore": 5, "verified": true, "source": "verified"}, {"name": "The Warden", "set": "Catacombs", "type": "Monster", "cost": "3S", "costNum": 3, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "Deep (Fight only in the Depths.)\nDEFEAT: Free two Prisoners", "acquire": "", "arriveDanger": "DANGER Pull +1 cube for dragon attacks.", "dragonAttack": true, "quantity": 1, "mechanics": ["Prisoner", "Danger-marker"], "image": "cards/the_warden.jpg", "flavor": "", "combo": {"provides": ["Free-Prisoner"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Prisoner"]}, "comboScore": 2, "verified": true, "source": "verified"}, {"name": "Ogre Merchant", "set": "Catacombs", "type": "Monster", "cost": "4S", "costNum": 4, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: $5 -OR- If you're in a Market room, take a Market item (at no cost).", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 2, "mechanics": [], "image": "cards/ogre_merchant.jpg", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Cutpurse", "set": "Adventure", "type": "Companion", "cost": 2, "costNum": 2, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 5, "text": "REACT: An opponent enters a market room. [Lockpick] -OR- 2 coin. You may discard a card to get both.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["React"], "image": "cards/cutpurse.jpg", "flavor": "Watch your money in the market.", "combo": {"provides": ["Companion"], "triggers": [], "interactive": ["React"], "trashTags": [], "clusters": ["Companion-Chain", "Lockpick", "Position-Market", "React"]}, "comboScore": 10, "verified": true, "source": "verified"}, {"name": "Spiritual Healer", "set": "Adventure", "type": "Companion", "cost": 2, "costNum": 2, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 3, "text": "If you have a Gem in your play area or discard pile, heart and +1 Clank!", "acquire": "", "arriveDanger": "You may make +2 Clank! to heart (heal 1).", "dragonAttack": false, "quantity": 1, "mechanics": ["Arrive Choice"], "image": "cards/spiritual_healer.jpg", "flavor": "If you doubt the crystal is necessary, just wait for the loud chanting.", "combo": {"provides": ["Companion"], "triggers": ["Gem trigger"], "interactive": ["Arrive-Choice"], "trashTags": [], "clusters": ["Arrive-Choice", "Companion-Chain", "Gem-Synergy"]}, "comboScore": 11, "verified": true, "source": "verified"}, {"name": "Virtuoso Burglar", "set": "Adventure", "type": "Companion", "cost": 2, "costNum": 2, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 5, "text": "-2 Clank! Trash a Burgle in your play area or discard pile.", "acquire": "", "arriveDanger": "You may make +1 Clank! to trash a Burgle from your hand or discard pile.", "dragonAttack": false, "quantity": 1, "mechanics": ["Arrive Choice", "Trash"], "image": "cards/virtuoso_burglar.jpg", "flavor": "Want it done right? Call her.", "combo": {"provides": ["Burgle-Trash", "Companion"], "triggers": [], "interactive": ["Arrive-Choice"], "trashTags": ["Active-Trash", "Burgle-Trash"], "clusters": ["Arrive-Choice", "Burgle-Removal", "Companion-Chain"]}, "comboScore": 10, "verified": true, "source": "verified"}, {"name": "Rebel Herald", "set": "Adventure", "type": "Companion", "cost": 1, "costNum": 1, "isMonster": false, "skill": 1, "swords": 0, "boots": 1, "vp": 4, "text": "If you have another companion in your play area, draw a card.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["React", "Companion-chain"], "image": "cards/rebel_herald.jpg", "flavor": "The most enduring friendships begin with a proper introduction.", "combo": {"provides": ["Companion"], "triggers": ["Another Companion"], "interactive": ["React"], "trashTags": [], "clusters": ["Companion-Chain", "Draw-Engine", "React"]}, "comboScore": 11, "verified": true, "source": "verified"}, {"name": "Tactician", "set": "Adventure", "type": "Companion", "cost": 3, "costNum": 3, "isMonster": false, "skill": 3, "swords": 2, "boots": 0, "vp": 6, "text": "You can't really disrupt his plan. He'll just devise a new one.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["React"], "image": "cards/tactician.jpg", "flavor": "", "combo": {"provides": ["Companion"], "triggers": [], "interactive": ["React"], "trashTags": [], "clusters": ["Companion-Chain", "React"]}, "comboScore": 6, "verified": true, "source": "verified"}, {"name": "Berserker", "set": "Adventure", "type": "Companion", "cost": 2, "costNum": 2, "isMonster": false, "skill": 1, "swords": 1, "boots": 0, "vp": 3, "text": "For each Clank! you make this turn, 1 coin.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["React"], "image": "cards/berserker.jpg", "flavor": "The screaming is a plus, you see. It draws more enemies to the fight.", "combo": {"provides": ["Companion"], "triggers": ["Clank-trigger"], "interactive": ["React"], "trashTags": [], "clusters": ["Clank-Trigger", "Coin-Engine", "Companion-Chain", "React"]}, "comboScore": 13, "verified": true, "source": "verified"}, {"name": "Assassin", "set": "Adventure", "type": "Companion", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": 2, "boots": 0, "vp": 4, "text": "-2 Clank!", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["React"], "image": "cards/assassin.jpg", "flavor": "Her clientele consists mostly of dungeon delvers and politicians.", "combo": {"provides": ["Companion"], "triggers": [], "interactive": ["React"], "trashTags": [], "clusters": ["Companion-Chain", "React"]}, "comboScore": 6, "verified": true, "source": "verified"}, {"name": "Royal Brat", "set": "Adventure", "type": "Companion", "cost": 2, "costNum": 2, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 5, "text": "If you have a crown, take a minor secret.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["React"], "image": "cards/royal_brat.jpg", "flavor": "It's mine! I want it now!", "combo": {"provides": ["Companion"], "triggers": ["Crown"], "interactive": ["React"], "trashTags": [], "clusters": ["Companion-Chain", "Crown", "React"]}, "comboScore": 11, "verified": true, "source": "verified"}, {"name": "Flawed Ruby", "set": "Adventure", "type": "Gem", "cost": 5, "costNum": 5, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 6, "text": "Draw a card.", "acquire": "+2 Clank!, each other player gets +1 Clank!", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Anti-player Clank"], "image": "cards/flawed_ruby.jpg", "flavor": "", "combo": {"provides": ["Gem"], "triggers": [], "interactive": ["Anti-Player"], "trashTags": [], "clusters": ["Anti-Player", "Draw-Engine", "Gem-Synergy"]}, "comboScore": 8, "verified": true, "source": "verified"}, {"name": "Flawed Sapphire", "set": "Adventure", "type": "Gem", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 4, "text": "Draw a card.", "acquire": "+2 Clank!, each other player gets +1 Clank!", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Anti-player Clank"], "image": "cards/flawed_sapphire.jpg", "flavor": "", "combo": {"provides": ["Gem"], "triggers": [], "interactive": ["Anti-Player"], "trashTags": [], "clusters": ["Anti-Player", "Draw-Engine", "Gem-Synergy"]}, "comboScore": 8, "verified": true, "source": "verified"}, {"name": "Flawed Emerald", "set": "Adventure", "type": "Gem", "cost": 4, "costNum": 4, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 5, "text": "Draw a card.", "acquire": "+2 Clank!, each other player gets +1 Clank!", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": ["Anti-player Clank"], "image": "cards/flawed_emerald.jpg", "flavor": "", "combo": {"provides": ["Gem"], "triggers": [], "interactive": ["Anti-Player"], "trashTags": [], "clusters": ["Anti-Player", "Draw-Engine", "Gem-Synergy"]}, "comboScore": 8, "verified": true, "source": "verified"}, {"name": "Scouting Ahead", "set": "Adventure", "type": "Other", "cost": 1, "costNum": 1, "isMonster": false, "skill": 0, "swords": 0, "boots": 1, "vp": 4, "text": "You don't have to stop in Crystal Caves this turn.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["React"], "image": "cards/scouting_ahead.jpg", "flavor": "Stay here. Catch your breath. I'll see what's in the next passage.", "combo": {"provides": [], "triggers": [], "interactive": ["React"], "trashTags": [], "clusters": ["Position-Cave", "React"]}, "comboScore": 6, "verified": true, "source": "verified"}, {"name": "Too Bad for You", "set": "Adventure", "type": "Other", "cost": 1, "costNum": 1, "isMonster": false, "skill": 1, "swords": 0, "boots": 0, "vp": 1, "text": "(no main effect — just stats)", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["React"], "image": "cards/too_bad_for_you.jpg", "flavor": "Maybe the next time you try that, you should limber up first.", "combo": {"provides": [], "triggers": [], "interactive": ["React"], "trashTags": [], "clusters": ["React"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "One With Everything", "set": "Adventure", "type": "Other", "cost": 1, "costNum": 1, "isMonster": false, "skill": 1, "swords": 1, "boots": 1, "vp": 3, "text": "(no main effect — stats only)", "acquire": "1 coin", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["React"], "image": "cards/one_with_everything.jpg", "flavor": "Open your mind to little opportunities and they'll add up to a big windfall.", "combo": {"provides": [], "triggers": [], "interactive": ["React"], "trashTags": [], "clusters": ["React"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Time Warp", "set": "Adventure", "type": "Other", "cost": 1, "costNum": 1, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 5, "text": "Teleport to an adjacent room.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["React", "Teleport"], "image": "cards/time_warp.jpg", "flavor": "This form of magical travel begins with a jump to the left.", "combo": {"provides": ["Teleport"], "triggers": [], "interactive": ["React"], "trashTags": [], "clusters": ["React", "Teleport"]}, "comboScore": 6, "verified": true, "source": "verified"}, {"name": "Walk It Off", "set": "Adventure", "type": "Other", "cost": 1, "costNum": 1, "isMonster": false, "skill": 0, "swords": 0, "boots": 1, "vp": 3, "text": "(no main effect — stats only)", "acquire": "Heal 1 (heart)", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": ["React"], "image": "cards/walk_it_off.jpg", "flavor": "'Tis but a scratch. I've had worse.", "combo": {"provides": [], "triggers": [], "interactive": ["React"], "trashTags": [], "clusters": ["React"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Elven Satchel", "set": "Adventure", "type": "Device", "cost": 2, "costNum": 2, "isMonster": false, "skill": null, "swords": null, "boots": null, "vp": 5, "text": "USE: Draw a card.", "acquire": "", "arriveDanger": "1 coin -OR- +1 Clank!, draw a card.", "dragonAttack": false, "quantity": 2, "mechanics": ["Arrive Choice"], "image": "cards/elven_satchel.jpg", "flavor": "Great for carrying a travel cloak, dagger, and spare boots.", "combo": {"provides": [], "triggers": [], "interactive": ["Arrive-Choice"], "trashTags": [], "clusters": ["Arrive-Choice", "Draw-Engine"]}, "comboScore": 6, "verified": true, "source": "verified"}, {"name": "Hiding Place", "set": "Adventure", "type": "Device", "cost": 2, "costNum": 2, "isMonster": false, "skill": null, "swords": null, "boots": null, "vp": 2, "text": "USE: -2 Clank!", "acquire": "", "arriveDanger": "You may discard a Burgle to get -2 Clank!", "dragonAttack": false, "quantity": 2, "mechanics": ["Arrive Choice", "Clank reduction"], "image": "cards/hiding_place.jpg", "flavor": "It's camouflage AND a weapons cache!", "combo": {"provides": [], "triggers": [], "interactive": ["Arrive-Choice"], "trashTags": [], "clusters": ["Arrive-Choice"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Secret Passage", "set": "Adventure", "type": "Device", "cost": 5, "costNum": 5, "isMonster": false, "skill": null, "swords": null, "boots": null, "vp": 5, "text": "USE: -2 Clank!, [Lockpick] [Lockpick]", "acquire": "", "arriveDanger": "You may spend 5 coin to acquire a Secret Tome.", "dragonAttack": false, "quantity": 1, "mechanics": ["Arrive Choice"], "image": "cards/secret_passage.jpg", "flavor": "Never judge a bookcase by what it covers.", "combo": {"provides": ["Tome-Acquire"], "triggers": ["Secret-Tome trigger"], "interactive": ["Arrive-Choice"], "trashTags": [], "clusters": ["Arrive-Choice", "Lockpick", "Secret-Tome"]}, "comboScore": 11, "verified": true, "source": "verified"}, {"name": "Pixie Swarm", "set": "Adventure", "type": "Monster", "cost": "1S", "costNum": 1, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: 1 coin", "acquire": "", "arriveDanger": "Each player who reveals a [Burgle] from their hand gets 1 coin.", "dragonAttack": false, "quantity": 2, "mechanics": ["Arrive"], "image": "cards/pixie_swarm.jpg", "flavor": "Nobody invades our territory. Let's get 'em!", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Spotter", "set": "Adventure", "type": "Monster", "cost": "2S", "costNum": 2, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: Each player may make +1 Clank! to get 2 coin. You also get -2 Clank!", "acquire": "", "arriveDanger": "Pull +1 cube for dragon attacks.", "dragonAttack": true, "quantity": 2, "mechanics": ["Danger"], "image": "cards/spotter.jpg", "flavor": "Even a dragon with six heads can use extra eyes in his dungeon.", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "verified"}, {"name": "Leprechaun", "set": "Adventure", "type": "Monster", "cost": "2S", "costNum": 2, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: 2 coin +1 Clank! -OR- 5 coin +3 Clank!", "acquire": "", "arriveDanger": "2 coin +1 Clank! -OR- 5 coin +3 Clank! (Arrive Choice)", "dragonAttack": false, "quantity": 1, "mechanics": ["Arrive Choice"], "image": "cards/leprechaun.jpg", "flavor": "Not especially tough, but they do hiss loudly when you get near.", "combo": {"provides": [], "triggers": [], "interactive": ["Arrive-Choice"], "trashTags": [], "clusters": ["Arrive-Choice"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Scuffler", "set": "Adventure", "type": "Monster", "cost": "2S", "costNum": 2, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: Each opponent chooses: -2 Clank! -OR- 2 coin -OR- Trash a Burgle in your discard pile. You get all three.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": ["Trash"], "image": "cards/scuffler.jpg", "flavor": "Don't waste a good weapon battling a scuffler.", "combo": {"provides": ["Burgle-Trash"], "triggers": [], "interactive": ["Anti-Player"], "trashTags": ["Active-Trash", "Burgle-Trash"], "clusters": ["Anti-Player", "Burgle-Removal"]}, "comboScore": 8, "verified": true, "source": "verified"}, {"name": "Succubus", "set": "Adventure", "type": "Monster", "cost": "3S", "costNum": 3, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: Each opponent chooses: 3 coin -OR- heart. You get both.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 2, "mechanics": [], "image": "cards/succubus.jpg", "flavor": "Even if you don't see the allure, you'll reap the rewards.", "combo": {"provides": [], "triggers": [], "interactive": ["Anti-Player"], "trashTags": [], "clusters": ["Anti-Player"]}, "comboScore": 4, "verified": true, "source": "verified"}, {"name": "Ape Lord Phantasm", "set": "Adventure", "type": "Monster", "cost": "3S", "costNum": 3, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: Draw two cards. Players may return any monkey idols to the monkey shrine room to take a Secret Tome for each.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "cards/ape_lord_phantasm.jpg", "flavor": "Some treasure isn't worth the nightmare that follows.", "combo": {"provides": ["Tome-Acquire"], "triggers": ["Monkey-Idol", "Secret-Tome trigger"], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine", "Monkey-Idol", "Secret-Tome"]}, "comboScore": 12, "verified": true, "source": "verified"}, {"name": "Tinkerer", "set": "Lairs", "type": "Companion", "cost": 4, "costNum": 4, "isMonster": false, "skill": 2, "swords": null, "boots": 1, "vp": 1, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": ["Companion"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Devotion", "set": "Lairs", "type": "Other", "cost": 7, "costNum": 7, "isMonster": false, "skill": 2, "swords": null, "boots": 2, "vp": 0, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Position-Wayshrine"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Jailbreaker", "set": "Lairs", "type": "Other", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": 3, "boots": null, "vp": 1, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Prisoner"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Monkey Paw", "set": "Lairs", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 1, "swords": 1, "boots": null, "vp": 3, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": ["Monkey-Idol"], "interactive": [], "trashTags": ["Trash-Other"], "clusters": ["Monkey-Idol"]}, "comboScore": 5, "verified": false, "source": "author-v1.2"}, {"name": "Quick Pick", "set": "Lairs", "type": "Other", "cost": 2, "costNum": 2, "isMonster": false, "skill": 1, "swords": null, "boots": 1, "vp": 1, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": ["Lockpick-Gen"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Lockpick"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Ten-Foot Pole", "set": "Lairs", "type": "Other", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 1, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Tile-Manipulation"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Thirst for Knowledge", "set": "Lairs", "type": "Other", "cost": 4, "costNum": 4, "isMonster": false, "skill": 3, "swords": null, "boots": null, "vp": 0, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": ["Secret-Tome trigger"], "interactive": [], "trashTags": [], "clusters": ["Secret-Tome"]}, "comboScore": 5, "verified": false, "source": "author-v1.2"}, {"name": "Tome of Fire", "set": "Lairs", "type": "Other", "cost": 4, "costNum": 4, "isMonster": false, "skill": 2, "swords": 2, "boots": null, "vp": 1, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": ["Secret-Tome named"], "triggers": ["Secret-Tome trigger"], "interactive": [], "trashTags": [], "clusters": ["Secret-Tome"]}, "comboScore": 5, "verified": false, "source": "author-v1.2"}, {"name": "Amethyst", "set": "Lairs", "type": "Gem", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 2, "text": "", "acquire": "+2 Clank!", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": ["Gem"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Gem-Synergy"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Cave Bat Wings", "set": "Lairs", "type": "Device", "cost": 6, "costNum": 6, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 4, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": ["Secret-Tome trigger"], "interactive": [], "trashTags": [], "clusters": ["Position-Cave", "Secret-Tome", "Trophy"]}, "comboScore": 9, "verified": false, "source": "author-v1.2"}, {"name": "False Bottom", "set": "Lairs", "type": "Device", "cost": 4, "costNum": 4, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 0, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": ["Lockpick-Gen"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Lockpick"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Merchant's Guild Pin", "set": "Lairs", "type": "Device", "cost": 4, "costNum": 4, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 2, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Position-Market", "Trophy"]}, "comboScore": 4, "verified": false, "source": "author-v1.2"}, {"name": "Cavern Prowler", "set": "Lairs", "type": "Monster", "cost": null, "costNum": null, "isMonster": false, "skill": 0, "swords": 4, "boots": null, "vp": 0, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": false, "source": "author-v1.2"}, {"name": "Hoard Keeper", "set": "Lairs", "type": "Monster", "cost": null, "costNum": null, "isMonster": false, "skill": 0, "swords": 3, "boots": null, "vp": 0, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Trophy"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Jailer", "set": "Lairs", "type": "Monster", "cost": null, "costNum": null, "isMonster": false, "skill": 0, "swords": 3, "boots": null, "vp": 0, "text": "", "acquire": "", "arriveDanger": "+1 Cube", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": ["Lockpick-Gen"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Lockpick", "Prisoner"]}, "comboScore": 4, "verified": false, "source": "author-v1.2"}, {"name": "Pit Fiend", "set": "Lairs", "type": "Monster", "cost": null, "costNum": null, "isMonster": false, "skill": 0, "swords": 2, "boots": null, "vp": 0, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Prisoner"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Skeleton Troubadour", "set": "Lairs", "type": "Monster", "cost": null, "costNum": null, "isMonster": false, "skill": 0, "swords": 1, "boots": null, "vp": 0, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": false, "source": "author-v1.2"}, {"name": "Underworld Guardian", "set": "Underworld", "type": "Monster", "cost": "3S", "costNum": 3, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 3, "text": "When encountered, you must defeat this or take 2 damage.\nDEFEAT: Take the 2x artifact enhancer.\nTROPHY: Bonus artifact. (doesn't count for your artifact limit.)", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": ["Artifact"], "interactive": [], "trashTags": [], "clusters": ["Artifact", "Trophy"]}, "comboScore": 7, "verified": true, "source": "image-extracted"}, {"name": "Tome of the Ape Lords", "set": "Underworld", "type": "Other", "cost": 4, "costNum": 4, "isMonster": false, "skill": 3, "swords": 0, "boots": 0, "vp": 3, "text": "If you have a monkey idol, this counts as a Secret Tome.", "acquire": "+3 Clank!", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "Ape Lord magic was divided into three schools.", "combo": {"provides": ["Secret-Tome counts-as", "Secret-Tome named"], "triggers": ["Monkey-Idol"], "interactive": [], "trashTags": [], "clusters": ["Monkey-Idol", "Secret-Tome"]}, "comboScore": 7, "verified": true, "source": "image-extracted"}, {"name": "Tome of Intellect", "set": "Underworld", "type": "Other", "cost": 6, "costNum": 6, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 1, "text": "Draw two cards. It counts as a Secret Tome.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "It's an exciting read. The words jump off the page.", "combo": {"provides": ["Secret-Tome counts-as", "Secret-Tome named"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine", "Secret-Tome"]}, "comboScore": 4, "verified": true, "source": "image-extracted"}, {"name": "Underworld Guide", "set": "Underworld", "type": "Companion", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": 0, "boots": 1, "vp": 0, "text": "If you're in the Underworld, draw a card.\nWhen you trash this, draw a card.", "acquire": "1 coin", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "Ask him no questions... but you'd best read the fine print.", "combo": {"provides": ["Companion"], "triggers": [], "interactive": [], "trashTags": ["Self-Trash", "Trash-Payoff"], "clusters": ["Companion-Chain", "Draw-Engine"]}, "comboScore": 5, "verified": true, "source": "image-extracted"}, {"name": "Soul Prism", "set": "Underworld", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 1, "text": "When you trash this, free a prisoner.", "acquire": "Heal 1", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "If you listen closely, you can hear tiny hands knocking.", "combo": {"provides": ["Free-Prisoner"], "triggers": [], "interactive": [], "trashTags": ["Self-Trash", "Trash-Payoff"], "clusters": ["Prisoner"]}, "comboScore": 3, "verified": true, "source": "image-extracted"}, {"name": "Oracle", "set": "Underworld", "type": "Companion", "cost": 4, "costNum": 4, "isMonster": false, "skill": 1, "swords": 0, "boots": 0, "vp": 1, "text": "Draw a card.\n-OR-\nSpend 1 coin to draw two cards.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "Tips make the visions a little clearer.", "combo": {"provides": ["Companion"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Draw-Engine"]}, "comboScore": 4, "verified": true, "source": "image-extracted"}, {"name": "Lantern", "set": "Underworld", "type": "Other", "cost": null, "costNum": null, "isMonster": false, "skill": null, "swords": 0, "boots": 1, "vp": 0, "text": "[partial: coin/clank effect — exact text obscured]", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "The Underworld is a dangerous place... [obscured]", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "image-extracted"}, {"name": "Big Ideas", "set": "Underworld", "type": "Other", "cost": null, "costNum": null, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 1, "text": "+1 Clank!\nIf you generate 6 or more [Skill] this turn, [obscured effect]", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "It's dumb enough that it might be brilliant.", "combo": {"provides": [], "triggers": ["Clank-trigger", "Skill-threshold"], "interactive": [], "trashTags": [], "clusters": ["Clank-Trigger", "Skill-Threshold"]}, "comboScore": 10, "verified": true, "source": "image-extracted"}, {"name": "Wealth of Knowledge", "set": "Underworld", "type": "Other", "cost": null, "costNum": null, "isMonster": false, "skill": 2, "swords": 0, "boots": 1, "vp": 0, "text": "ARRIVE: All players get 1 coin.\nWorth 1 [point] for each Secret Tome you have.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "Unlock the riches of your [obscured]", "combo": {"provides": [], "triggers": ["Secret-Tome trigger"], "interactive": ["Anti-Player"], "trashTags": [], "clusters": ["Anti-Player", "Secret-Tome"]}, "comboScore": 9, "verified": true, "source": "image-extracted"}, {"name": "Moneychanger's Booth", "set": "Underworld", "type": "Device", "cost": 4, "costNum": 4, "isMonster": false, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "USE: [Get 2 coins — exact wording obscured]", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "It's a great deal. Trinkets from the upper world for access to the underworld.", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "image-extracted"}, {"name": "Fire Breath", "set": "Underworld", "type": "Other", "cost": null, "costNum": null, "isMonster": false, "skill": 1, "swords": 1, "boots": 0, "vp": 1, "text": "If you make any Clank! this turn, draw a card.", "acquire": "+1 Sword", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "Mages everywhere are chatting about this hot new spell.", "combo": {"provides": [], "triggers": ["Clank-trigger"], "interactive": [], "trashTags": [], "clusters": ["Clank-Trigger", "Draw-Engine"]}, "comboScore": 7, "verified": true, "source": "image-extracted"}, {"name": "Abyssal Hydra", "set": "Underworld", "type": "Monster", "cost": "3S", "costNum": 3, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "ARRIVE: Put 6 coin on this.\nDEFEAT: Draw two cards, take 2 coin from this. This stays in the dungeon row if it still has any coin.", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "That is one hale hydra.", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine"]}, "comboScore": 2, "verified": true, "source": "image-extracted"}, {"name": "Harpy Matriarch", "set": "Underworld", "type": "Monster", "cost": "2S", "costNum": 2, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "Fight this only in the Underworld.\nDEFEAT: 2 coin\nTROPHY: Worth 1 [point] for each harpy trophy you have (including this one).", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "Mess with her brood, and you're messing with her.", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Trophy"]}, "comboScore": 2, "verified": true, "source": "image-extracted"}, {"name": "Acid Splash", "set": "Underworld", "type": "Other", "cost": 2, "costNum": 2, "isMonster": false, "skill": 0, "swords": 0, "boots": 0, "vp": 1, "text": "Reveal the top card of your deck. (Reshuffle if needed.)\nThen choose: Trash it -OR- discard it to get 2 coin.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "This is a highly volatile spell.", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": ["Trash-Other"], "clusters": ["Discard-Engine"]}, "comboScore": 2, "verified": true, "source": "image-extracted"}, {"name": "Cyclops", "set": "Underworld", "type": "Monster", "cost": "3S", "costNum": 3, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "ARRIVE: All players get +1 Clank!\nDEFEAT: Take a lockpick, trash a card in your play area or discard pile.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "Don't worry about the boulder. He doesn't have good depth perception.", "combo": {"provides": ["Lockpick-Gen"], "triggers": [], "interactive": ["Anti-Player"], "trashTags": ["Active-Trash"], "clusters": ["Anti-Player", "Discard-Engine", "Lockpick"]}, "comboScore": 10, "verified": true, "source": "image-extracted"}, {"name": "Grave Robber", "set": "Underworld", "type": "Monster", "cost": "2S", "costNum": 2, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "ARRIVE: Rotate each square tile with any players on it 180 degrees.\nDEFEAT: 1 coin", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "In the Underworld lies grave danger.", "combo": {"provides": [], "triggers": [], "interactive": ["Anti-Player"], "trashTags": [], "clusters": ["Anti-Player", "Tile-Manipulation"]}, "comboScore": 6, "verified": true, "source": "image-extracted"}, {"name": "Shifting Shadow", "set": "Underworld", "type": "Monster", "cost": "1S", "costNum": 1, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DEFEAT: You may move in the wrong direction through one-way tunnels this turn.", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "Invisible to most, these creatures dwell on the edge of the living world and the ghost world.", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": true, "source": "image-extracted"}, {"name": "Wild Boar", "set": "Underworld", "type": "Monster", "cost": "2S", "costNum": 2, "isMonster": true, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "DANGER: Pull +1 cube for dragon attacks.\nDEFEAT: +1 Clank!, draw two cards.", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "Best not stand in its path...", "combo": {"provides": [], "triggers": ["Clank-trigger"], "interactive": [], "trashTags": [], "clusters": ["Clank-Trigger", "Draw-Engine"]}, "comboScore": 7, "verified": true, "source": "image-extracted"}, {"name": "Soothsayer", "set": "Underworld", "type": "Companion", "cost": 3, "costNum": 3, "isMonster": false, "skill": 2, "swords": 0, "boots": 0, "vp": 2, "text": "If you have a fate card, +1 coin.", "acquire": "", "arriveDanger": "Each player may spend 1 coin to heal.", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "The future is coming soon.", "combo": {"provides": ["Companion"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Coin-Engine", "Companion-Chain", "Fate-Card"]}, "comboScore": 6, "verified": true, "source": "image-extracted"}, {"name": "Catapult", "set": "Underworld", "type": "Device", "cost": 2, "costNum": 2, "isMonster": false, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "USE: +2 Clank!, teleport to an adjacent room.", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "I have an idea. Hold my tankard.", "combo": {"provides": ["Teleport"], "triggers": ["Clank-trigger"], "interactive": [], "trashTags": [], "clusters": ["Clank-Trigger", "Teleport"]}, "comboScore": 7, "verified": true, "source": "image-extracted"}, {"name": "Orpheus", "set": "Underworld", "type": "Companion", "cost": 7, "costNum": 7, "isMonster": false, "skill": 0, "swords": 0, "boots": 2, "vp": 0, "text": "+1 Clank!, 1 coin\nWorth 1 [point] for each freed Prisoner you have.", "acquire": "Free a prisoner.", "arriveDanger": "Put 3 dragon cubes back in the bag.", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": ["Companion", "Free-Prisoner"], "triggers": ["Prisoner count"], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Prisoner"]}, "comboScore": 7, "verified": true, "source": "image-extracted"}, {"name": "Mystic Elevator", "set": "Underworld", "type": "Device", "cost": 5, "costNum": 5, "isMonster": false, "skill": null, "swords": null, "boots": null, "vp": 0, "text": "USE: +1 Clank!, teleport to a Market room in the Underworld.", "acquire": "", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "Going down?", "combo": {"provides": ["Teleport"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Position-Market", "Teleport"]}, "comboScore": 4, "verified": true, "source": "image-extracted"}, {"name": "Utility Knife", "set": "Underworld", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": 1, "boots": 0, "vp": 0, "text": "Draw a card.", "acquire": "1 coin", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "It slices, it dices, it transfers wealth... but wait, there's more!", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Draw-Engine"]}, "comboScore": 2, "verified": true, "source": "image-extracted"}, {"name": "Apprentice Thief", "set": "Underworld", "type": "Companion", "cost": 3, "costNum": 3, "isMonster": false, "skill": 1, "swords": 1, "boots": null, "vp": 1, "text": "", "acquire": "Lockpick", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": ["Companion", "Lockpick-Gen"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Companion-Chain", "Lockpick"]}, "comboScore": 4, "verified": false, "source": "author-v1.2"}, {"name": "Sculptor", "set": "Underworld", "type": "Companion", "cost": 3, "costNum": 3, "isMonster": false, "skill": 0, "swords": null, "boots": null, "vp": 1, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": ["Companion"], "triggers": [], "interactive": [], "trashTags": ["Trash-Other"], "clusters": ["Companion-Chain"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Ethereal Step", "set": "Underworld", "type": "Other", "cost": 3, "costNum": 3, "isMonster": false, "skill": 2, "swords": null, "boots": null, "vp": 1, "text": "", "acquire": "", "arriveDanger": "", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": ["Teleport"], "triggers": [], "interactive": [], "trashTags": [], "clusters": ["Teleport"]}, "comboScore": 2, "verified": false, "source": "author-v1.2"}, {"name": "Quick Trip", "set": "Underworld", "type": "Other", "cost": 5, "costNum": 5, "isMonster": false, "skill": 1, "swords": null, "boots": 2, "vp": 2, "text": "", "acquire": "+1 Move,+2 Clank!", "arriveDanger": "", "dragonAttack": true, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": ["Artifact"], "interactive": [], "trashTags": [], "clusters": ["Artifact", "Position-Cave"]}, "comboScore": 7, "verified": false, "source": "author-v1.2"}, {"name": "Chimera", "set": "Underworld", "type": "Monster", "cost": null, "costNum": null, "isMonster": false, "skill": 0, "swords": 3, "boots": null, "vp": 0, "text": "", "acquire": "", "arriveDanger": "+1 Clank! All", "dragonAttack": false, "quantity": 1, "mechanics": [], "image": "", "flavor": "", "combo": {"provides": [], "triggers": [], "interactive": [], "trashTags": [], "clusters": []}, "comboScore": 0, "verified": false, "source": "author-v1.2"}];
+const CLUSTERS_INFO = {"Companion-Chain": "Cards that gain bonuses when you have another Companion in play. Companions themselves are the providers.", "Secret-Tome": "Cards that count as or interact with Secret Tomes (big VP + payoff triggers, Imp Assistant scaling).", "Gem-Synergy": "Cards that trigger when you have/play Gems.", "Monkey-Idol": "Cards that interact with monkey idol tokens.", "Crown": "Cards that activate when you have a Crown.", "Artifact": "Cards that activate per Artifact or when you carry one.", "Prisoner": "Cards that free prisoners or scale with freed-prisoner count.", "Lockpick": "Cards that generate or spend Lockpicks.", "Skill-Threshold": "Cards that fire when you generate 6+ Skill in a turn.", "Clank-Trigger": "Cards that pay off when you make Clank!", "Burgle-Removal": "Cards designed to trash Burgles (starter chaff thinning).", "Position-Cave": "Cards that activate in/around Crystal Caves.", "Position-Market": "Cards that activate in Market rooms.", "Position-Wayshrine": "Cards that activate at Wayshrines.", "Haunted-Ghost": "Cards that interact with haunted tiles or Ghosts.", "React": "Cards played during opponents turns. Anchor mechanic.", "Arrive-Choice": "Cards where every player makes a choice on arrival.", "Anti-Player": "Cards that hurt opponents (Clank to others, all-player effects).", "Trophy": "Cards kept face-up out of deck. Anchor mechanic (Lairs/Underworld).", "Coin-Engine": "Cards with strong coin generation per condition.", "Draw-Engine": "Cards that cycle your deck.", "Teleport": "Cards that move without spending Boots.", "Tile-Manipulation": "Cards that rotate/place tiles."};
+
+// Benchmarks computed dynamically from CARDS where set==='Catacombs' — see buildTargets()
+const TARGETS = {
+  Companion:[20,25], Monster:[18,22], Device:[8,12], Gem:[5,10], Other:[38,46],
+  Dragon:[22,28], TrashActive:[12,18], TrashTotal:[18,22], Draw:[28,32], MeanCost:[3.4,3.8],
+  SkillDen:[0.72,0.88], SwordDen:[0.38,0.47], BootDen:[0.32,0.40], VpDen:[1.27,1.55]
+};
+
+const TYPE_COLORS = { Companion:'#c08040', Monster:'#c0392b', Device:'#2a4a5a', Gem:'#d4a857', Other:'#6abf69' };
+const SET_COLORS = { Catacombs:'#d4a857', Adventure:'#c0392b', Lairs:'#6abf69', Underworld:'#5a3a6a' };
+
+function sumQty(arr) { return arr.reduce((a,c)=>a+c.quantity,0); }
+function byType(cards) { const t={}; cards.forEach(c=>t[c.type]=(t[c.type]||0)+c.quantity); return t; }
+function bySet(cards) { const s={}; cards.forEach(c=>s[c.set]=(s[c.set]||0)+c.quantity); return s; }
+function hasCluster(c, cl) { return (c.combo && c.combo.clusters || []).includes(cl); }
+function hasTrash(c, t) { return (c.combo && c.combo.trashTags || []).includes(t); }
+
+// Tabs
+document.querySelectorAll('nav.tabs button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('nav.tabs button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById(b.dataset.tab).classList.add('active');
+    if (b.dataset.tab==='analysis') buildAnalysis();
+    if (b.dataset.tab==='combos') buildCombos();
+    if (b.dataset.tab==='targets') buildTargets();
+  });
+});
+
+// ---- Pool filters ----
+const sets = [...new Set(CARDS.map(c => c.set))].sort();
+const types = [...new Set(CARDS.map(c => c.type))].sort();
+const allClusters = [...new Set(CARDS.flatMap(c => c.combo && c.combo.clusters || []))].sort();
+const allTrashTags = [...new Set(CARDS.flatMap(c => c.combo && c.combo.trashTags || []))].sort();
+
+function makeCheckboxList(container, items, getCount) {
+  container.innerHTML = items.map(it =>
+    `<label><input type="checkbox" value="${it}"><span class="nm">${it}</span><span class="count">${getCount(it)}</span></label>`
+  ).join('');
+}
+makeCheckboxList(document.getElementById('f-set'), sets, s => sumQty(CARDS.filter(c=>c.set===s)));
+makeCheckboxList(document.getElementById('f-type'), types, t => sumQty(CARDS.filter(c=>c.type===t)));
+makeCheckboxList(document.getElementById('f-cluster'), allClusters, cl => sumQty(CARDS.filter(c=>hasCluster(c,cl))));
+makeCheckboxList(document.getElementById('f-trash'), allTrashTags, t => sumQty(CARDS.filter(c=>hasTrash(c,t))));
+
+function getChecked(id) { return Array.from(document.querySelectorAll(`#${id} input:checked`)).map(c=>c.value); }
+
+function applyFilters() {
+  const q = document.getElementById('f-search').value.toLowerCase();
+  const selSets = getChecked('f-set');
+  const selTypes = getChecked('f-type');
+  const minC = parseInt(document.getElementById('f-min').value);
+  const maxC = parseInt(document.getElementById('f-max').value);
+  const drg = document.getElementById('f-dragon').value;
+  const selClusters = getChecked('f-cluster');
+  const selTrash = getChecked('f-trash');
+  const sortBy = document.getElementById('f-sort').value;
+
+  let rows = CARDS.filter(c => {
+    if (q && !((c.name||'').toLowerCase().includes(q) || (c.text||'').toLowerCase().includes(q))) return false;
+    if (selSets.length && !selSets.includes(c.set)) return false;
+    if (selTypes.length && !selTypes.includes(c.type)) return false;
+    if (!isNaN(minC) && (c.costNum===null || c.costNum < minC)) return false;
+    if (!isNaN(maxC) && (c.costNum===null || c.costNum > maxC)) return false;
+    if (drg === 'yes' && !c.dragonAttack) return false;
+    if (drg === 'no' && c.dragonAttack) return false;
+    if (selClusters.length && !selClusters.some(cl => hasCluster(c, cl))) return false;
+    if (selTrash.length && !selTrash.some(t => hasTrash(c, t))) return false;
+    const vf = document.getElementById('f-verified').value;
+    if (vf === 'yes' && !c.verified) return false;
+    if (vf === 'no' && c.verified) return false;
+    return true;
+  });
+
+  const sorters = {
+    set: (a,b) => (a.set||'').localeCompare(b.set||'') || (a.name||'').localeCompare(b.name||''),
+    name: (a,b) => (a.name||'').localeCompare(b.name||''),
+    cost: (a,b) => (a.costNum??99) - (b.costNum??99) || a.name.localeCompare(b.name),
+    vp: (a,b) => (b.vp??-1) - (a.vp??-1),
+    qty: (a,b) => b.quantity - a.quantity,
+    combo: (a,b) => (b.comboScore||0) - (a.comboScore||0),
+  };
+  rows.sort(sorters[sortBy]);
+
+  const tot = sumQty(rows);
+  document.getElementById('row-count').textContent = `${rows.length} unique · ${tot} copies`;
+  document.getElementById('grid').innerHTML = rows.map(c => `
+    <div class="card ${!c.verified ? 'tentative' : ''}" onclick="openModal(${CARDS.indexOf(c)})">
+      <span class="set-badge set-${c.set}">${c.set}</span>
+      ${c.quantity > 1 ? `<span class="qty-badge">×${c.quantity}</span>` : ''}
+      ${c.comboScore > 5 ? `<span class="combo-pip">⚡${c.comboScore}</span>` : ''}
+      ${!c.verified ? `<span class="tentative-badge">tentative</span>` : ''}
+      ${c.image ? `<img src="${c.image}" alt="${c.name}" loading="lazy">` : `<div class="placeholder"><div><span class="ph-name">${c.name}</span>image pending</div></div>`}
+      <div class="info">
+        <div class="name">${c.name}</div>
+        <div class="meta">
+          <span>${c.cost!=null?(c.isMonster?c.cost:c.cost+'$'):''}</span>
+          <span>${c.vp!=null?c.vp+' VP':''}${c.dragonAttack?' <span class="dragon-icon">★</span>':''}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  updateLiveStats(rows);
+}
+
+function updateLiveStats(rows) {
+  const tot = sumQty(rows);
+  if (!tot) { document.getElementById('live-stats').innerHTML = '<div class="row"><span class="label">No cards</span></div>'; return; }
+  const t = byType(rows);
+  const drg = sumQty(rows.filter(c => c.dragonAttack));
+  const trashActive = sumQty(rows.filter(c => hasTrash(c,'Active-Trash')));
+  const trashSelf = sumQty(rows.filter(c => hasTrash(c,'Self-Trash')));
+  const draw = sumQty(rows.filter(c => hasCluster(c,'Draw-Engine')));
+  const costs = rows.filter(c => !c.isMonster && c.costNum!=null);
+  const avgCost = costs.length ? (costs.reduce((a,c)=>a+c.costNum*c.quantity,0) / sumQty(costs)) : 0;
+  const avgCombo = rows.length ? (rows.reduce((a,c)=>a+(c.comboScore||0)*c.quantity,0)/tot) : 0;
+  document.getElementById('live-stats').innerHTML = `
+    <div class="row"><span class="label">Total copies</span><span class="value">${tot}</span></div>
+    <div class="row"><span class="label">Unique</span><span class="value">${rows.length}</span></div>
+    <div class="row"><span class="label">Avg cost</span><span class="value">${avgCost.toFixed(2)}$</span></div>
+    <div class="row"><span class="label">Avg combo score</span><span class="value">${avgCombo.toFixed(1)}</span></div>
+    <div class="row"><span class="label">Dragon</span><span class="value">${drg} (${(100*drg/tot).toFixed(0)}%)</span></div>
+    <div class="row"><span class="label">Active trash</span><span class="value">${trashActive} (${(100*trashActive/tot).toFixed(0)}%)</span></div>
+    <div class="row"><span class="label">Self-trash</span><span class="value">${trashSelf}</span></div>
+    <div class="row"><span class="label">Draw</span><span class="value">${draw} (${(100*draw/tot).toFixed(0)}%)</span></div>
+    ${Object.entries(t).map(([k,n]) => `<div class="row"><span class="label">${k}</span><span class="value">${n} (${(100*n/tot).toFixed(0)}%)</span></div>`).join('')}
+  `;
+}
+
+// ---- Modal ----
+function openModal(idx) {
+  const c = CARDS[idx];
+  document.getElementById('modal-img-container').innerHTML = c.image
+    ? `<img src="${c.image}" alt="${c.name}" style="width:100%;border-radius:6px;background:#111;">`
+    : `<div class="placeholder"><div><span class="ph-name">${c.name}</span><div>Image pending</div><div style="font-size:0.85em;margin-top:8px;">Verify when ${c.set} arrives</div></div></div>`;
+  const combo = c.combo || {};
+  const trashPills = (combo.trashTags||[]).map(t => {
+    const cls = (t==='Self-Trash') ? 'trash-bad' : 'trash-good';
+    return `<span class="combo-pill ${cls}">${t}</span>`;
+  }).join('');
+  document.getElementById('modal-details').innerHTML = `
+    <h2>${c.name}</h2>
+    <div>
+      <span class="badge set-${c.set}">${c.set}</span>
+      <span class="badge" style="background:#3a2d23;color:#d4a857;">${c.type}</span>
+      ${c.dragonAttack ? '<span class="badge" style="background:#c0392b;color:#fff;">Dragon Attack</span>' : ''}
+      ${c.comboScore ? `<span class="badge" style="background:#d4a857;color:#2a1810;">⚡ Combo ${c.comboScore}</span>` : ''}
+      ${!c.verified ? `<span class="badge" style="background:#d97757;color:#1a1410;">⚠ Tentative</span>` : ''}
+    </div>
+    <div class="stats-grid">
+      <span class="label">Cost</span><span class="value">${c.cost ?? '—'}</span>
+      <span class="label">Skill</span><span class="value">${c.skill ?? '—'}</span>
+      <span class="label">Swords</span><span class="value">${c.swords ?? '—'}</span>
+      <span class="label">Boots</span><span class="value">${c.boots ?? '—'}</span>
+      <span class="label">VP</span><span class="value">${c.vp ?? '—'}</span>
+      <span class="label">Quantity in box</span><span class="value">${c.quantity}</span>
+    </div>
+    ${c.text ? `<div class="text-block"><span class="lbl">Effect</span>${c.text}</div>` : ''}
+    ${c.acquire ? `<div class="text-block"><span class="lbl">Acquire</span>${c.acquire}</div>` : ''}
+    ${c.arriveDanger ? `<div class="text-block"><span class="lbl">Arrive / Danger</span>${c.arriveDanger}</div>` : ''}
+    ${c.flavor ? `<div class="text-block" style="font-style:italic;"><span class="lbl">Flavor</span>${c.flavor}</div>` : ''}
+    ${combo.clusters && combo.clusters.length ? `<div class="combo-section"><span class="lbl">Combo clusters</span>${combo.clusters.map(cl=>`<span class="combo-pill cluster">${cl}</span>`).join('')}</div>` : ''}
+    ${combo.provides && combo.provides.length ? `<div class="combo-section"><span class="lbl">Provides (enables combos)</span>${combo.provides.map(p=>`<span class="combo-pill provides">${p}</span>`).join('')}</div>` : ''}
+    ${combo.triggers && combo.triggers.length ? `<div class="combo-section"><span class="lbl">Triggers off (combo activator)</span>${combo.triggers.map(p=>`<span class="combo-pill triggers">${p}</span>`).join('')}</div>` : ''}
+    ${combo.interactive && combo.interactive.length ? `<div class="combo-section"><span class="lbl">Interactive</span>${combo.interactive.map(p=>`<span class="combo-pill interactive">${p}</span>`).join('')}</div>` : ''}
+    ${trashPills ? `<div class="combo-section"><span class="lbl">Trash type</span>${trashPills}</div>` : ''}
+    ${c.mechanics && c.mechanics.length ? `<div class="mech-tags">${c.mechanics.map(m=>`<span class="mech-tag">${m}</span>`).join('')}</div>` : ''}
+  `;
+  document.getElementById('modal').classList.add('active');
+}
+function closeModal() { document.getElementById('modal').classList.remove('active'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function resetFilters() {
+  document.getElementById('f-search').value = '';
+  document.querySelectorAll('.checkbox-list input').forEach(cb => cb.checked = false);
+  document.getElementById('f-min').value = ''; document.getElementById('f-max').value = '';
+  document.getElementById('f-dragon').value = ''; document.getElementById('f-sort').value = 'set';
+  applyFilters();
+}
+document.querySelectorAll('#pool input, #pool select').forEach(el => { el.addEventListener('input', applyFilters); el.addEventListener('change', applyFilters); });
+
+// ---- SVG helpers ----
+function svgEl(w,h) { return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">`; }
+function txt(x,y,s,col='#9d8b6f',sz=11,anchor='start') { return `<text x="${x}" y="${y}" fill="${col}" font-size="${sz}" text-anchor="${anchor}">${s}</text>`; }
+function vbar(items,w=560,h=280,color='#d4a857',labelLen=110) {
+  if (!items.length) return svgEl(w,h)+'</svg>';
+  const ML=labelLen,MR=80,MT=10,MB=10; const cw=w-ML-MR,ch=h-MT-MB;
+  const bh = Math.max(14, ch/items.length - 6); const maxV = Math.max(...items.map(i=>i[1])) || 1;
+  let out = svgEl(w,h);
+  items.forEach(([k,v],i) => {
+    const y = MT+i*(ch/items.length)+3; const bw = (v/maxV)*cw;
+    const col = typeof color === 'function' ? color(k) : color;
+    out += txt(ML-8, y+bh/2+4, k, '#9d8b6f', 12, 'end');
+    out += `<rect x="${ML}" y="${y}" width="${bw}" height="${bh}" fill="${col}" rx="2"/>`;
+    out += txt(ML+bw+6, y+bh/2+4, v, '#f0e3cc', 12);
+  });
+  return out + '</svg>';
+}
+function cbar(items,w=520,h=260,color='#d4a857',suffix='') {
+  if (!items.length) return svgEl(w,h)+'</svg>';
+  const ML=35,MR=18,MT=18,MB=32; const cw=w-ML-MR,ch=h-MT-MB;
+  const slotW=cw/items.length; const bw=slotW*0.7; const maxV=Math.max(...items.map(i=>i[1]))||1;
+  let out=svgEl(w,h);
+  for (let t=0;t<5;t++) { const ty=MT+ch-(t/4)*ch; const tv=(maxV*t/4).toFixed(maxV>10?0:1); out+=`<line x1="${ML}" y1="${ty}" x2="${w-MR}" y2="${ty}" stroke="#4a3a2a" stroke-width="0.5" stroke-dasharray="2 3"/>`+txt(ML-6,ty+3,tv,'#9d8b6f',10,'end'); }
+  items.forEach(([k,v],i) => {
+    const x=ML+i*slotW+(slotW-bw)/2; const bhh=(v/maxV)*ch; const y=MT+ch-bhh;
+    const col = typeof color === 'function' ? color(k) : color;
+    out += `<rect x="${x}" y="${y}" width="${bw}" height="${bhh}" fill="${col}" rx="2"/>`;
+    out += txt(x+bw/2,y-4,v,'#f0e3cc',11,'middle')+txt(x+bw/2,h-10,k+suffix,'#9d8b6f',11,'middle');
+  });
+  return out+'</svg>';
+}
+function donut(items,w=420,h=260) {
+  const total=items.reduce((a,[,v])=>a+v,0)||1; const cx=120,cy=130,ro=90,ri=50;
+  let out=svgEl(w,h); let ang=-Math.PI/2;
+  items.forEach(([k,v]) => {
+    const a=(v/total)*Math.PI*2; const a0=ang,a1=ang+a;
+    const x0o=cx+ro*Math.cos(a0),y0o=cy+ro*Math.sin(a0),x1o=cx+ro*Math.cos(a1),y1o=cy+ro*Math.sin(a1);
+    const x0i=cx+ri*Math.cos(a0),y0i=cy+ri*Math.sin(a0),x1i=cx+ri*Math.cos(a1),y1i=cy+ri*Math.sin(a1);
+    const large = a > Math.PI ? 1 : 0;
+    const col = TYPE_COLORS[k] || SET_COLORS[k] || '#888';
+    out += `<path d="M ${x0o} ${y0o} A ${ro} ${ro} 0 ${large} 1 ${x1o} ${y1o} L ${x1i} ${y1i} A ${ri} ${ri} 0 ${large} 0 ${x0i} ${y0i} Z" fill="${col}"/>`;
+    const mid=(a0+a1)/2; const lx=cx+((ro+ri)/2)*Math.cos(mid),ly=cy+((ro+ri)/2)*Math.sin(mid);
+    out += txt(lx,ly+4,v,'#1a1410',13,'middle'); ang=a1;
+  });
+  items.forEach(([k,v],i) => { const col=TYPE_COLORS[k]||SET_COLORS[k]||'#888'; out+=`<rect x="240" y="${30+i*24}" width="14" height="14" fill="${col}" rx="2"/>`+txt(262,42+i*24,k,'#f0e3cc',13)+txt(262,56+i*24,`${v} (${(100*v/total).toFixed(1)}%)`,'#9d8b6f',11); });
+  return out+'</svg>';
+}
+function stackedBar(setData, types, w=420, h=300) {
+  const sets=Object.keys(setData); if (!sets.length) return svgEl(w,h)+'</svg>';
+  const ML=90,MR=20,MT=30,MB=20; const cw=w-ML-MR,ch=h-MT-MB; const bh=ch/sets.length-6;
+  const maxV=Math.max(...sets.map(s=>types.reduce((a,t)=>a+(setData[s][t]||0),0)))||1;
+  let out=svgEl(w,h); let lx=ML;
+  types.forEach(t => { out+=`<rect x="${lx}" y="6" width="12" height="12" fill="${TYPE_COLORS[t]}"/>`+txt(lx+16,16,t,'#9d8b6f',10); lx+=70; });
+  sets.forEach((s,i) => {
+    const y=MT+i*(ch/sets.length)+3; let x=ML; let total=0;
+    out += txt(ML-8,y+bh/2+4,s,'#9d8b6f',12,'end');
+    types.forEach(t => { const v=setData[s][t]||0; if (!v) return; const bw=(v/maxV)*cw;
+      out += `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" fill="${TYPE_COLORS[t]}"/>`;
+      if (bw>16) out+=txt(x+bw/2,y+bh/2+4,v,'#1a1410',10,'middle');
+      x+=bw; total+=v;
+    });
+    out += txt(x+6,y+bh/2+4,total,'#f0e3cc',12);
+  });
+  return out+'</svg>';
+}
+
+// ---- Analysis tab ----
+function buildAnalysis() {
+  const tot=sumQty(CARDS); const types=byType(CARDS); const sets=bySet(CARDS);
+  const drg=sumQty(CARDS.filter(c=>c.dragonAttack));
+  const trashActive=sumQty(CARDS.filter(c=>hasTrash(c,'Active-Trash')));
+  const drawQ=sumQty(CARDS.filter(c=>hasCluster(c,'Draw-Engine')));
+  const reactQ=sumQty(CARDS.filter(c=>hasCluster(c,'React')));
+  const trophyQ=sumQty(CARDS.filter(c=>hasCluster(c,'Trophy')));
+  const costs=CARDS.filter(c=>!c.isMonster && c.costNum!=null);
+  const meanCost=costs.length ? costs.reduce((a,c)=>a+c.costNum*c.quantity,0)/sumQty(costs) : 0;
+  document.getElementById('kpis').innerHTML = [
+    {l:'Unique cards',v:CARDS.length,s:''},
+    {l:'Total copies',v:tot,s:'qty-weighted'},
+    {l:'Sets covered',v:Object.keys(sets).length+' / 4',s:''},
+    {l:'Mean cost',v:meanCost.toFixed(2)+'$',s:'non-monster'},
+    {l:'Dragon ratio',v:(100*drg/tot).toFixed(1)+'%',s:`${drg} cards`},
+    {l:'Active trash',v:(100*trashActive/tot).toFixed(1)+'%',s:`${trashActive} cards (your preference)`},
+    {l:'Draw availability',v:(100*drawQ/tot).toFixed(1)+'%',s:`${drawQ} cards`},
+    {l:'React',v:reactQ,s:'anchor: include all'},
+    {l:'Trophy',v:trophyQ,s:'anchor: include all'},
+  ].map(k=>`<div class="kpi"><div class="label">${k.l}</div><div class="value">${k.v}</div>${k.s?`<div class="sub">${k.s}</div>`:''}</div>`).join('');
+  document.getElementById('chart-types').innerHTML = donut(['Companion','Monster','Device','Gem','Other'].filter(t=>types[t]).map(t=>[t,types[t]]));
+  const cd={}; CARDS.filter(c=>!c.isMonster && c.costNum!=null).forEach(c=>cd[c.costNum]=(cd[c.costNum]||0)+c.quantity);
+  document.getElementById('chart-cost').innerHTML = cbar(Object.keys(cd).map(Number).sort((a,b)=>a-b).map(k=>[String(k),cd[k]]), 520, 240, '#d4a857', '$');
+  const sd={}; CARDS.filter(c=>c.isMonster && c.costNum!=null).forEach(c=>sd[c.costNum]=(sd[c.costNum]||0)+c.quantity);
+  document.getElementById('chart-sword').innerHTML = cbar(Object.keys(sd).map(Number).sort((a,b)=>a-b).map(k=>[String(k),sd[k]]), 520, 240, '#c0392b', 'S');
+  const dragSet=[]; Object.keys(sets).forEach(s => { const sc=CARDS.filter(c=>c.set===s); dragSet.push([s, Math.round(100*sumQty(sc.filter(c=>c.dragonAttack))/sumQty(sc))]); });
+  document.getElementById('chart-dragon').innerHTML = vbar(dragSet, 520, Math.max(120,dragSet.length*40), '#c0392b', 100);
+  const mechMap={}; CARDS.forEach(c=>(c.mechanics||[]).forEach(m=>mechMap[m]=(mechMap[m]||0)+c.quantity));
+  document.getElementById('chart-mech').innerHTML = vbar(Object.entries(mechMap).sort((a,b)=>b[1]-a[1]).slice(0,16), 900, Math.max(200,16*28), '#8a6a2a', 150);
+  const setData={}; Object.keys(sets).forEach(s => { setData[s]={}; CARDS.filter(c=>c.set===s).forEach(c => setData[s][c.type]=(setData[s][c.type]||0)+c.quantity); });
+  document.getElementById('chart-set-types').innerHTML = stackedBar(setData, ['Companion','Monster','Device','Gem','Other']);
+  let sk=0,sw=0,bo=0,vp=0;
+  CARDS.filter(c=>!c.isMonster).forEach(c => { sk+=(c.skill||0)*c.quantity; sw+=(c.swords||0)*c.quantity; bo+=(c.boots||0)*c.quantity; vp+=(c.vp||0)*c.quantity; });
+  document.getElementById('chart-resources').innerHTML = vbar([['Skill',sk],['Swords',sw],['Boots',bo],['VP',vp]], 420, 220, k=>({Skill:'#5a4a2a',Swords:'#5a2a2a',Boots:'#2a4a3a',VP:'#5a3a1a'}[k]), 80);
+}
+
+// ---- Combos tab ----
+function buildCombos() {
+  const tot = sumQty(CARDS);
+  const trashActive=sumQty(CARDS.filter(c=>hasTrash(c,'Active-Trash')));
+  const trashSelf=sumQty(CARDS.filter(c=>hasTrash(c,'Self-Trash')));
+  const trashPayoff=sumQty(CARDS.filter(c=>hasTrash(c,'Trash-Payoff')));
+  const burgleT=sumQty(CARDS.filter(c=>hasTrash(c,'Burgle-Trash')));
+  const reactQ=sumQty(CARDS.filter(c=>hasCluster(c,'React')));
+  const trophyQ=sumQty(CARDS.filter(c=>hasCluster(c,'Trophy')));
+  const interactiveQ=sumQty(CARDS.filter(c=>{const i=c.combo&&c.combo.interactive||[];return i.length>0}));
+  const avgCombo = CARDS.reduce((a,c)=>a+(c.comboScore||0)*c.quantity,0)/tot;
+
+    // Compute combo participation
+  const orphans = CARDS.filter(c => (c.combo&&c.combo.clusters||[]).length === 0);
+  const orphansQ = sumQty(orphans);
+  const inSomeCluster = sumQty(CARDS.filter(c => (c.combo&&c.combo.clusters||[]).length > 0));
+  const inMulti = sumQty(CARDS.filter(c => (c.combo&&c.combo.clusters||[]).length >= 2));
+  const inThreePlus = sumQty(CARDS.filter(c => (c.combo&&c.combo.clusters||[]).length >= 3));
+  
+  document.getElementById('combo-kpis').innerHTML = [
+    {l:'Combo participation',v:(100*inSomeCluster/tot).toFixed(0)+'%',s:`${inSomeCluster} of ${tot} in 1+ cluster`},
+    {l:'Multi-cluster (2+)',v:(100*inMulti/tot).toFixed(0)+'%',s:`${inMulti} cards`},
+    {l:'Multi-cluster (3+)',v:(100*inThreePlus/tot).toFixed(0)+'%',s:'sweet spot for combos'},
+    {l:'Combo orphans',v:orphansQ,s:'in 0 clusters — combo deadweight'},
+    {l:'Avg combo score',v:avgCombo.toFixed(1),s:'higher = more combos'},
+    {l:'Interactive cards',v:interactiveQ,s:'React + Arrive Choice + Anti-player'},
+    {l:'React (anchor)',v:reactQ,s:''},
+    {l:'Trophy (anchor)',v:trophyQ,s:''},
+    {l:'Active trash (preferred)',v:trashActive,s:''},
+    {l:'Self-trash (avoid)',v:trashSelf,s:''},
+    {l:'Trash payoff',v:trashPayoff,s:''},
+    {l:'Burgle removal',v:burgleT,s:''},
+  ].map(k=>`<div class="kpi"><div class="label">${k.l}</div><div class="value">${k.v}</div>${k.s?`<div class="sub">${k.s}</div>`:''}</div>`).join('');
+
+  // Clusters grid
+  const clusterCounts={}; const clusterCards={};
+  CARDS.forEach(c => (c.combo&&c.combo.clusters||[]).forEach(cl => {
+    clusterCounts[cl]=(clusterCounts[cl]||0)+c.quantity;
+    if (!clusterCards[cl]) clusterCards[cl]=[];
+    clusterCards[cl].push(c);
+  }));
+  const ordered = Object.entries(clusterCounts).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('cluster-grid').innerHTML = ordered.map(([cl,n]) => {
+    const samples = (clusterCards[cl]||[]).slice(0,4).map(c=>c.name);
+    return `<div class="cluster-card" onclick="showCluster('${cl}')">
+      <h4>${cl} <span class="qty">${n}</span></h4>
+      <div class="desc">${CLUSTERS_INFO[cl]||''}</div>
+      <div class="samples">${samples.map(s=>`<span>${s}</span>`).join('')}${clusterCards[cl].length > 4 ? `<span>+${clusterCards[cl].length-4}</span>` : ''}</div>
+    </div>`;
+  }).join('');
+
+  // Trash chart
+  document.getElementById('chart-trash-types').innerHTML = vbar([
+    ['Active trash (preferred)', trashActive],
+    ['Burgle removal', burgleT],
+    ['Trash payoff (when trashed)', trashPayoff],
+    ['Self-trash (avoided)', trashSelf],
+  ], 480, 220, k=>k.includes('preferred')||k.includes('removal')||k.includes('payoff') ? '#6abf69' : '#d97757', 200);
+
+  // Burgle availability
+  const burgleProviders = CARDS.filter(c=>hasCluster(c,'Burgle-Removal'));
+  document.getElementById('chart-burgle').innerHTML = vbar(burgleProviders.map(c=>[c.name, c.quantity]), 480, Math.max(120,burgleProviders.length*32), '#8a6a2a', 200);
+
+  // Top combo cards
+  const top = [...CARDS].sort((a,b)=>(b.comboScore||0)-(a.comboScore||0)).slice(0,16);
+    // Cluster-count distribution
+  const cdist = {0:0,1:0,2:0,3:0,4:0,5:0};
+  CARDS.forEach(c => {
+    const n = Math.min(5, (c.combo&&c.combo.clusters||[]).length);
+    cdist[n] = (cdist[n]||0) + c.quantity;
+  });
+  document.getElementById('chart-cluster-dist').innerHTML = cbar(
+    [['0',cdist[0]||0],['1',cdist[1]||0],['2',cdist[2]||0],['3',cdist[3]||0],['4+',(cdist[4]||0)+(cdist[5]||0)]],
+    480, 220, k=>k==='0'?'#d97757':(k==='1'?'#8a6a2a':'#6abf69'), ''
+  );
+  
+  // Cluster health table
+  document.getElementById('cluster-health-table').innerHTML = renderClusterHealth();
+  
+  // Orphans
+  const orphList = CARDS.filter(c => (c.combo&&c.combo.clusters||[]).length === 0).sort((a,b)=>a.name.localeCompare(b.name));
+  document.getElementById('orphans-list').innerHTML = orphList.map(c => `
+    <div class="combo-row" onclick="openModal(${CARDS.indexOf(c)})">
+      ${c.image ? `<img src="${c.image}">` : `<div style="width:36px;height:50px;background:var(--panel-2);border-radius:3px;display:flex;align-items:center;justify-content:center;color:var(--gold-dim);font-size:0.6em;">?</div>`}
+      <div class="info">
+        <div class="name">${c.name}</div>
+        <div class="clusters">${c.set} · ${c.type}</div>
+      </div>
+      <div class="score" style="color:var(--bad);font-size:0.85em;">orphan</div>
+    </div>
+  `).join('');
+  
+  document.getElementById('combo-top').innerHTML = top.map(c => `
+    <div class="combo-row" onclick="openModal(${CARDS.indexOf(c)})">
+      <img src="${c.image}">
+      <div class="info">
+        <div class="name">${c.name}</div>
+        <div class="clusters">${(c.combo&&c.combo.clusters||[]).slice(0,3).join(' · ')}</div>
+      </div>
+      <div class="score">${c.comboScore}</div>
+    </div>
+  `).join('');
+}
+
+function showCluster(cl) {
+  const cards = CARDS.filter(c=>hasCluster(c,cl));
+  const tot = sumQty(cards);
+  document.getElementById('cluster-detail-container').style.display='block';
+  document.getElementById('cluster-detail').innerHTML = `
+    <h3>${cl} <span style="color:var(--text-dim);font-size:0.75em;">${cards.length} unique · ${tot} copies</span></h3>
+    <div class="meta">${CLUSTERS_INFO[cl]||''}</div>
+    <div class="cluster-cards">
+      ${cards.sort((a,b)=>(b.comboScore||0)-(a.comboScore||0)).map(c => `
+        <div class="mini-card" onclick="openModal(${CARDS.indexOf(c)})">
+          <img src="${c.image}" alt="${c.name}">
+          <div class="nm">${c.name}${c.quantity>1?` ×${c.quantity}`:''}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  document.getElementById('cluster-detail').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function renderClusterHealth() {
+  // For each cluster: provs, trigs, both
+  const ch = {};
+  CARDS.forEach(c => {
+    const combo = c.combo || {};
+    (combo.clusters||[]).forEach(cl => {
+      if (!ch[cl]) ch[cl] = {p:0,t:0,b:0};
+      const hasProv = (combo.provides||[]).length > 0;
+      const hasTrig = (combo.triggers||[]).length > 0;
+      if (hasProv && hasTrig) ch[cl].b += c.quantity;
+      else if (hasProv) ch[cl].p += c.quantity;
+      else if (hasTrig) ch[cl].t += c.quantity;
+      else { /* card in cluster but no explicit prov/trig — count as both */ ch[cl].b += c.quantity; }
+    });
+  });
+  // Build an HTML table-like SVG that scales
+  const entries = Object.entries(ch).sort((a,b)=>(b[1].p+b[1].t+b[1].b)-(a[1].p+a[1].t+a[1].b));
+  let out = `<div style="font-size:0.85em;max-height:340px;overflow-y:auto;">
+    <table style="width:100%;border-collapse:collapse;">
+    <thead><tr style="color:var(--gold);">
+      <th style="text-align:left;padding:5px 6px;border-bottom:1px solid var(--border);">Cluster</th>
+      <th style="text-align:right;padding:5px 6px;border-bottom:1px solid var(--border);">P</th>
+      <th style="text-align:right;padding:5px 6px;border-bottom:1px solid var(--border);">T</th>
+      <th style="text-align:right;padding:5px 6px;border-bottom:1px solid var(--border);">B</th>
+      <th style="text-align:left;padding:5px 6px;border-bottom:1px solid var(--border);">Status</th>
+    </tr></thead><tbody>`;
+  entries.forEach(([cl, h]) => {
+    const totalProv = h.p + h.b;
+    const totalTrig = h.t + h.b;
+    let status = '', cls = '';
+    if (totalProv === 0 && totalTrig === 0) { status = 'untagged'; cls = 'status-low'; }
+    else if (totalProv === 0) { status = '◑ trigger only'; cls = 'status-low'; }
+    else if (totalTrig === 0) { status = '◐ passive'; cls = 'status-high'; }
+    else { status = '✓ active'; cls = 'status-ok'; }
+    out += `<tr><td style="padding:5px 6px;border-bottom:1px solid var(--border);">${cl}</td>
+      <td style="text-align:right;padding:5px 6px;border-bottom:1px solid var(--border);">${h.p}</td>
+      <td style="text-align:right;padding:5px 6px;border-bottom:1px solid var(--border);">${h.t}</td>
+      <td style="text-align:right;padding:5px 6px;border-bottom:1px solid var(--border);color:var(--gold);font-weight:600;">${h.b}</td>
+      <td style="padding:5px 6px;border-bottom:1px solid var(--border);" class="${cls}">${status}</td></tr>`;
+  });
+  out += `</tbody></table></div>
+    <div style="font-size:0.75em;color:var(--text-dim);margin-top:6px;">P = providers only · T = triggers only · B = both</div>`;
+  return out;
+}
+
+// ---- Targets tab ----
+function buildTargets() {
+  // === DYNAMIC base benchmark from Catacombs subset of pool ===
+  function computeStats(subset) {
+    const tot = sumQty(subset);
+    const types = byType(subset);
+    const nm = subset.filter(c=>!c.isMonster);
+    const nmQty = sumQty(nm);
+    const costs = nm.filter(c=>c.costNum!=null);
+    return {
+      total: tot,
+      unique: subset.length,
+      types,
+      typeRatio: t => tot ? 100*(types[t]||0)/tot : 0,
+      dragonQty: sumQty(subset.filter(c=>c.dragonAttack)),
+      dragonRatio: tot ? 100*sumQty(subset.filter(c=>c.dragonAttack))/tot : 0,
+      meanCost: costs.length ? costs.reduce((a,c)=>a+c.costNum*c.quantity,0)/sumQty(costs) : 0,
+      trashActive: sumQty(subset.filter(c=>hasTrash(c,'Active-Trash'))),
+      trashSelf: sumQty(subset.filter(c=>hasTrash(c,'Self-Trash'))),
+      trashTotal: sumQty(subset.filter(c=>(c.combo&&c.combo.trashTags||[]).length>0)),
+      drawQ: sumQty(subset.filter(c=>hasCluster(c,'Draw-Engine'))),
+      nmQty,
+      skillDen: nmQty ? nm.reduce((a,c)=>a+(c.skill||0)*c.quantity,0)/nmQty : 0,
+      swordDen: nmQty ? nm.reduce((a,c)=>a+(c.swords||0)*c.quantity,0)/nmQty : 0,
+      bootDen: nmQty ? nm.reduce((a,c)=>a+(c.boots||0)*c.quantity,0)/nmQty : 0,
+      vpDen: nmQty ? nm.reduce((a,c)=>a+(c.vp||0)*c.quantity,0)/nmQty : 0,
+      clankPlus: sumQty(subset.filter(c=>(c.mechanics||[]).includes('Clank+'))),
+      clankMinus: sumQty(subset.filter(c=>(c.mechanics||[]).includes('Clank-'))),
+      comboPart: tot ? 100*sumQty(subset.filter(c=>(c.combo&&c.combo.clusters||[]).length>0))/tot : 0,
+      multiCluster: tot ? 100*sumQty(subset.filter(c=>(c.combo&&c.combo.clusters||[]).length>=2))/tot : 0,
+    };
+  }
+  
+  const BASE = computeStats(CARDS.filter(c=>c.set==='Catacombs'));
+  const POOL = computeStats(CARDS);
+  const tot = POOL.total;
+  const types = POOL.types;
+  const drg = POOL.dragonQty;
+  const trashActive = POOL.trashActive;
+  const trashSelf = POOL.trashSelf;
+  const trashTotal = POOL.trashTotal;
+  const drawQ = POOL.drawQ;
+  const meanCost = POOL.meanCost;
+  const clankPlus = POOL.clankPlus;
+  const clankMinus = POOL.clankMinus;
+  const reactQ = sumQty(CARDS.filter(c=>hasCluster(c,'React')));
+  const trophyQ = sumQty(CARDS.filter(c=>hasCluster(c,'Trophy')));
+  // Also need base versions of react/trophy (should be 0 in pure Catacombs base)
+  const baseReact = sumQty(CARDS.filter(c=>c.set==='Catacombs' && hasCluster(c,'React')));
+  const baseTrophy = sumQty(CARDS.filter(c=>c.set==='Catacombs' && hasCluster(c,'Trophy')));
+  // Pool resource densities (used in rows + charts)
+  const skillDen = POOL.skillDen;
+  const swordDen = POOL.swordDen;
+  const bootDen = POOL.bootDen;
+  const vpDen = POOL.vpDen;
+
+  function pct(n) { return (100*n/tot).toFixed(1); }
+  function basePct(n) { return BASE.total ? (100*n/BASE.total).toFixed(0) : '0'; }
+  function statusBand(val, [lo,hi]) {
+    if (val < lo) return ['▼ low','status-low'];
+    if (val > hi) return ['▲ high','status-high'];
+    return ['✓ in band','status-ok'];
+  }
+  const rows = [
+    { metric:'Companion %', base:`${basePct(BASE.types.Companion||0)}%`, target:'20-25%', current:`${pct(types.Companion||0)}%`, val:100*(types.Companion||0)/tot, band:TARGETS.Companion },
+    { metric:'Monster %', base:`${basePct(BASE.types.Monster||0)}%`, target:'18-22%', current:`${pct(types.Monster||0)}%`, val:100*(types.Monster||0)/tot, band:TARGETS.Monster },
+    { metric:'Device %', base:`${basePct(BASE.types.Device||0)}%`, target:'8-12%', current:`${pct(types.Device||0)}%`, val:100*(types.Device||0)/tot, band:TARGETS.Device },
+    { metric:'Gem %', base:`${basePct(BASE.types.Gem||0)}%`, target:'5-10%', current:`${pct(types.Gem||0)}%`, val:100*(types.Gem||0)/tot, band:TARGETS.Gem },
+    { metric:'Other %', base:`${basePct(BASE.types.Other||0)}%`, target:'38-46%', current:`${pct(types.Other||0)}%`, val:100*(types.Other||0)/tot, band:TARGETS.Other },
+    { metric:'Dragon Attack %', base:`${basePct(BASE.dragonQty)}%`, target:'22-28%', current:`${pct(drg)}%`, val:100*drg/tot, band:TARGETS.Dragon },
+    { metric:'Active trash % (preferred)', base:`${basePct(BASE.trashActive)}%`, target:'12-18%', current:`${pct(trashActive)}%`, val:100*trashActive/tot, band:TARGETS.TrashActive },
+    { metric:'Trash total %', base:`${basePct(BASE.trashTotal)}%`, target:'18-22%', current:`${pct(trashTotal)}%`, val:100*trashTotal/tot, band:TARGETS.TrashTotal },
+    { metric:'Self-trash count (avoid)', base:String(BASE.trashSelf), target:'minimize', current:trashSelf, val:0, band:[0,99], _custom:true },
+    { metric:'Draw availability %', base:`${basePct(BASE.drawQ)}%`, target:'28-32%', current:`${pct(drawQ)}%`, val:100*drawQ/tot, band:TARGETS.Draw },
+    { metric:'Mean cost ($)', base:BASE.meanCost.toFixed(2), target:'3.4-3.7', current:meanCost.toFixed(2), val:meanCost, band:TARGETS.MeanCost },
+    { metric:'Skill density (per non-monster card)', base:BASE.skillDen.toFixed(2), target:'0.72-0.88', current:skillDen.toFixed(2), val:skillDen, band:TARGETS.SkillDen },
+    { metric:'Swords density (per non-monster card)', base:BASE.swordDen.toFixed(2), target:'0.38-0.47', current:swordDen.toFixed(2), val:swordDen, band:TARGETS.SwordDen },
+    { metric:'Boots density (per non-monster card)', base:BASE.bootDen.toFixed(2), target:'0.32-0.40', current:bootDen.toFixed(2), val:bootDen, band:TARGETS.BootDen },
+    { metric:'VP density (per non-monster card)', base:BASE.vpDen.toFixed(2), target:'1.27-1.55', current:vpDen.toFixed(2), val:vpDen, band:TARGETS.VpDen },
+    { metric:'Combo participation %', base:`${BASE.comboPart.toFixed(0)}%`, target:'≥85%', current:`${(100*sumQty(CARDS.filter(c=>(c.combo&&c.combo.clusters||[]).length>0))/tot).toFixed(0)}%`, val:100*sumQty(CARDS.filter(c=>(c.combo&&c.combo.clusters||[]).length>0))/tot, band:[85,100] },
+    { metric:'Multi-cluster % (≥2)', base:`${BASE.multiCluster.toFixed(0)}%`, target:'≥40%', current:`${(100*sumQty(CARDS.filter(c=>(c.combo&&c.combo.clusters||[]).length>=2))/tot).toFixed(0)}%`, val:100*sumQty(CARDS.filter(c=>(c.combo&&c.combo.clusters||[]).length>=2))/tot, band:[40,100] },
+  ];
+  let html = rows.map(r => {
+    let s='—', cls='';
+    if (r._custom) { s = r.current<=3 ? '✓ minimal' : '▲ many'; cls = r.current<=3 ? 'status-ok' : 'status-high'; }
+    else { [s,cls] = statusBand(r.val, r.band); }
+    return `<tr><td>${r.metric}</td><td class="num">${r.base}</td><td class="num">${r.target}</td><td class="num">${r.current}</td><td class="num ${cls}">${s}</td></tr>`;
+  }).join('');
+  html += `<tr><td>React cards (anchor)</td><td class="num">${baseReact}</td><td class="num">Include all available</td><td class="num">${reactQ}</td><td class="num status-ok">anchor</td></tr>`;
+  html += `<tr><td>Trophy cards (anchor)</td><td class="num">${baseTrophy}</td><td class="num">Include all available</td><td class="num">${trophyQ}</td><td class="num ${trophyQ===0?'status-low':'status-ok'}">${trophyQ===0?'awaiting Lairs/Underworld':'anchor'}</td></tr>`;
+  document.getElementById('benchmark-tbody').innerHTML = html;
+
+  document.getElementById('chart-trash').innerHTML = vbar([
+    ['Active trash (preferred)', trashActive],
+    ['Burgle trash', sumQty(CARDS.filter(c=>hasTrash(c,'Burgle-Trash')))],
+    ['Trash payoff', sumQty(CARDS.filter(c=>hasTrash(c,'Trash-Payoff')))],
+    ['Self-trash (avoid)', trashSelf],
+  ], 480, 220, k=>k.includes('avoid') ? '#d97757' : '#6abf69', 200);
+  document.getElementById('chart-clank').innerHTML = vbar([
+    ['Clank+ generators', clankPlus],
+    ['Clank- reducers', clankMinus],
+    ['Net surplus', clankPlus - clankMinus],
+  ], 480, 200, k=>k.includes('generators')?'#c0392b':(k.includes('reducers')?'#6abf69':'#d4a857'), 180);
+
+  // Resource density with band markers (custom SVG)
+  const resData = [
+    {label:'Skill', val:skillDen, base:BASE.skillDen, band:TARGETS.SkillDen, color:'#5a4a2a'},
+    {label:'Swords', val:swordDen, base:BASE.swordDen, band:TARGETS.SwordDen, color:'#5a2a2a'},
+    {label:'Boots', val:bootDen, base:BASE.bootDen, band:TARGETS.BootDen, color:'#2a4a3a'},
+    {label:'VP', val:vpDen, base:BASE.vpDen, band:TARGETS.VpDen, color:'#5a3a1a'},
+  ];
+  document.getElementById('chart-resource-density').innerHTML = renderResourceDensity(resData);
+
+  // Projection: scale to 100-card deck (proportionally)
+  const proj = resData.map(r => {
+    const projected = Math.round(r.val * 80);  // assume ~80 non-monster cards in 100-card deck (matches base 80/100)
+    const baseTotal = Math.round(r.base * 80);
+    return { label:r.label, projected, base:baseTotal, color:r.color };
+  });
+  document.getElementById('chart-resource-projection').innerHTML = renderResourceProjection(proj);
+}
+
+function renderResourceDensity(items) {
+  const w=480, h=240;
+  const ML=70, MR=20, MT=20, MB=30;
+  const cw=w-ML-MR, ch=h-MT-MB;
+  const rowH = ch/items.length;
+  const maxV = Math.max(...items.map(r => Math.max(r.val*1.1, r.band[1]*1.1, r.base*1.1)));
+  let out = svgEl(w,h);
+  items.forEach((r,i) => {
+    const y = MT + i*rowH + 6;
+    const innerH = rowH - 14;
+    // Band rectangle
+    const bx0 = ML + (r.band[0]/maxV)*cw;
+    const bx1 = ML + (r.band[1]/maxV)*cw;
+    out += `<rect x="${bx0}" y="${y}" width="${bx1-bx0}" height="${innerH}" fill="#6abf69" opacity="0.15"/>`;
+    // Base marker (dashed line)
+    const baseX = ML + (r.base/maxV)*cw;
+    out += `<line x1="${baseX}" y1="${y}" x2="${baseX}" y2="${y+innerH}" stroke="#9d8b6f" stroke-width="1" stroke-dasharray="3 3"/>`;
+    out += txt(baseX, y-2, 'base', '#9d8b6f', 9, 'middle');
+    // Current value as a colored bar
+    const valX = ML + (r.val/maxV)*cw;
+    out += `<rect x="${ML}" y="${y+innerH/3}" width="${valX-ML}" height="${innerH/3}" fill="${r.color}" rx="2"/>`;
+    out += txt(valX+6, y+innerH/2+4, r.val.toFixed(2), '#f0e3cc', 11);
+    out += txt(ML-8, y+innerH/2+4, r.label, '#9d8b6f', 12, 'end');
+  });
+  // X axis label
+  out += txt((ML+w-MR)/2, h-8, 'Density (resource per card)', '#9d8b6f', 10, 'middle');
+  return out + '</svg>';
+}
+
+function renderResourceProjection(items) {
+  const w=480, h=240;
+  const ML=70, MR=80, MT=20, MB=30;
+  const cw=w-ML-MR, ch=h-MT-MB;
+  const rowH = ch/items.length;
+  const maxV = Math.max(...items.flatMap(r=>[r.projected, r.base])) * 1.1;
+  let out = svgEl(w,h);
+  items.forEach((r,i) => {
+    const y = MT + i*rowH + 6;
+    const innerH = rowH - 14;
+    out += txt(ML-8, y+innerH/2+4, r.label, '#9d8b6f', 12, 'end');
+    // base (thin grey)
+    const baseW = (r.base/maxV)*cw;
+    out += `<rect x="${ML}" y="${y+2}" width="${baseW}" height="${innerH/2-2}" fill="#4a3a2a" rx="2"/>`;
+    out += txt(ML+baseW+4, y+innerH/4+4, 'base '+r.base, '#9d8b6f', 10);
+    // projected (bold colored)
+    const projW = (r.projected/maxV)*cw;
+    out += `<rect x="${ML}" y="${y+innerH/2}" width="${projW}" height="${innerH/2-2}" fill="${r.color}" rx="2"/>`;
+    out += txt(ML+projW+4, y+innerH*0.75+4, 'proj '+r.projected, '#f0e3cc', 10);
+  });
+  return out + '</svg>';
+}
+
+applyFilters();
+</script>
+</body>
+</html>

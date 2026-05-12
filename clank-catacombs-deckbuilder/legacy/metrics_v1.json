@@ -1,0 +1,192 @@
+{
+  "set_unique": {
+    "Treasures": 14,
+    "Base": 31,
+    "Underworld": 15,
+    "Adventure": 12,
+    "Catacombs": 46,
+    "Mummy": 10,
+    "Promo": 5,
+    "Lairs": 17
+  },
+  "set_qty": {
+    "Treasures": 14,
+    "Base": 32,
+    "Underworld": 17,
+    "Adventure": 12,
+    "Catacombs": 53,
+    "Mummy": 10,
+    "Promo": 5,
+    "Lairs": 17
+  },
+  "type_dist": {
+    "Companion": 40,
+    "Other": 56,
+    "Gem": 12,
+    "Device": 14,
+    "Monster": 28
+  },
+  "per_set_type": {
+    "Base": {
+      "Companion": 10,
+      "Monster": 5,
+      "Device": 4,
+      "Gem": 5,
+      "Other": 8
+    },
+    "Adventure": {
+      "Companion": 5,
+      "Monster": 3,
+      "Device": 1,
+      "Gem": 0,
+      "Other": 3
+    },
+    "Treasures": {
+      "Companion": 2,
+      "Monster": 2,
+      "Device": 0,
+      "Gem": 2,
+      "Other": 8
+    },
+    "Mummy": {
+      "Companion": 6,
+      "Monster": 1,
+      "Device": 0,
+      "Gem": 0,
+      "Other": 3
+    },
+    "Promo": {
+      "Companion": 1,
+      "Monster": 0,
+      "Device": 2,
+      "Gem": 1,
+      "Other": 1
+    },
+    "Catacombs": {
+      "Companion": 12,
+      "Monster": 10,
+      "Device": 5,
+      "Gem": 3,
+      "Other": 23
+    },
+    "Lairs": {
+      "Companion": 1,
+      "Monster": 5,
+      "Device": 3,
+      "Gem": 1,
+      "Other": 7
+    },
+    "Underworld": {
+      "Companion": 3,
+      "Monster": 6,
+      "Device": 1,
+      "Gem": 0,
+      "Other": 7
+    }
+  },
+  "dragon_per_set": {
+    "Base": {
+      "drag": 8,
+      "total": 32
+    },
+    "Adventure": {
+      "drag": 4,
+      "total": 12
+    },
+    "Treasures": {
+      "drag": 4,
+      "total": 14
+    },
+    "Mummy": {
+      "drag": 1,
+      "total": 10
+    },
+    "Promo": {
+      "drag": 2,
+      "total": 5
+    },
+    "Catacombs": {
+      "drag": 15,
+      "total": 53
+    },
+    "Lairs": {
+      "drag": 6,
+      "total": 17
+    },
+    "Underworld": {
+      "drag": 4,
+      "total": 17
+    }
+  },
+  "coverage": {
+    "Base": {
+      "have": 31,
+      "box": 100,
+      "pct": 31
+    },
+    "Adventure": {
+      "have": 12,
+      "box": 35,
+      "pct": 34
+    },
+    "Treasures": {
+      "have": 14,
+      "box": 35,
+      "pct": 40
+    },
+    "Mummy": {
+      "have": 10,
+      "box": 40,
+      "pct": 25
+    },
+    "Promo": {
+      "have": 5,
+      "box": 15,
+      "pct": 33
+    },
+    "Catacombs": {
+      "have": 46,
+      "box": 100,
+      "pct": 46
+    },
+    "Lairs": {
+      "have": 17,
+      "box": 50,
+      "pct": 34
+    },
+    "Underworld": {
+      "have": 15,
+      "box": 50,
+      "pct": 30
+    }
+  },
+  "cost_dist": {
+    "30": 33,
+    "20": 25,
+    "40": 26,
+    "50": 17,
+    "10": 7,
+    "60": 14,
+    "70": 3,
+    "80": 2,
+    "0": 1
+  },
+  "type_ratios": {
+    "Companion": 25.0,
+    "Other": 37.5,
+    "Gem": 7.5,
+    "Device": 10.0,
+    "Monster": 20.0
+  },
+  "type_qty": {
+    "Companion": 40,
+    "Other": 60,
+    "Gem": 12,
+    "Device": 16,
+    "Monster": 32
+  },
+  "dragon_total": 44,
+  "dragon_ratio": 27.5,
+  "total_unique": 150,
+  "total_qty": 160
+}

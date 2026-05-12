@@ -1,0 +1,300 @@
+{
+  "schema_version": "1.1",
+  "extracted_via": "user-uploaded card images, multimodal analysis",
+  "notes": "All values read directly from card images. Where text is partially obscured by overlap or low contrast, marked as 'partial'.",
+  "cards": [
+    {
+      "name": "Underworld Guardian",
+      "set": "Underworld",
+      "type": "Monster",
+      "cost": "3S",
+      "swordCost": 3,
+      "skill": null, "swords": null, "boots": null,
+      "vp": 3,
+      "dragonAttack": false,
+      "quantity": 1,
+      "text": "When encountered, you must defeat this or take 2 damage.\nDEFEAT: Take the 2x artifact enhancer.\nTROPHY: Bonus artifact. (doesn't count for your artifact limit.)",
+      "synergy": "Trophy, Artifact enhancer",
+      "notes": "Permanent boss monster on the Underworld board. Aka 'Kerberos'. Defeating gives the 2x artifact enhancer."
+    },
+    {
+      "name": "Tome of the Ape Lords",
+      "set": "Underworld",
+      "type": "Other",
+      "cost": 4, "skill": 3, "swords": 0, "boots": 0, "vp": 3,
+      "dragonAttack": false, "quantity": 1,
+      "text": "If you have a monkey idol, this counts as a Secret Tome.",
+      "acquire": "+3 Clank!",
+      "synergy": "Secret Tome, Monkey Idol",
+      "flavor": "Ape Lord magic was divided into three schools."
+    },
+    {
+      "name": "Tome of Intellect",
+      "set": "Underworld",
+      "type": "Other",
+      "cost": 6, "skill": 0, "swords": 0, "boots": 0, "vp": 1,
+      "dragonAttack": false, "quantity": 1,
+      "text": "Draw two cards. It counts as a Secret Tome.",
+      "synergy": "Secret Tome, Draw",
+      "flavor": "It's an exciting read. The words jump off the page."
+    },
+    {
+      "name": "Underworld Guide",
+      "set": "Underworld",
+      "type": "Companion",
+      "cost": 2, "skill": 0, "swords": 0, "boots": 1, "vp": 0,
+      "dragonAttack": false, "quantity": 1,
+      "text": "If you're in the Underworld, draw a card.\nWhen you trash this, draw a card.",
+      "acquire": "1 coin",
+      "synergy": "Trash, Draw, Underworld",
+      "flavor": "Ask him no questions... but you'd best read the fine print.",
+      "notes": "Trash-for-draw companion. The 'when you trash this' clause makes it a great early-game pick — works in any Trash device."
+    },
+    {
+      "name": "Soul Prism",
+      "set": "Underworld",
+      "type": "Other",
+      "cost": 3, "skill": 2, "swords": 0, "boots": 0, "vp": 1,
+      "dragonAttack": true, "quantity": 1,
+      "text": "When you trash this, free a prisoner.",
+      "acquire": "Heal 1",
+      "synergy": "Trash, Prisoner",
+      "flavor": "If you listen closely, you can hear tiny hands knocking.",
+      "notes": "Cheap 2-skill card that doubles as a Prisoner-source when trashed. Dragon attack on acquire."
+    },
+    {
+      "name": "Oracle",
+      "set": "Underworld",
+      "type": "Companion",
+      "cost": 4, "skill": 1, "swords": 0, "boots": 0, "vp": 1,
+      "dragonAttack": false, "quantity": 1,
+      "text": "Draw a card.\n-OR-\nSpend 1 coin to draw two cards.",
+      "synergy": "Draw, Coin-spend",
+      "flavor": "Tips make the visions a little clearer."
+    },
+    {
+      "name": "Lantern",
+      "set": "Underworld",
+      "type": "Other",
+      "cost": null, "skill": null, "swords": 0, "boots": 1, "vp": null,
+      "dragonAttack": null, "quantity": 1,
+      "text": "[partial: coin/clank effect — exact text obscured]",
+      "flavor": "The Underworld is a dangerous place... [obscured]",
+      "synergy": "Boots, Underworld",
+      "notes": "PARTIAL EXTRACTION — card was on the left edge of image, cost and main effect not fully readable. Yellow boot icon visible = produces 1 Boot. Bottom shows a coin icon with '1'."
+    },
+    {
+      "name": "Big Ideas",
+      "set": "Underworld",
+      "type": "Other",
+      "cost": null, "skill": 2, "swords": 0, "boots": 0, "vp": 1,
+      "dragonAttack": null, "quantity": 1,
+      "text": "+1 Clank!\nIf you generate 6 or more [Skill] this turn, [obscured effect]",
+      "synergy": "Skill threshold, Clank",
+      "flavor": "It's dumb enough that it might be brilliant.",
+      "notes": "PARTIAL — bottom-right cost obscured. Visible: Skill 2, VP 1, makes +1 Clank, threshold-conditional effect at 6 skill."
+    },
+    {
+      "name": "Wealth of Knowledge",
+      "set": "Underworld",
+      "type": "Other",
+      "cost": null, "skill": 2, "swords": 0, "boots": 1, "vp": "?",
+      "dragonAttack": null, "quantity": 1,
+      "text": "ARRIVE: All players get 1 coin.\nWorth 1 [point] for each Secret Tome you have.",
+      "synergy": "Secret Tome, End-game VP scaler",
+      "flavor": "Unlock the riches of your [obscured]",
+      "notes": "PARTIAL — cost hidden by overlap. Variable VP that scales with Secret Tome count. Strong with the Imp Assistant / Tome strategy."
+    },
+    {
+      "name": "Moneychanger's Booth",
+      "set": "Underworld",
+      "type": "Device",
+      "cost": 4, "skill": null, "swords": null, "boots": null, "vp": null,
+      "dragonAttack": null, "quantity": 1,
+      "text": "USE: [Get 2 coins — exact wording obscured]",
+      "synergy": "Coin generation",
+      "flavor": "It's a great deal. Trinkets from the upper world for access to the underworld.",
+      "notes": "PARTIAL — device cost 4, but the USE benefit text partially obscured."
+    },
+    {
+      "name": "Fire Breath",
+      "set": "Underworld",
+      "type": "Other",
+      "cost": null, "skill": 1, "swords": 1, "boots": 0, "vp": 1,
+      "dragonAttack": false, "quantity": 1,
+      "text": "If you make any Clank! this turn, draw a card.",
+      "acquire": "+1 Sword",
+      "synergy": "Clank-triggered draw",
+      "flavor": "Mages everywhere are chatting about this hot new spell.",
+      "notes": "Cost not readable in image. Stat line strong: 1 Skill + 1 Sword + Clank-trigger draw."
+    },
+    {
+      "name": "Abyssal Hydra",
+      "set": "Underworld",
+      "type": "Monster",
+      "cost": "3S", "swordCost": 3,
+      "skill": null, "swords": null, "boots": null, "vp": 0,
+      "dragonAttack": true, "quantity": 1,
+      "text": "ARRIVE: Put 6 coin on this.\nDEFEAT: Draw two cards, take 2 coin from this. This stays in the dungeon row if it still has any coin.",
+      "synergy": "Persistent monster, Coin pool, Draw",
+      "flavor": "That is one hale hydra.",
+      "notes": "Persistent monster — sticks in dungeon row until coin pool empty (drained 2 at a time, ~3 fights). Big payoff for sword-heavy decks."
+    },
+    {
+      "name": "Harpy Matriarch",
+      "set": "Underworld",
+      "type": "Monster",
+      "cost": "2S", "swordCost": 2,
+      "skill": null, "swords": null, "boots": null, "vp": "?",
+      "dragonAttack": false, "quantity": 1,
+      "text": "Fight this only in the Underworld.\nDEFEAT: 2 coin\nTROPHY: Worth 1 [point] for each harpy trophy you have (including this one).",
+      "synergy": "Trophy, Harpy chain",
+      "flavor": "Mess with her brood, and you're messing with her.",
+      "notes": "Underworld-only monster. Trophy mechanic scales — if you defeat multiple Harpies (this + Harpy tokens from board), each is worth more. Quadratic scaling in some sense."
+    },
+    {
+      "name": "Acid Splash",
+      "set": "Underworld",
+      "type": "Other",
+      "cost": 2, "skill": 0, "swords": 0, "boots": 0, "vp": 1,
+      "dragonAttack": false, "quantity": 1,
+      "text": "Reveal the top card of your deck. (Reshuffle if needed.)\nThen choose: Trash it -OR- discard it to get 2 coin.",
+      "synergy": "Trash, Coin",
+      "flavor": "This is a highly volatile spell.",
+      "notes": "Cheap trash card — major thinning effect at 2 cost. The 'or 2 coin' fallback means it's never dead."
+    },
+    {
+      "name": "Cyclops",
+      "set": "Underworld",
+      "type": "Monster",
+      "cost": "3S", "swordCost": 3,
+      "skill": null, "swords": null, "boots": null, "vp": 0,
+      "dragonAttack": false, "quantity": 1,
+      "text": "ARRIVE: All players get +1 Clank!\nDEFEAT: Take a lockpick, trash a card in your play area or discard pile.",
+      "synergy": "Lockpick, Trash, Anti-player",
+      "flavor": "Don't worry about the boulder. He doesn't have good depth perception.",
+      "notes": "High-value monster — lockpick + trash for 3 swords. The +1 Clank on arrival hurts all players (good in multiplayer)."
+    },
+    {
+      "name": "Grave Robber",
+      "set": "Underworld",
+      "type": "Monster",
+      "cost": "2S", "swordCost": 2,
+      "skill": null, "swords": null, "boots": null, "vp": 0,
+      "dragonAttack": false, "quantity": 1,
+      "text": "ARRIVE: Rotate each square tile with any players on it 180 degrees.\nDEFEAT: 1 coin",
+      "synergy": "Tile manipulation, Anti-player movement",
+      "flavor": "In the Underworld lies grave danger.",
+      "notes": "Disruption monster — the tile rotation can severely mess with opponents' planned routes."
+    },
+    {
+      "name": "Shifting Shadow",
+      "set": "Underworld",
+      "type": "Monster",
+      "cost": "1S", "swordCost": 1,
+      "skill": null, "swords": null, "boots": null, "vp": 0,
+      "dragonAttack": false, "quantity": 1,
+      "text": "DEFEAT: You may move in the wrong direction through one-way tunnels this turn.",
+      "synergy": "Movement, One-way tunnels",
+      "flavor": "Invisible to most, these creatures dwell on the edge of the living world and the ghost world.",
+      "notes": "Cheap 1-sword monster. Defeat reward situational but useful in tight maps."
+    },
+    {
+      "name": "Wild Boar",
+      "set": "Underworld",
+      "type": "Monster",
+      "cost": "2S", "swordCost": 2,
+      "skill": null, "swords": null, "boots": null, "vp": 0,
+      "dragonAttack": true, "quantity": 1,
+      "text": "DANGER: Pull +1 cube for dragon attacks.\nDEFEAT: +1 Clank!, draw two cards.",
+      "synergy": "Draw, Self-Clank risk",
+      "flavor": "Best not stand in its path...",
+      "notes": "DANGER card — increases dragon attack pull while in row. Defeat is huge (draw 2) but you also +1 your own Clank."
+    },
+    {
+      "name": "Soothsayer",
+      "set": "Underworld",
+      "type": "Companion",
+      "cost": 3, "skill": 2, "swords": 0, "boots": 0, "vp": 2,
+      "dragonAttack": false, "quantity": 1,
+      "text": "If you have a fate card, +1 coin.",
+      "arrive": "Each player may spend 1 coin to heal.",
+      "synergy": "Fate card, Coin",
+      "flavor": "The future is coming soon.",
+      "notes": "Solid 3-cost companion (2 Skill / 2 VP) with Fate synergy. The Arrive heal-for-coin is communal."
+    },
+    {
+      "name": "Catapult",
+      "set": "Underworld",
+      "type": "Device",
+      "cost": 2, "skill": null, "swords": null, "boots": null, "vp": null,
+      "dragonAttack": true, "quantity": 1,
+      "text": "USE: +2 Clank!, teleport to an adjacent room.",
+      "synergy": "Teleport, Self-Clank cost",
+      "flavor": "I have an idea. Hold my tankard.",
+      "notes": "Cheap teleport device — +2 Clank cost. Dragon attack on acquire."
+    },
+    {
+      "name": "Orpheus",
+      "set": "Underworld",
+      "type": "Companion",
+      "cost": 7, "skill": 0, "swords": 0, "boots": 2, "vp": "?",
+      "dragonAttack": false, "quantity": 1,
+      "text": "+1 Clank!, 1 coin\nWorth 1 [point] for each freed Prisoner you have.",
+      "arrive": "Put 3 dragon cubes back in the bag.",
+      "acquire": "Free a prisoner.",
+      "synergy": "Prisoner chain, Dragon cube removal",
+      "notes": "Major 7-cost companion. Arrive removes 3 dragon cubes from bag (huge defense), Acquire frees a prisoner, end-game scales with prisoners. Premium card."
+    },
+    {
+      "name": "Mystic Elevator",
+      "set": "Underworld",
+      "type": "Device",
+      "cost": 5, "skill": null, "swords": null, "boots": null, "vp": null,
+      "dragonAttack": true, "quantity": 1,
+      "text": "USE: +1 Clank!, teleport to a Market room in the Underworld.",
+      "synergy": "Teleport, Market access, Underworld",
+      "flavor": "Going down?",
+      "notes": "Underworld-Market shortcut device. Useful for fast Underworld access."
+    },
+    {
+      "name": "Utility Knife",
+      "set": "Underworld",
+      "type": "Other",
+      "cost": 3, "skill": 0, "swords": 1, "boots": 0, "vp": 0,
+      "dragonAttack": false, "quantity": 1,
+      "text": "Draw a card.",
+      "acquire": "1 coin",
+      "synergy": "Draw, Sword",
+      "flavor": "It slices, it dices, it transfers wealth... but wait, there's more!",
+      "notes": "Cheap utility — 1 sword + 1 card draw for 3 skill."
+    }
+  ],
+  "tokens": [
+    {
+      "name": "Imp Assistant (4x)",
+      "set": "Underworld",
+      "type": "Token",
+      "category": "Forbidden Library token",
+      "value": "x4 VP per Secret Tome at end of game",
+      "drawback": "When you acquire a Secret Tome, must remove 2 cards from the Dungeon Row (may trigger dragon attack)",
+      "notes": "There are 3 different Imp Assistants placed in the Forbidden Library at start of game. Multipliers likely 2x/3x/4x. Player can only carry one."
+    },
+    {
+      "name": "Artifact Enhancer 2x",
+      "set": "Underworld",
+      "type": "Token",
+      "category": "Underworld Guardian reward",
+      "value": "Doubles the value of your highest-VP artifact at end of game",
+      "notes": "Awarded to the player who defeats the Underworld Guardian (Kerberos)."
+    },
+    {
+      "name": "Artifact Enhancer 1.5x",
+      "set": "Underworld",
+      "type": "Token",
+      "category": "Underworld Guardian room reward",
+      "value": "1.5x your highest-VP artifact at end of game",
+      "notes": "Two copies — awarded to the next two players who enter the Guardian's room after he's defeated."
+    }
+  ]
+}

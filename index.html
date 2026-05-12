@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fun Projects — Fernando Moreira</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A personal collection of fun side projects.">
+<style>
+:root {
+  --bg: #f7f4ec;
+  --panel: #ffffff;
+  --panel-2: #f0ebdc;
+  --gold: #b8862e;
+  --gold-dim: #d4a857;
+  --text: #2a1810;
+  --text-dim: #6a5a4a;
+  --accent: #c0392b;
+  --border: #d4c9b0;
+  --shadow: 0 1px 3px rgba(42,24,16,0.08);
+  --header-grad: linear-gradient(135deg, #2a1810 0%, #3a2818 100%);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; line-height: 1.5; min-height: 100vh; display: flex; flex-direction: column; }
+
+header {
+  background: var(--header-grad);
+  padding: 80px 24px 70px;
+  text-align: center;
+  border-bottom: 2px solid var(--gold-dim);
+}
+header h1 {
+  color: var(--gold-dim);
+  margin: 0 0 12px;
+  font-size: 2.6em;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+header p.tagline {
+  color: #c9b890;
+  margin: 0 auto;
+  max-width: 560px;
+  font-size: 1.05em;
+}
+header .by {
+  color: #9d8b6f;
+  margin: 14px 0 0;
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+}
+
+main {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 50px 24px 60px;
+  width: 100%;
+}
+
+.intro {
+  max-width: 720px;
+  margin: 0 auto 36px;
+  color: var(--text-dim);
+  font-size: 1em;
+}
+.intro h2 {
+  color: var(--gold);
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.project {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px 22px 18px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.project::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold-dim);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s;
+}
+.project:hover { transform: translateY(-2px); border-color: var(--gold-dim); box-shadow: 0 6px 18px rgba(42,24,16,0.12); }
+.project:hover::before { transform: scaleX(1); }
+
+.project.placeholder {
+  background: var(--panel-2);
+  border-style: dashed;
+  cursor: default;
+  opacity: 0.75;
+}
+.project.placeholder:hover { transform: none; box-shadow: var(--shadow); border-color: var(--border); }
+.project.placeholder:hover::before { transform: scaleX(0); }
+
+.project .status {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.status-active { background: rgba(42,138,58,0.12); color: #2a8a3a; }
+.status-wip { background: rgba(184,134,46,0.15); color: var(--gold); }
+.status-idea { background: rgba(106,90,74,0.15); color: var(--text-dim); }
+
+.project h3 {
+  color: var(--text);
+  margin: 0 0 6px;
+  font-size: 1.2em;
+  font-weight: 600;
+  padding-right: 60px;
+}
+.project .subtitle {
+  color: var(--gold);
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.project p {
+  color: var(--text-dim);
+  font-size: 0.92em;
+  margin: 0 0 14px;
+  flex: 1;
+}
+.project .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+}
+.project .tag {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.72em;
+}
+
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-dim);
+  font-size: 0.85em;
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+}
+footer a {
+  color: var(--gold);
+  text-decoration: none;
+}
+footer a:hover { text-decoration: underline; }
+
+@media (max-width: 600px) {
+  header { padding: 50px 20px 40px; }
+  header h1 { font-size: 1.9em; }
+  main { padding: 36px 20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Fun Projects</h1>
+  <p class="tagline">A growing collection of side projects — board game tools, experiments, things I felt like building on a weekend.</p>
+  <p class="by">by Fernando Moreira</p>
+</header>
+
+<main>
+  <section class="intro">
+    <h2>About</h2>
+    <p>Each project here is self-contained. Click a card to open it. Most are plain HTML/CSS/JS pages — no install, no build, just open and use.</p>
+  </section>
+
+  <section class="projects">
+    <a href="clank-catacombs-deckbuilder/" class="project">
+      <span class="status status-active">Active</span>
+      <div class="subtitle">Board game · Clank!</div>
+      <h3>Clank! Catacombs Deck Builder</h3>
+      <p>Interactive card pool, statistical analysis, combo clusters and live deck stats for a custom Clank! Catacombs deck. Includes Catacombs, Adventuring Party, and the upcoming Lairs and Underworld expansions.</p>
+      <div class="meta">
+        <span class="tag">HTML</span>
+        <span class="tag">localStorage</span>
+        <span class="tag">SVG charts</span>
+        <span class="tag">138 cards</span>
+      </div>
+    </a>
+
+    <div class="project placeholder">
+      <span class="status status-idea">Soon</span>
+      <div class="subtitle">Next idea</div>
+      <h3>Something else, eventually</h3>
+      <p>This is a placeholder for whatever I build next. When a new project lands, this card gets replaced.</p>
+      <div class="meta">
+        <span class="tag">TBD</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Source on <a href="https://github.com/fernandofreitasmoreira/fun-projects">GitHub</a> · built with no framework, on a weekend
+</footer>
+
+</body>
+</html>
