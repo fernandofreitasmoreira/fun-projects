@@ -1768,6 +1768,44 @@ function buildDungeonDeck() {
   const isBurgleTrash = c => (c.combo?.trashTags || []).includes('Burgle-Trash')
                           || (c.combo?.clusters  || []).includes('Burgle-Removal');
 
+  // Shared tiebreaker. Priorities (in order):
+  //   1. Card not yet in deck wins (favours unique-card diversity).
+  //   2. Card from a set that is currently under-represented in the deck
+  //      relative to the pool (favours pulling from all 4 sets, not just the
+  //      ones with hand-curated combo scores).
+  //   3. Higher combo score wins.
+  //   4. Alphabetical (deterministic tiebreak).
+  function setShareInDeck(setName) {
+    let inDeck = 0;
+    for (const [n, q] of Object.entries(deck)) {
+      const c = CARDS.find(cc => cc.name === n);
+      if (c && c.set === setName) inDeck += q;
+    }
+    return inDeck;
+  }
+  // Pool size per set (computed once)
+  const setPoolSize = {};
+  pool.forEach(c => { setPoolSize[c.set] = (setPoolSize[c.set] || 0) + c.quantity; });
+  function setSaturation(c) {
+    // 0 = nothing of this set in deck yet, 1 = whole set already in
+    const cap = setPoolSize[c.set] || 1;
+    return setShareInDeck(c.set) / cap;
+  }
+  function rankCandidates(arr) {
+    return arr.sort((a, b) => {
+      const aIn = (deck[a.name] || 0) > 0 ? 1 : 0;
+      const bIn = (deck[b.name] || 0) > 0 ? 1 : 0;
+      if (aIn !== bIn) return aIn - bIn;       // not-in-deck wins
+      // Prefer cards from less-saturated sets (i.e. Underworld over Catacombs
+      // when Catacombs is already heavily represented).
+      const sat = setSaturation(a) - setSaturation(b);
+      if (Math.abs(sat) > 0.02) return sat;     // strictly less-saturated wins
+      if ((b.comboScore || 0) !== (a.comboScore || 0))
+        return (b.comboScore || 0) - (a.comboScore || 0);
+      return a.name.localeCompare(b.name);
+    });
+  }
+
   // ---- Step 1: Every React card (every copy) ----
   // Step 2: Every Trophy card (every copy) — included here as the "always in"
   // category alongside pinned cards; we track them separately for the UI.
@@ -1812,14 +1850,9 @@ function buildDungeonDeck() {
   function fillFloor(predicate, target, label) {
     let cur = countWhere(predicate);
     while (cur < target && used < total) {
-      const candidates = pool.filter(c =>
-        predicate(c) && !inFull(c)
-      );
+      const candidates = pool.filter(c => predicate(c) && !inFull(c));
       if (!candidates.length) break;
-      candidates.sort((a, b) =>
-        (b.comboScore || 0) - (a.comboScore || 0)
-        || a.name.localeCompare(b.name)
-      );
+      rankCandidates(candidates);
       addOne(candidates[0]);
       cur = countWhere(predicate);
     }
@@ -1838,14 +1871,9 @@ function buildDungeonDeck() {
   function maximise(predicate, label) {
     const startUsed = used;
     while (used < total) {
-      const candidates = pool.filter(c =>
-        predicate(c) && !inFull(c)
-      );
+      const candidates = pool.filter(c => predicate(c) && !inFull(c));
       if (!candidates.length) break;
-      candidates.sort((a, b) =>
-        (b.comboScore || 0) - (a.comboScore || 0)
-        || a.name.localeCompare(b.name)
-      );
+      rankCandidates(candidates);
       addOne(candidates[0]);
     }
     steps.push({
