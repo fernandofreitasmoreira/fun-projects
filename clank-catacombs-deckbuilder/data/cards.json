@@ -7,11 +7,10 @@
     "Underworld"
   ],
   "sets_pending_verification": [
-    "Lairs",
-    "Underworld"
+    "Lairs"
   ],
-  "total_unique": 138,
-  "total_qty": 180,
+  "total_unique": 174,
+  "total_qty": 225,
   "cards": [
     {
       "name": "Empurror",
@@ -53,7 +52,8 @@
       },
       "comboScore": 9,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Golden Flute",
@@ -87,7 +87,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Payoff",
@@ -121,7 +122,8 @@
       },
       "comboScore": -1,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Rebel Scribe",
@@ -161,7 +163,8 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Waystone",
@@ -202,7 +205,8 @@
       },
       "comboScore": 3,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Flamboyance",
@@ -239,7 +243,8 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Imp Familiar",
@@ -281,7 +286,8 @@
       },
       "comboScore": 9,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Pillage",
@@ -315,7 +321,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Remove Traps",
@@ -345,7 +352,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Shadow Walk",
@@ -384,7 +392,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Astral Projection",
@@ -421,7 +430,8 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Boots of the Ape Lord",
@@ -460,7 +470,8 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Bard",
@@ -499,7 +510,8 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Lie in Wait",
@@ -535,7 +547,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Lightstick",
@@ -567,7 +580,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Rebel Thief",
@@ -610,7 +624,8 @@
       },
       "comboScore": 9,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Riot",
@@ -653,7 +668,8 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Scavenger",
@@ -689,7 +705,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Smash and Grab",
@@ -724,7 +741,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Sneak Attack",
@@ -757,7 +775,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Sudden Movement",
@@ -789,7 +808,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Swindle",
@@ -819,7 +839,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Bandit",
@@ -855,7 +876,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Charlatan",
@@ -892,7 +914,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Corrupt Advisor",
@@ -936,7 +959,8 @@
       },
       "comboScore": 11,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Divining Rod",
@@ -970,7 +994,8 @@
       },
       "comboScore": 5,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Elven Sword",
@@ -1004,7 +1029,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Librarian",
@@ -1043,7 +1069,8 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Rebel Paladin",
@@ -1086,7 +1113,8 @@
       },
       "comboScore": 12,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Skulker",
@@ -1122,7 +1150,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Smoky Quartz",
@@ -1162,7 +1191,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Spectral Rider",
@@ -1203,7 +1233,8 @@
       },
       "comboScore": 8,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "White Tourmaline",
@@ -1244,7 +1275,8 @@
       },
       "comboScore": 6,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Brave Hero",
@@ -1283,7 +1315,8 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Curator",
@@ -1324,7 +1357,8 @@
       },
       "comboScore": 9,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Diversion",
@@ -1361,7 +1395,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Expert Guide",
@@ -1395,7 +1430,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Rebel General",
@@ -1435,7 +1471,8 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Robbery",
@@ -1473,7 +1510,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Rose Quartz",
@@ -1513,7 +1551,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Black Tourmaline",
@@ -1554,7 +1593,8 @@
       },
       "comboScore": 6,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Crystal Compass",
@@ -1590,7 +1630,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Double Cross",
@@ -1628,7 +1669,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Expensive Taste",
@@ -1665,7 +1707,8 @@
       },
       "comboScore": 5,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Fiery Quartz",
@@ -1705,7 +1748,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Floating Skull",
@@ -1748,7 +1792,8 @@
       },
       "comboScore": 9,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Grand Theft",
@@ -1787,7 +1832,8 @@
       },
       "comboScore": 5,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Lute",
@@ -1826,7 +1872,8 @@
       },
       "comboScore": 9,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Souldrinker",
@@ -1856,7 +1903,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Thirst for Adventure",
@@ -1893,7 +1941,8 @@
       },
       "comboScore": 5,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Blink Spell",
@@ -1929,7 +1978,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Wishing Well",
@@ -1964,7 +2014,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Darkened Alcove",
@@ -1996,7 +2047,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Underground River",
@@ -2026,7 +2078,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Locked Trunk",
@@ -2062,7 +2115,8 @@
       },
       "comboScore": 5,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Thieves' Shrine",
@@ -2101,7 +2155,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Black Market",
@@ -2140,7 +2195,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Skeleton",
@@ -2172,7 +2228,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Animated Wall",
@@ -2204,7 +2261,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Crystal Kobold",
@@ -2240,7 +2298,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Keymaster",
@@ -2276,7 +2335,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Skeleton Priest",
@@ -2312,7 +2372,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Archoverlord",
@@ -2350,7 +2411,8 @@
       },
       "comboScore": 6,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Marble Guardian",
@@ -2387,7 +2449,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Skeletal Ape",
@@ -2419,7 +2482,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Skeleton Warlock",
@@ -2458,7 +2522,8 @@
       },
       "comboScore": 5,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "The Warden",
@@ -2495,7 +2560,8 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Ogre Merchant",
@@ -2525,7 +2591,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Cutpurse",
@@ -2566,7 +2633,8 @@
       },
       "comboScore": 10,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Spiritual Healer",
@@ -2608,7 +2676,8 @@
       },
       "comboScore": 11,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Virtuoso Burglar",
@@ -2653,7 +2722,8 @@
       },
       "comboScore": 10,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Rebel Herald",
@@ -2696,7 +2766,8 @@
       },
       "comboScore": 11,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Tactician",
@@ -2735,7 +2806,8 @@
       },
       "comboScore": 6,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Berserker",
@@ -2778,7 +2850,8 @@
       },
       "comboScore": 13,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Assassin",
@@ -2817,7 +2890,8 @@
       },
       "comboScore": 6,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Royal Brat",
@@ -2859,7 +2933,8 @@
       },
       "comboScore": 11,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Flawed Ruby",
@@ -2899,7 +2974,8 @@
       },
       "comboScore": 8,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Flawed Sapphire",
@@ -2939,7 +3015,8 @@
       },
       "comboScore": 8,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Flawed Emerald",
@@ -2979,7 +3056,8 @@
       },
       "comboScore": 8,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Scouting Ahead",
@@ -3016,7 +3094,8 @@
       },
       "comboScore": 6,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Too Bad for You",
@@ -3052,7 +3131,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "One With Everything",
@@ -3088,7 +3168,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Time Warp",
@@ -3128,7 +3209,8 @@
       },
       "comboScore": 6,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Walk It Off",
@@ -3164,7 +3246,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Elven Satchel",
@@ -3201,7 +3284,8 @@
       },
       "comboScore": 6,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Hiding Place",
@@ -3238,7 +3322,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Secret Passage",
@@ -3280,7 +3365,8 @@
       },
       "comboScore": 11,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Pixie Swarm",
@@ -3312,7 +3398,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Spotter",
@@ -3344,7 +3431,8 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Leprechaun",
@@ -3380,7 +3468,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Scuffler",
@@ -3422,7 +3511,8 @@
       },
       "comboScore": 8,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Succubus",
@@ -3456,7 +3546,8 @@
       },
       "comboScore": 4,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Ape Lord Phantasm",
@@ -3495,7 +3586,8 @@
       },
       "comboScore": 12,
       "verified": true,
-      "source": "verified"
+      "source": "verified",
+      "category": "DungeonDeck"
     },
     {
       "name": "Tinkerer",
@@ -3529,7 +3621,8 @@
       },
       "comboScore": 2,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Devotion",
@@ -3561,7 +3654,8 @@
       },
       "comboScore": 2,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Jailbreaker",
@@ -3593,7 +3687,8 @@
       },
       "comboScore": 2,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Monkey Paw",
@@ -3629,7 +3724,8 @@
       },
       "comboScore": 5,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Quick Pick",
@@ -3663,7 +3759,8 @@
       },
       "comboScore": 2,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Ten-Foot Pole",
@@ -3695,7 +3792,8 @@
       },
       "comboScore": 2,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Thirst for Knowledge",
@@ -3729,7 +3827,8 @@
       },
       "comboScore": 5,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Tome of Fire",
@@ -3765,7 +3864,8 @@
       },
       "comboScore": 5,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Amethyst",
@@ -3799,7 +3899,8 @@
       },
       "comboScore": 2,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Cave Bat Wings",
@@ -3835,7 +3936,8 @@
       },
       "comboScore": 9,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "False Bottom",
@@ -3869,7 +3971,8 @@
       },
       "comboScore": 2,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Merchant's Guild Pin",
@@ -3902,7 +4005,8 @@
       },
       "comboScore": 4,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Cavern Prowler",
@@ -3932,7 +4036,8 @@
       },
       "comboScore": 0,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Hoard Keeper",
@@ -3964,7 +4069,8 @@
       },
       "comboScore": 2,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Jailer",
@@ -3999,7 +4105,8 @@
       },
       "comboScore": 4,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Pit Fiend",
@@ -4031,7 +4138,8 @@
       },
       "comboScore": 2,
       "verified": false,
-      "source": "author-v1.2"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Skeleton Troubadour",
@@ -4061,414 +4169,35 @@
       },
       "comboScore": 0,
       "verified": false,
-      "source": "author-v1.2"
-    },
-    {
-      "name": "Underworld Guardian",
-      "set": "Underworld",
-      "type": "Monster",
-      "cost": "3S",
-      "costNum": 3,
-      "isMonster": true,
-      "skill": null,
-      "swords": null,
-      "boots": null,
-      "vp": 3,
-      "text": "When encountered, you must defeat this or take 2 damage.\nDEFEAT: Take the 2x artifact enhancer.\nTROPHY: Bonus artifact. (doesn't count for your artifact limit.)",
-      "acquire": "",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "",
-      "combo": {
-        "provides": [],
-        "triggers": [
-          "Artifact"
-        ],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": [
-          "Artifact",
-          "Trophy"
-        ]
-      },
-      "comboScore": 7,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Tome of the Ape Lords",
-      "set": "Underworld",
-      "type": "Other",
-      "cost": 4,
-      "costNum": 4,
-      "isMonster": false,
-      "skill": 3,
-      "swords": 0,
-      "boots": 0,
-      "vp": 3,
-      "text": "If you have a monkey idol, this counts as a Secret Tome.",
-      "acquire": "+3 Clank!",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "Ape Lord magic was divided into three schools.",
-      "combo": {
-        "provides": [
-          "Secret-Tome counts-as",
-          "Secret-Tome named"
-        ],
-        "triggers": [
-          "Monkey-Idol"
-        ],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": [
-          "Monkey-Idol",
-          "Secret-Tome"
-        ]
-      },
-      "comboScore": 7,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Tome of Intellect",
-      "set": "Underworld",
-      "type": "Other",
-      "cost": 6,
-      "costNum": 6,
-      "isMonster": false,
-      "skill": 0,
-      "swords": 0,
-      "boots": 0,
-      "vp": 1,
-      "text": "Draw two cards. It counts as a Secret Tome.",
-      "acquire": "",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "It's an exciting read. The words jump off the page.",
-      "combo": {
-        "provides": [
-          "Secret-Tome counts-as",
-          "Secret-Tome named"
-        ],
-        "triggers": [],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": [
-          "Draw-Engine",
-          "Secret-Tome"
-        ]
-      },
-      "comboScore": 4,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Underworld Guide",
-      "set": "Underworld",
-      "type": "Companion",
-      "cost": 2,
-      "costNum": 2,
-      "isMonster": false,
-      "skill": 0,
-      "swords": 0,
-      "boots": 1,
-      "vp": 0,
-      "text": "If you're in the Underworld, draw a card.\nWhen you trash this, draw a card.",
-      "acquire": "1 coin",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "Ask him no questions... but you'd best read the fine print.",
-      "combo": {
-        "provides": [
-          "Companion"
-        ],
-        "triggers": [],
-        "interactive": [],
-        "trashTags": [
-          "Self-Trash",
-          "Trash-Payoff"
-        ],
-        "clusters": [
-          "Companion-Chain",
-          "Draw-Engine"
-        ]
-      },
-      "comboScore": 5,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Soul Prism",
-      "set": "Underworld",
-      "type": "Other",
-      "cost": 3,
-      "costNum": 3,
-      "isMonster": false,
-      "skill": 2,
-      "swords": 0,
-      "boots": 0,
-      "vp": 1,
-      "text": "When you trash this, free a prisoner.",
-      "acquire": "Heal 1",
-      "arriveDanger": "",
-      "dragonAttack": true,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "If you listen closely, you can hear tiny hands knocking.",
-      "combo": {
-        "provides": [
-          "Free-Prisoner"
-        ],
-        "triggers": [],
-        "interactive": [],
-        "trashTags": [
-          "Self-Trash",
-          "Trash-Payoff"
-        ],
-        "clusters": [
-          "Prisoner"
-        ]
-      },
-      "comboScore": 3,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Oracle",
-      "set": "Underworld",
-      "type": "Companion",
-      "cost": 4,
-      "costNum": 4,
-      "isMonster": false,
-      "skill": 1,
-      "swords": 0,
-      "boots": 0,
-      "vp": 1,
-      "text": "Draw a card.\n-OR-\nSpend 1 coin to draw two cards.",
-      "acquire": "",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "Tips make the visions a little clearer.",
-      "combo": {
-        "provides": [
-          "Companion"
-        ],
-        "triggers": [],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": [
-          "Companion-Chain",
-          "Draw-Engine"
-        ]
-      },
-      "comboScore": 4,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Lantern",
-      "set": "Underworld",
-      "type": "Other",
-      "cost": null,
-      "costNum": null,
-      "isMonster": false,
-      "skill": null,
-      "swords": 0,
-      "boots": 1,
-      "vp": 0,
-      "text": "[partial: coin/clank effect — exact text obscured]",
-      "acquire": "",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "The Underworld is a dangerous place... [obscured]",
-      "combo": {
-        "provides": [],
-        "triggers": [],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": []
-      },
-      "comboScore": 0,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Big Ideas",
-      "set": "Underworld",
-      "type": "Other",
-      "cost": null,
-      "costNum": null,
-      "isMonster": false,
-      "skill": 2,
-      "swords": 0,
-      "boots": 0,
-      "vp": 1,
-      "text": "+1 Clank!\nIf you generate 6 or more [Skill] this turn, [obscured effect]",
-      "acquire": "",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "It's dumb enough that it might be brilliant.",
-      "combo": {
-        "provides": [],
-        "triggers": [
-          "Clank-trigger",
-          "Skill-threshold"
-        ],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": [
-          "Clank-Trigger",
-          "Skill-Threshold"
-        ]
-      },
-      "comboScore": 10,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Wealth of Knowledge",
-      "set": "Underworld",
-      "type": "Other",
-      "cost": null,
-      "costNum": null,
-      "isMonster": false,
-      "skill": 2,
-      "swords": 0,
-      "boots": 1,
-      "vp": 0,
-      "text": "ARRIVE: All players get 1 coin.\nWorth 1 [point] for each Secret Tome you have.",
-      "acquire": "",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "Unlock the riches of your [obscured]",
-      "combo": {
-        "provides": [],
-        "triggers": [
-          "Secret-Tome trigger"
-        ],
-        "interactive": [
-          "Anti-Player"
-        ],
-        "trashTags": [],
-        "clusters": [
-          "Anti-Player",
-          "Secret-Tome"
-        ]
-      },
-      "comboScore": 9,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Moneychanger's Booth",
-      "set": "Underworld",
-      "type": "Device",
-      "cost": 4,
-      "costNum": 4,
-      "isMonster": false,
-      "skill": null,
-      "swords": null,
-      "boots": null,
-      "vp": 0,
-      "text": "USE: [Get 2 coins — exact wording obscured]",
-      "acquire": "",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "It's a great deal. Trinkets from the upper world for access to the underworld.",
-      "combo": {
-        "provides": [],
-        "triggers": [],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": []
-      },
-      "comboScore": 0,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Fire Breath",
-      "set": "Underworld",
-      "type": "Other",
-      "cost": null,
-      "costNum": null,
-      "isMonster": false,
-      "skill": 1,
-      "swords": 1,
-      "boots": 0,
-      "vp": 1,
-      "text": "If you make any Clank! this turn, draw a card.",
-      "acquire": "+1 Sword",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "Mages everywhere are chatting about this hot new spell.",
-      "combo": {
-        "provides": [],
-        "triggers": [
-          "Clank-trigger"
-        ],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": [
-          "Clank-Trigger",
-          "Draw-Engine"
-        ]
-      },
-      "comboScore": 7,
-      "verified": true,
-      "source": "image-extracted"
+      "source": "author-v1.2",
+      "category": "DungeonDeck"
     },
     {
       "name": "Abyssal Hydra",
       "set": "Underworld",
+      "category": "DungeonDeck",
       "type": "Monster",
-      "cost": "3S",
-      "costNum": 3,
+      "cost": null,
+      "costNum": null,
       "isMonster": true,
       "skill": null,
-      "swords": null,
+      "swords": 4,
       "boots": null,
-      "vp": 0,
-      "text": "ARRIVE: Put 6 coin on this.\nDEFEAT: Draw two cards, take 2 coin from this. This stays in the dungeon row if it still has any coin.",
+      "vp": null,
+      "text": "DEFEAT: Draw two cards, take 2 gold from this. This stays in the dungeon row if it still has any gold.",
       "acquire": "",
-      "arriveDanger": "",
+      "arriveDanger": "ARRIVE: Put 6 gold on this.",
       "dragonAttack": true,
       "quantity": 1,
-      "mechanics": [],
-      "image": "",
+      "mechanics": [
+        "Monster",
+        "Draw2",
+        "Gold-pool"
+      ],
+      "image": "cards/abyssal_hydra.jpg",
       "flavor": "That is one hale hydra.",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [],
         "triggers": [],
@@ -4480,93 +4209,72 @@
       },
       "comboScore": 2,
       "verified": true,
-      "source": "image-extracted"
+      "source": "verified"
     },
     {
-      "name": "Harpy Matriarch",
+      "name": "Chimera",
       "set": "Underworld",
+      "category": "DungeonDeck",
       "type": "Monster",
-      "cost": "2S",
-      "costNum": 2,
+      "cost": null,
+      "costNum": null,
       "isMonster": true,
       "skill": null,
-      "swords": null,
+      "swords": 3,
       "boots": null,
-      "vp": 0,
-      "text": "Fight this only in the Underworld.\nDEFEAT: 2 coin\nTROPHY: Worth 1 [point] for each harpy trophy you have (including this one).",
+      "vp": null,
+      "text": "DEFEAT: Take a major secret, +1 Clank!",
       "acquire": "",
-      "arriveDanger": "",
+      "arriveDanger": "ARRIVE: All players get +1 Clank!",
       "dragonAttack": false,
       "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "Mess with her brood, and you're messing with her.",
+      "mechanics": [
+        "Monster",
+        "Clank+",
+        "Major-Secret"
+      ],
+      "image": "cards/chimera.jpg",
+      "flavor": "There seems to have been some kind of mix-up.",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [],
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": [
-          "Trophy"
-        ]
+        "clusters": []
       },
-      "comboScore": 2,
+      "comboScore": 0,
       "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Acid Splash",
-      "set": "Underworld",
-      "type": "Other",
-      "cost": 2,
-      "costNum": 2,
-      "isMonster": false,
-      "skill": 0,
-      "swords": 0,
-      "boots": 0,
-      "vp": 1,
-      "text": "Reveal the top card of your deck. (Reshuffle if needed.)\nThen choose: Trash it -OR- discard it to get 2 coin.",
-      "acquire": "",
-      "arriveDanger": "",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "This is a highly volatile spell.",
-      "combo": {
-        "provides": [],
-        "triggers": [],
-        "interactive": [],
-        "trashTags": [
-          "Trash-Other"
-        ],
-        "clusters": [
-          "Discard-Engine"
-        ]
-      },
-      "comboScore": 2,
-      "verified": true,
-      "source": "image-extracted"
+      "source": "verified"
     },
     {
       "name": "Cyclops",
       "set": "Underworld",
+      "category": "DungeonDeck",
       "type": "Monster",
-      "cost": "3S",
-      "costNum": 3,
+      "cost": null,
+      "costNum": null,
       "isMonster": true,
       "skill": null,
-      "swords": null,
+      "swords": 3,
       "boots": null,
-      "vp": 0,
-      "text": "ARRIVE: All players get +1 Clank!\nDEFEAT: Take a lockpick, trash a card in your play area or discard pile.",
+      "vp": null,
+      "text": "DEFEAT: Take a lockpick, trash a card in your play area or discard pile.",
       "acquire": "",
-      "arriveDanger": "",
+      "arriveDanger": "ARRIVE: All players get +1 Clank!",
       "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
+      "quantity": 2,
+      "mechanics": [
+        "Monster",
+        "Lockpick",
+        "Trash",
+        "Clank+"
+      ],
+      "image": "cards/cyclops.jpg",
       "flavor": "Don't worry about the boulder. He doesn't have good depth perception.",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [
           "Lockpick-Gen"
@@ -4586,27 +4294,33 @@
       },
       "comboScore": 10,
       "verified": true,
-      "source": "image-extracted"
+      "source": "verified"
     },
     {
       "name": "Grave Robber",
       "set": "Underworld",
+      "category": "DungeonDeck",
       "type": "Monster",
-      "cost": "2S",
-      "costNum": 2,
+      "cost": null,
+      "costNum": null,
       "isMonster": true,
       "skill": null,
-      "swords": null,
+      "swords": 2,
       "boots": null,
-      "vp": 0,
-      "text": "ARRIVE: Rotate each square tile with any players on it 180 degrees.\nDEFEAT: 1 coin",
+      "vp": null,
+      "text": "DEFEAT: +1 gold",
       "acquire": "",
-      "arriveDanger": "",
+      "arriveDanger": "ARRIVE: Rotate each square tile with any players on it 180 degrees.",
       "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
+      "quantity": 2,
+      "mechanics": [
+        "Monster",
+        "Gold"
+      ],
+      "image": "cards/grave_robber.jpg",
       "flavor": "In the Underworld lies grave danger.",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [],
         "triggers": [],
@@ -4621,27 +4335,74 @@
       },
       "comboScore": 6,
       "verified": true,
-      "source": "image-extracted"
+      "source": "verified"
+    },
+    {
+      "name": "Harpy Matriarch",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Monster",
+      "cost": null,
+      "costNum": null,
+      "isMonster": true,
+      "skill": null,
+      "swords": 3,
+      "boots": null,
+      "vp": null,
+      "text": "Fight this only in the Underworld. DEFEAT: 2 (trophy). TROPHY: Worth 1 VP for each harpy trophy you have (including this one).",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": true,
+      "quantity": 1,
+      "mechanics": [
+        "Monster",
+        "Underworld-only",
+        "Trophy",
+        "Harpy",
+        "VP-scaling"
+      ],
+      "image": "cards/harpy_matriarch.jpg",
+      "flavor": "Mess with her brood, and you're messing with her.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": [
+          "Trophy"
+        ]
+      },
+      "comboScore": 2,
+      "verified": true,
+      "source": "verified"
     },
     {
       "name": "Shifting Shadow",
       "set": "Underworld",
+      "category": "DungeonDeck",
       "type": "Monster",
-      "cost": "1S",
-      "costNum": 1,
+      "cost": null,
+      "costNum": null,
       "isMonster": true,
       "skill": null,
-      "swords": null,
+      "swords": 1,
       "boots": null,
-      "vp": 0,
+      "vp": null,
       "text": "DEFEAT: You may move in the wrong direction through one-way tunnels this turn.",
       "acquire": "",
       "arriveDanger": "",
       "dragonAttack": false,
       "quantity": 1,
-      "mechanics": [],
-      "image": "",
+      "mechanics": [
+        "Monster",
+        "Movement"
+      ],
+      "image": "cards/shifting_shadow.jpg",
       "flavor": "Invisible to most, these creatures dwell on the edge of the living world and the ghost world.",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [],
         "triggers": [],
@@ -4651,27 +4412,34 @@
       },
       "comboScore": 0,
       "verified": true,
-      "source": "image-extracted"
+      "source": "verified"
     },
     {
       "name": "Wild Boar",
       "set": "Underworld",
+      "category": "DungeonDeck",
       "type": "Monster",
-      "cost": "2S",
-      "costNum": 2,
+      "cost": null,
+      "costNum": null,
       "isMonster": true,
       "skill": null,
-      "swords": null,
+      "swords": 2,
       "boots": null,
-      "vp": 0,
-      "text": "DANGER: Pull +1 cube for dragon attacks.\nDEFEAT: +1 Clank!, draw two cards.",
+      "vp": null,
+      "text": "DEFEAT: +1 Clank!, draw two cards.",
       "acquire": "",
-      "arriveDanger": "",
+      "arriveDanger": "DANGER: Pull +1 cube for dragon attacks.",
       "dragonAttack": true,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
+      "quantity": 2,
+      "mechanics": [
+        "Monster",
+        "Clank+",
+        "Draw2"
+      ],
+      "image": "cards/wild_boar.jpg",
       "flavor": "Best not stand in its path...",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [],
         "triggers": [
@@ -4686,63 +4454,34 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Soothsayer",
-      "set": "Underworld",
-      "type": "Companion",
-      "cost": 3,
-      "costNum": 3,
-      "isMonster": false,
-      "skill": 2,
-      "swords": 0,
-      "boots": 0,
-      "vp": 2,
-      "text": "If you have a fate card, +1 coin.",
-      "acquire": "",
-      "arriveDanger": "Each player may spend 1 coin to heal.",
-      "dragonAttack": false,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "The future is coming soon.",
-      "combo": {
-        "provides": [
-          "Companion"
-        ],
-        "triggers": [],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": [
-          "Coin-Engine",
-          "Companion-Chain",
-          "Fate-Card"
-        ]
-      },
-      "comboScore": 6,
-      "verified": true,
-      "source": "image-extracted"
+      "source": "verified"
     },
     {
       "name": "Catapult",
       "set": "Underworld",
+      "category": "DungeonDeck",
       "type": "Device",
-      "cost": 2,
-      "costNum": 2,
+      "cost": null,
+      "costNum": null,
       "isMonster": false,
-      "skill": null,
+      "skill": 2,
       "swords": null,
       "boots": null,
-      "vp": 0,
+      "vp": 2,
       "text": "USE: +2 Clank!, teleport to an adjacent room.",
       "acquire": "",
       "arriveDanger": "",
       "dragonAttack": true,
       "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "I have an idea. Hold my tankard.",
+      "mechanics": [
+        "Device",
+        "Teleport",
+        "Clank+"
+      ],
+      "image": "cards/catapult.jpg",
+      "flavor": "\"I have an idea. Hold my tankard.\"",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [
           "Teleport"
@@ -4759,27 +4498,355 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "image-extracted"
+      "source": "verified"
+    },
+    {
+      "name": "Moneychanger's Booth",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Device",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": 2,
+      "swords": null,
+      "boots": null,
+      "vp": 4,
+      "text": "USE: Spend 2 skill. Trinkets from the upper world for access to the underworld.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Device",
+        "Skill-spend",
+        "Underworld"
+      ],
+      "image": "cards/moneychanger_s_booth.jpg",
+      "flavor": "It's a great deal.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Mystic Elevator",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Device",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 5,
+      "text": "USE: +1 Clank!, teleport to a Market room in the Underworld.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": true,
+      "quantity": 1,
+      "mechanics": [
+        "Device",
+        "Teleport",
+        "Clank+",
+        "Market",
+        "Underworld"
+      ],
+      "image": "cards/mystic_elevator.jpg",
+      "flavor": "\"Going down?\"",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [
+          "Teleport"
+        ],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": [
+          "Position-Market",
+          "Teleport"
+        ]
+      },
+      "comboScore": 4,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Underground Spring",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Device",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 4,
+      "text": "USE: Heal. If you're in the Underworld, trash a card in your play area or discard pile.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Device",
+        "Heal",
+        "Trash",
+        "Underworld"
+      ],
+      "image": "cards/underground_spring.jpg",
+      "flavor": "It's like drinking from the Fountain of Youth.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Apprentice Thief",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": 3,
+      "costNum": 3,
+      "isMonster": false,
+      "skill": 1,
+      "swords": 1,
+      "boots": null,
+      "vp": null,
+      "text": "",
+      "acquire": "Take a lockpick.",
+      "arriveDanger": "",
+      "dragonAttack": true,
+      "quantity": 1,
+      "mechanics": [
+        "Companion",
+        "Has-Acquire",
+        "Lockpick"
+      ],
+      "image": "cards/apprentice_thief.jpg",
+      "flavor": "No blacksmith or miller openings this year, unfortunately.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [
+          "Companion",
+          "Lockpick-Gen"
+        ],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": [
+          "Companion-Chain",
+          "Lockpick"
+        ]
+      },
+      "comboScore": 4,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "George",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": 1,
+      "swords": 1,
+      "boots": null,
+      "vp": 4,
+      "text": "+1 Clank! and draw a card. If you have a monkey idol, do that again.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Companion",
+        "Clank+",
+        "Draw1",
+        "Monkey-Idol"
+      ],
+      "image": "cards/george.jpg",
+      "flavor": "If you make him furious, his response will be injurious.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Gray Knight",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": 2,
+      "swords": 2,
+      "boots": null,
+      "vp": 5,
+      "text": "",
+      "acquire": "1 gold",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Companion",
+        "Has-Acquire",
+        "Gold"
+      ],
+      "image": "cards/gray_knight.jpg",
+      "flavor": "The core doctrine of the order of gray knights is moral flexibility.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Hero of Prophecy",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": 3,
+      "costNum": 3,
+      "isMonster": false,
+      "skill": 2,
+      "swords": 1,
+      "boots": 1,
+      "vp": 6,
+      "text": "If you have a fate card, trash a card in your play area or discard pile.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Companion",
+        "Fate",
+        "Trash"
+      ],
+      "image": "cards/hero_of_prophecy.jpg",
+      "flavor": "\"Did I choose this path? Or did the path choose me?\"",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Oracle",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": 1,
+      "swords": null,
+      "boots": null,
+      "vp": 4,
+      "text": "Draw a card. -OR- Spend 1 skill to draw two cards.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Companion",
+        "Draw1",
+        "Draw2",
+        "Skill-spend"
+      ],
+      "image": "cards/oracle.jpg",
+      "flavor": "Tips make the visions a little clearer.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [
+          "Companion"
+        ],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": [
+          "Companion-Chain",
+          "Draw-Engine"
+        ]
+      },
+      "comboScore": 4,
+      "verified": true,
+      "source": "verified"
     },
     {
       "name": "Orpheus",
       "set": "Underworld",
+      "category": "DungeonDeck",
       "type": "Companion",
-      "cost": 7,
-      "costNum": 7,
+      "cost": null,
+      "costNum": null,
       "isMonster": false,
-      "skill": 0,
-      "swords": 0,
+      "skill": null,
+      "swords": null,
       "boots": 2,
-      "vp": 0,
-      "text": "+1 Clank!, 1 coin\nWorth 1 [point] for each freed Prisoner you have.",
+      "vp": 7,
+      "text": "+1 Clank!, +1 skill. Worth 1 VP for each freed Prisoner you have.",
       "acquire": "Free a prisoner.",
-      "arriveDanger": "Put 3 dragon cubes back in the bag.",
+      "arriveDanger": "ARRIVE: Put 3 dragon cubes back in the bag.",
       "dragonAttack": false,
       "quantity": 1,
-      "mechanics": [],
-      "image": "",
+      "mechanics": [
+        "Companion",
+        "Has-Acquire",
+        "Clank+",
+        "Skill",
+        "Prisoner",
+        "VP-scaling",
+        "Boots"
+      ],
+      "image": "cards/orpheus.jpg",
       "flavor": "",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [
           "Companion",
@@ -4797,130 +4864,110 @@
       },
       "comboScore": 7,
       "verified": true,
-      "source": "image-extracted"
+      "source": "verified"
     },
     {
-      "name": "Mystic Elevator",
+      "name": "Rebel Rouser",
       "set": "Underworld",
-      "type": "Device",
-      "cost": 5,
-      "costNum": 5,
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": 1,
+      "costNum": 1,
       "isMonster": false,
-      "skill": null,
-      "swords": null,
+      "skill": 1,
+      "swords": 2,
       "boots": null,
-      "vp": 0,
-      "text": "USE: +1 Clank!, teleport to a Market room in the Underworld.",
+      "vp": 4,
+      "text": "If you have another companion in your play area, draw a card. If you make 2 or more Clank! this turn, draw a card.",
       "acquire": "",
-      "arriveDanger": "",
-      "dragonAttack": true,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "Going down?",
-      "combo": {
-        "provides": [
-          "Teleport"
-        ],
-        "triggers": [],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": [
-          "Position-Market",
-          "Teleport"
-        ]
-      },
-      "comboScore": 4,
-      "verified": true,
-      "source": "image-extracted"
-    },
-    {
-      "name": "Utility Knife",
-      "set": "Underworld",
-      "type": "Other",
-      "cost": 3,
-      "costNum": 3,
-      "isMonster": false,
-      "skill": 0,
-      "swords": 1,
-      "boots": 0,
-      "vp": 0,
-      "text": "Draw a card.",
-      "acquire": "1 coin",
       "arriveDanger": "",
       "dragonAttack": false,
       "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "It slices, it dices, it transfers wealth... but wait, there's more!",
+      "mechanics": [
+        "Companion",
+        "Companion-synergy",
+        "Draw1",
+        "Clank+"
+      ],
+      "image": "cards/rebel_rouser.jpg",
+      "flavor": "He always knows just what to say... assuming you want an angry mob.",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [],
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": [
-          "Draw-Engine"
-        ]
+        "clusters": []
       },
-      "comboScore": 2,
+      "comboScore": 0,
       "verified": true,
-      "source": "image-extracted"
+      "source": "verified"
     },
     {
-      "name": "Apprentice Thief",
+      "name": "Rebel Tunnel Guide",
       "set": "Underworld",
+      "category": "DungeonDeck",
       "type": "Companion",
-      "cost": 3,
-      "costNum": 3,
+      "cost": 1,
+      "costNum": 1,
       "isMonster": false,
-      "skill": 1,
+      "skill": null,
       "swords": 1,
-      "boots": null,
-      "vp": 1,
-      "text": "",
-      "acquire": "Lockpick",
-      "arriveDanger": "",
-      "dragonAttack": true,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "",
-      "combo": {
-        "provides": [
-          "Companion",
-          "Lockpick-Gen"
-        ],
-        "triggers": [],
-        "interactive": [],
-        "trashTags": [],
-        "clusters": [
-          "Companion-Chain",
-          "Lockpick"
-        ]
-      },
-      "comboScore": 4,
-      "verified": false,
-      "source": "author-v1.2"
-    },
-    {
-      "name": "Sculptor",
-      "set": "Underworld",
-      "type": "Companion",
-      "cost": 3,
-      "costNum": 3,
-      "isMonster": false,
-      "skill": 0,
-      "swords": null,
-      "boots": null,
-      "vp": 1,
-      "text": "",
+      "boots": 1,
+      "vp": 2,
+      "text": "If you have another companion in your play area, draw a card.",
       "acquire": "",
       "arriveDanger": "",
       "dragonAttack": false,
       "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "",
+      "mechanics": [
+        "Companion",
+        "Companion-synergy",
+        "Draw1",
+        "Boots"
+      ],
+      "image": "cards/rebel_tunnel_guide.jpg",
+      "flavor": "Tunnel Guiding has definitely gotten more dangerous over the years.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Sculptor",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 3,
+      "text": "Trash a card in your play area. -OR- Draw a card.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 2,
+      "mechanics": [
+        "Companion",
+        "Trash",
+        "Draw1"
+      ],
+      "image": "cards/sculptor.jpg",
+      "flavor": "\"Have you seen my brother, Clay?\"",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [
           "Companion"
@@ -4935,28 +4982,325 @@
         ]
       },
       "comboScore": 2,
-      "verified": false,
-      "source": "author-v1.2"
+      "verified": true,
+      "source": "verified"
     },
     {
-      "name": "Ethereal Step",
+      "name": "Soothsayer",
       "set": "Underworld",
-      "type": "Other",
-      "cost": 3,
-      "costNum": 3,
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": 2,
+      "costNum": 2,
       "isMonster": false,
       "skill": 2,
       "swords": null,
       "boots": null,
-      "vp": 1,
-      "text": "",
+      "vp": 3,
+      "text": "If you have a fate card, +1 skill.",
+      "acquire": "",
+      "arriveDanger": "ARRIVE: Each player may spend 1 gold to heal.",
+      "dragonAttack": false,
+      "quantity": 2,
+      "mechanics": [
+        "Companion",
+        "Fate",
+        "Skill",
+        "Heal"
+      ],
+      "image": "cards/soothsayer.jpg",
+      "flavor": "\"The future is coming soon.\"",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [
+          "Companion"
+        ],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": [
+          "Coin-Engine",
+          "Companion-Chain",
+          "Fate-Card"
+        ]
+      },
+      "comboScore": 6,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Spellblade Invoker",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": 2,
+      "costNum": 2,
+      "isMonster": false,
+      "skill": null,
+      "swords": 2,
+      "boots": null,
+      "vp": 5,
+      "text": "+1 Clank! Teleport to an adjacent room.",
       "acquire": "",
       "arriveDanger": "",
       "dragonAttack": false,
       "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "",
+      "mechanics": [
+        "Companion",
+        "Clank+",
+        "Teleport"
+      ],
+      "image": "cards/spellblade_invoker.jpg",
+      "flavor": "\"I come from a long line of Invokers.\"",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Underworld Dealer",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 3,
+      "text": "+1 skill -OR- Spend 3 gold to take a Secret Tome.",
+      "acquire": "1 gold",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Companion",
+        "Has-Acquire",
+        "Skill",
+        "Secret-Tome",
+        "Gold-spend"
+      ],
+      "image": "cards/underworld_dealer.jpg",
+      "flavor": "\"You look very familiar.\" \"Oh, my brother deals in rare items too!\"",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Underworld Guide",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Companion",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": 1,
+      "vp": 2,
+      "text": "If you're in the Underworld, draw a card. When you trash this, draw a card.",
+      "acquire": "1 gold",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 2,
+      "mechanics": [
+        "Companion",
+        "Has-Acquire",
+        "Draw1",
+        "Trash",
+        "Underworld",
+        "Boots"
+      ],
+      "image": "cards/underworld_guide.jpg",
+      "flavor": "Ask him no questions... but you'd best read the fine print.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [
+          "Companion"
+        ],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [
+          "Self-Trash",
+          "Trash-Payoff"
+        ],
+        "clusters": [
+          "Companion-Chain",
+          "Draw-Engine"
+        ]
+      },
+      "comboScore": 5,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Acid Splash",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 2,
+      "text": "Reveal the top card of your deck. (Reshuffle if needed.) Then choose: Trash it -OR- discard it to get 2 swords.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Spell",
+        "Trash",
+        "Swords"
+      ],
+      "image": "cards/acid_splash.jpg",
+      "flavor": "This is a highly volatile spell.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [
+          "Trash-Other"
+        ],
+        "clusters": [
+          "Discard-Engine"
+        ]
+      },
+      "comboScore": 2,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Big Ideas",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": 2,
+      "swords": null,
+      "boots": null,
+      "vp": 2,
+      "text": "+1 Clank! If you generate 6 skill or more this turn, +1 gold.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Spell",
+        "Clank+",
+        "Skill",
+        "Gold"
+      ],
+      "image": "cards/big_ideas.jpg",
+      "flavor": "It's dumb enough that it might be brilliant.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [
+          "Clank-trigger",
+          "Skill-threshold"
+        ],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": [
+          "Clank-Trigger",
+          "Skill-Threshold"
+        ]
+      },
+      "comboScore": 10,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Escape Plan",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": 1,
+      "vp": 3,
+      "text": "When you trash this, +2 boots and you don't have to stop in Crystal Caves this turn.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Trash-trigger",
+        "Boots",
+        "Crystal-Cave"
+      ],
+      "image": "cards/escape_plan.jpg",
+      "flavor": "Always know the way out.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Ethereal Step",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": 2,
+      "swords": null,
+      "boots": null,
+      "vp": 3,
+      "text": "If you generate 6 skill or more this turn, teleport to an adjacent room.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Spell",
+        "Teleport",
+        "Skill"
+      ],
+      "image": "cards/ethereal_step.jpg",
+      "flavor": "They won't see you coming.",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [
           "Teleport"
@@ -4969,28 +5313,81 @@
         ]
       },
       "comboScore": 2,
-      "verified": false,
-      "source": "author-v1.2"
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Fire Breath",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": 1,
+      "swords": 1,
+      "boots": null,
+      "vp": 2,
+      "text": "If you make any Clank! this turn, draw a card.",
+      "acquire": "1 sword",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Spell",
+        "Has-Acquire",
+        "Draw1",
+        "Clank+"
+      ],
+      "image": "cards/fire_breath.jpg",
+      "flavor": "Mages everywhere are chatting about this hot new spell.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [
+          "Clank-trigger"
+        ],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": [
+          "Clank-Trigger",
+          "Draw-Engine"
+        ]
+      },
+      "comboScore": 7,
+      "verified": true,
+      "source": "verified"
     },
     {
       "name": "Quick Trip",
       "set": "Underworld",
+      "category": "DungeonDeck",
       "type": "Other",
-      "cost": 5,
-      "costNum": 5,
+      "cost": 2,
+      "costNum": 2,
       "isMonster": false,
       "skill": 1,
       "swords": null,
       "boots": 2,
-      "vp": 2,
-      "text": "",
-      "acquire": "+1 Move,+2 Clank!",
+      "vp": 5,
+      "text": "If you have an artifact worth 10 or less, you don't have to stop in Crystal Caves this turn.",
+      "acquire": "+1 boot, +2 Clank!",
       "arriveDanger": "",
       "dragonAttack": true,
-      "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "",
+      "quantity": 2,
+      "mechanics": [
+        "Spell",
+        "Has-Acquire",
+        "Boots",
+        "Clank+",
+        "Artifact",
+        "Crystal-Cave"
+      ],
+      "image": "cards/quick_trip.jpg",
+      "flavor": "\"Going in for some goodies. Need anything?\"",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [],
         "triggers": [
@@ -5004,28 +5401,37 @@
         ]
       },
       "comboScore": 7,
-      "verified": false,
-      "source": "author-v1.2"
+      "verified": true,
+      "source": "verified"
     },
     {
-      "name": "Chimera",
+      "name": "Slink",
       "set": "Underworld",
-      "type": "Monster",
-      "cost": null,
-      "costNum": null,
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 2,
+      "costNum": 2,
       "isMonster": false,
-      "skill": 0,
-      "swords": 3,
-      "boots": null,
-      "vp": 0,
-      "text": "",
-      "acquire": "",
-      "arriveDanger": "+1 Clank! All",
+      "skill": null,
+      "swords": null,
+      "boots": 1,
+      "vp": 6,
+      "text": "-2 Clank! Draw a card.",
+      "acquire": "+1 boot, -2 Clank!",
+      "arriveDanger": "",
       "dragonAttack": false,
       "quantity": 1,
-      "mechanics": [],
-      "image": "",
-      "flavor": "",
+      "mechanics": [
+        "Spell",
+        "Has-Acquire",
+        "Clank-",
+        "Draw1",
+        "Boots"
+      ],
+      "image": "cards/slink.jpg",
+      "flavor": "Alone or in pairs, this move is a wonderful ploy.",
+      "vpCondition": null,
+      "revealTiming": null,
       "combo": {
         "provides": [],
         "triggers": [],
@@ -5034,8 +5440,1273 @@
         "clusters": []
       },
       "comboScore": 0,
-      "verified": false,
-      "source": "author-v1.2"
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Wealth of Knowledge",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 2,
+      "costNum": 2,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": 1,
+      "vp": 5,
+      "text": "Worth 1 VP for each Secret Tome you have.",
+      "acquire": "",
+      "arriveDanger": "ARRIVE: All players get +1 gold.",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Boots",
+        "Secret-Tome",
+        "VP-scaling"
+      ],
+      "image": "cards/wealth_of_knowledge.jpg",
+      "flavor": "Unlock the riches of your mind.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [
+          "Secret-Tome trigger"
+        ],
+        "interactive": [
+          "Anti-Player"
+        ],
+        "trashTags": [],
+        "clusters": [
+          "Anti-Player",
+          "Secret-Tome"
+        ]
+      },
+      "comboScore": 9,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Burial Urn",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 4,
+      "costNum": 4,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 5,
+      "text": "When you trash this, +4 skill.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Trash-trigger",
+        "Skill"
+      ],
+      "image": "cards/burial_urn.jpg",
+      "flavor": "Its exterior is just as precious as its contents.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Lantern",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": 1,
+      "vp": 1,
+      "text": "Heal.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 2,
+      "mechanics": [
+        "Boots",
+        "Heal"
+      ],
+      "image": "cards/lantern.jpg",
+      "flavor": "The Underworld is a dark and dangerous place. You'll need something to light the way.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Soul Prism",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": 2,
+      "swords": null,
+      "boots": null,
+      "vp": 3,
+      "text": "When you trash this, free a prisoner.",
+      "acquire": "1 heart (heal)",
+      "arriveDanger": "",
+      "dragonAttack": true,
+      "quantity": 1,
+      "mechanics": [
+        "Has-Acquire",
+        "Trash-trigger",
+        "Prisoner",
+        "Heal"
+      ],
+      "image": "cards/soul_prism.jpg",
+      "flavor": "If you listen closely, you can hear tiny hands knocking.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [
+          "Free-Prisoner"
+        ],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [
+          "Self-Trash",
+          "Trash-Payoff"
+        ],
+        "clusters": [
+          "Prisoner"
+        ]
+      },
+      "comboScore": 3,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Thunderstriker",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": 3,
+      "boots": null,
+      "vp": 6,
+      "text": "Draw a card. Worth 1 VP for each harpy trophy you have.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Draw1",
+        "Harpy",
+        "VP-scaling",
+        "Swords"
+      ],
+      "image": "cards/thunderstriker.jpg",
+      "flavor": "This sword is for the birds.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Tome of Intellect",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 1,
+      "costNum": 1,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 6,
+      "text": "Draw two cards. This counts as a Secret Tome.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Draw2",
+        "Secret-Tome"
+      ],
+      "image": "cards/tome_of_intellect.jpg",
+      "flavor": "It's an exciting read. The words jump off the page.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [
+          "Secret-Tome counts-as",
+          "Secret-Tome named"
+        ],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": [
+          "Draw-Engine",
+          "Secret-Tome"
+        ]
+      },
+      "comboScore": 4,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Tome of the Ape Lords",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": 3,
+      "costNum": 3,
+      "isMonster": false,
+      "skill": 3,
+      "swords": null,
+      "boots": null,
+      "vp": 4,
+      "text": "If you have a monkey idol, this counts as a Secret Tome.",
+      "acquire": "+3 Clank!",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Has-Acquire",
+        "Secret-Tome",
+        "Monkey-Idol",
+        "Clank+"
+      ],
+      "image": "cards/tome_of_the_ape_lords.jpg",
+      "flavor": "Ape Lord magic was divided into three schools.",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [
+          "Secret-Tome counts-as",
+          "Secret-Tome named"
+        ],
+        "triggers": [
+          "Monkey-Idol"
+        ],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": [
+          "Monkey-Idol",
+          "Secret-Tome"
+        ]
+      },
+      "comboScore": 7,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Utility Knife",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Other",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": 1,
+      "boots": null,
+      "vp": 3,
+      "text": "Draw a card.",
+      "acquire": "1 gold",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 2,
+      "mechanics": [
+        "Has-Acquire",
+        "Draw1",
+        "Swords"
+      ],
+      "image": "cards/utility_knife.jpg",
+      "flavor": "It slices, it dices, it transfers wealth... but wait, there's more!",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": [
+          "Draw-Engine"
+        ]
+      },
+      "comboScore": 2,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Garnet",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Gem",
+      "cost": 4,
+      "costNum": 4,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 2,
+      "text": "1 skill. Draw a card.",
+      "acquire": "+2 Clank!",
+      "arriveDanger": "",
+      "dragonAttack": true,
+      "quantity": 1,
+      "mechanics": [
+        "Has-Acquire",
+        "Clank+",
+        "Draw1",
+        "Skill"
+      ],
+      "image": "cards/garnet.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Polished Garnet",
+      "set": "Underworld",
+      "category": "DungeonDeck",
+      "type": "Gem",
+      "cost": 6,
+      "costNum": 6,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 4,
+      "text": "1 skill. Draw a card.",
+      "acquire": "+2 Clank!",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Has-Acquire",
+        "Clank+",
+        "Draw1",
+        "Skill"
+      ],
+      "image": "cards/polished_garnet.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Underworld Guardian",
+      "set": "Underworld",
+      "category": "Guardian",
+      "type": "Guardian",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": null,
+      "text": "When encountered, you must defeat this or take 2 damage. DEFEAT: Take the 2x artifact enhancer. TROPHY: Bonus artifact. (Doesn't count for your artifact limit.)",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Monster",
+        "Boss",
+        "Trophy",
+        "Artifact-Enhancer",
+        "Bonus-Artifact"
+      ],
+      "image": "cards/underworld_guardian.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": null,
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The High Priestess",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 3,
+      "text": "Reveal on a future turn. When revealed, you don't have to stop in Crystal Caves this turn.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Reveal-Future",
+        "Crystal-Caves"
+      ],
+      "image": "cards/the_high_priestess.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "future-turn",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Fool",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 10,
+      "text": "Worth 10 if you have two Stumbles.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Stumble"
+      ],
+      "image": "cards/the_fool.jpg",
+      "flavor": "",
+      "vpCondition": "if you have two Stumbles",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Empress",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 6,
+      "text": "Worth 6 if you have a Crown.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Crown"
+      ],
+      "image": "cards/the_empress.jpg",
+      "flavor": "",
+      "vpCondition": "if you have a Crown",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Magician",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 3,
+      "text": "At the end of the game, this counts as a Secret Tome.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Secret-Tome",
+        "Score-Conditional"
+      ],
+      "image": "cards/the_magician.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Lovers",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 2,
+      "text": "Reveal this immediately. Gain 2 hearts (heal 2).",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Reveal-Now",
+        "Heal"
+      ],
+      "image": "cards/the_lovers.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "immediate",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Emperor",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 12,
+      "text": "Worth 12 if you have an artifact enhancer, a crown, and a monkey idol.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Artifact-Enhancer",
+        "Crown",
+        "Monkey-Idol"
+      ],
+      "image": "cards/the_emperor.jpg",
+      "flavor": "",
+      "vpCondition": "if you have an artifact enhancer, a crown, and a monkey idol",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Chariot",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": -3,
+      "text": "Reveal this immediately. Gain 1 boot each turn.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Reveal-Now",
+        "Boot",
+        "Recurring"
+      ],
+      "image": "cards/the_chariot.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "immediate",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Hierophant",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 2,
+      "text": "Reveal on a future turn to teleport to an adjacent room.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Reveal-Future",
+        "Teleport"
+      ],
+      "image": "cards/the_hierophant.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "future-turn",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Wheel of Fortune",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 10,
+      "text": "Worth 10 if you have 10 gold or more.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Gold"
+      ],
+      "image": "cards/wheel_of_fortune.jpg",
+      "flavor": "",
+      "vpCondition": "if you have 10 gold or more",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Strength",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": null,
+      "text": "If you have... 1 harpy trophy: 3, 2 harpy trophies: 5, 3+ harpy trophies: 8.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Trophy",
+        "Harpy",
+        "Scaling"
+      ],
+      "image": "cards/strength.jpg",
+      "flavor": "",
+      "vpCondition": "scaling by harpy trophies (1=3, 2=5, 3+=8)",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Justice",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": null,
+      "text": "Reveal anytime. Allows you to carry an additional artifact.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Reveal-Anytime",
+        "Artifact-Capacity"
+      ],
+      "image": "cards/justice.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "anytime",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Hermit",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 6,
+      "text": "Worth 6 if you have a monkey idol.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Monkey-Idol"
+      ],
+      "image": "cards/the_hermit.jpg",
+      "flavor": "",
+      "vpCondition": "if you have a monkey idol",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Temperance",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 4,
+      "text": "Worth 4 victory points (flat value).",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Flat"
+      ],
+      "image": "cards/temperance.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Hanged Man",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 5,
+      "text": "Reveal this immediately. Add a ghost cube from the supply to the Clank! area.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Reveal-Now",
+        "Clank",
+        "Ghost-Cube"
+      ],
+      "image": "cards/the_hanged_man.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "immediate",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Imp",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": null,
+      "text": "If you have... 1 gem: 4, 2 gems: 8, 3+ gems: 12.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Gem",
+        "Scaling"
+      ],
+      "image": "cards/the_imp.jpg",
+      "flavor": "",
+      "vpCondition": "scaling by gems (1=4, 2=8, 3+=12)",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Death",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 1,
+      "text": "If you have an artifact, score your points even if you were knocked out in the Depths. Worth 1, or -5 if you were knocked out in the Depths.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Knockout",
+        "Artifact",
+        "Depths"
+      ],
+      "image": "cards/death.jpg",
+      "flavor": "",
+      "vpCondition": "1 normally, -5 if knocked out in the Depths",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Moon",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 8,
+      "text": "Worth 8 if you have two or more Underworld market items.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Underworld-Market"
+      ],
+      "image": "cards/the_moon.jpg",
+      "flavor": "",
+      "vpCondition": "if you have two or more Underworld market items",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Tower",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 3,
+      "text": "You may reveal this if you're in a tower room to gain 3 gold.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Reveal-Anytime",
+        "Tower-Room",
+        "Gold"
+      ],
+      "image": "cards/the_tower.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "anytime",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Sun",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 10,
+      "text": "Worth 10 if you have a mastery token.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Mastery-Token"
+      ],
+      "image": "cards/the_sun.jpg",
+      "flavor": "",
+      "vpCondition": "if you have a mastery token",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The Star",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 3,
+      "text": "You may reveal this when one or more of your cubes are drawn from the bag. Return those cubes to your supply instead of taking damage.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Reveal-Anytime",
+        "Damage-Prevention",
+        "Cubes"
+      ],
+      "image": "cards/the_star.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "anytime",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "The World",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 7,
+      "text": "Worth 7 if you have three or more market items.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": false,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Score-Conditional",
+        "Market"
+      ],
+      "image": "cards/the_world.jpg",
+      "flavor": "",
+      "vpCondition": "if you have three or more market items",
+      "revealTiming": "end-of-game",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
+    },
+    {
+      "name": "Judgement",
+      "set": "Underworld",
+      "category": "Fate",
+      "type": "Fate",
+      "cost": null,
+      "costNum": null,
+      "isMonster": false,
+      "skill": null,
+      "swords": null,
+      "boots": null,
+      "vp": 5,
+      "text": "Reveal this immediately. The dragon attacks.",
+      "acquire": "",
+      "arriveDanger": "",
+      "dragonAttack": true,
+      "quantity": 1,
+      "mechanics": [
+        "Fate",
+        "Reveal-Now",
+        "Dragon-Attack"
+      ],
+      "image": "cards/judgement.jpg",
+      "flavor": "",
+      "vpCondition": null,
+      "revealTiming": "immediate",
+      "combo": {
+        "provides": [],
+        "triggers": [],
+        "interactive": [],
+        "trashTags": [],
+        "clusters": []
+      },
+      "comboScore": 0,
+      "verified": true,
+      "source": "verified"
     }
   ]
 }

@@ -43,6 +43,8 @@ tmp/
 **/raw-photos/
 **/_intermediate/
 **/cards-original/
+# Rulebooks — IP belongs to Renegade / Dire Wolf, kept locally for reference
+**/rulebooks/
 *.HEIC
 IMG_*_full.jpg
 IMG_*_r*c*.jpg
