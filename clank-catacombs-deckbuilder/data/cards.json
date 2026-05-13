@@ -4201,13 +4201,17 @@
       "combo": {
         "provides": [],
         "triggers": [],
-        "interactive": [],
+        "interactive": [
+          "Anti-Player"
+        ],
         "trashTags": [],
         "clusters": [
-          "Draw-Engine"
+          "Draw-Engine",
+          "Coin-Engine",
+          "Anti-Player"
         ]
       },
-      "comboScore": 2,
+      "comboScore": 8,
       "verified": true,
       "source": "verified"
     },
@@ -4240,11 +4244,18 @@
       "combo": {
         "provides": [],
         "triggers": [],
-        "interactive": [],
+        "interactive": [
+          "Anti-Player",
+          "Arrive-Choice"
+        ],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Anti-Player",
+          "Clank-Trigger",
+          "Arrive-Choice"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 10,
       "verified": true,
       "source": "verified"
     },
@@ -4287,9 +4298,9 @@
           "Active-Trash"
         ],
         "clusters": [
-          "Anti-Player",
-          "Discard-Engine",
-          "Lockpick"
+          "Lockpick",
+          "Burgle-Removal",
+          "Anti-Player"
         ]
       },
       "comboScore": 10,
@@ -4329,11 +4340,12 @@
         ],
         "trashTags": [],
         "clusters": [
-          "Anti-Player",
-          "Tile-Manipulation"
+          "Coin-Engine",
+          "Tile-Manipulation",
+          "Anti-Player"
         ]
       },
-      "comboScore": 6,
+      "comboScore": 8,
       "verified": true,
       "source": "verified"
     },
@@ -4367,14 +4379,18 @@
       "revealTiming": null,
       "combo": {
         "provides": [],
-        "triggers": [],
+        "triggers": [
+          "Harpy-trigger"
+        ],
         "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Trophy"
+          "Trophy",
+          "Position-Underworld",
+          "Harpy-Synergy"
         ]
       },
-      "comboScore": 2,
+      "comboScore": 9,
       "verified": true,
       "source": "verified"
     },
@@ -4408,9 +4424,11 @@
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Tile-Manipulation"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 2,
       "verified": true,
       "source": "verified"
     },
@@ -4442,17 +4460,15 @@
       "revealTiming": null,
       "combo": {
         "provides": [],
-        "triggers": [
-          "Clank-trigger"
-        ],
+        "triggers": [],
         "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Clank-Trigger",
-          "Draw-Engine"
+          "Draw-Engine",
+          "Clank-Trigger"
         ]
       },
-      "comboScore": 7,
+      "comboScore": 4,
       "verified": true,
       "source": "verified"
     },
@@ -4486,17 +4502,15 @@
         "provides": [
           "Teleport"
         ],
-        "triggers": [
-          "Clank-trigger"
-        ],
+        "triggers": [],
         "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Clank-Trigger",
-          "Teleport"
+          "Teleport",
+          "Clank-Trigger"
         ]
       },
-      "comboScore": 7,
+      "comboScore": 4,
       "verified": true,
       "source": "verified"
     },
@@ -4531,9 +4545,12 @@
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Position-Market",
+          "Position-Underworld"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 4,
       "verified": true,
       "source": "verified"
     },
@@ -4573,11 +4590,13 @@
         "interactive": [],
         "trashTags": [],
         "clusters": [
+          "Teleport",
           "Position-Market",
-          "Teleport"
+          "Position-Underworld",
+          "Clank-Trigger"
         ]
       },
-      "comboScore": 4,
+      "comboScore": 8,
       "verified": true,
       "source": "verified"
     },
@@ -4612,10 +4631,16 @@
         "provides": [],
         "triggers": [],
         "interactive": [],
-        "trashTags": [],
-        "clusters": []
+        "trashTags": [
+          "Active-Trash"
+        ],
+        "clusters": [
+          "Heal-Engine",
+          "Position-Underworld",
+          "Burgle-Removal"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 8,
       "verified": true,
       "source": "verified"
     },
@@ -4654,11 +4679,10 @@
         "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Companion-Chain",
           "Lockpick"
         ]
       },
-      "comboScore": 4,
+      "comboScore": 2,
       "verified": true,
       "source": "verified"
     },
@@ -4690,13 +4714,21 @@
       "vpCondition": null,
       "revealTiming": null,
       "combo": {
-        "provides": [],
-        "triggers": [],
+        "provides": [
+          "Companion"
+        ],
+        "triggers": [
+          "Monkey-Idol"
+        ],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Draw-Engine",
+          "Monkey-Idol",
+          "Clank-Trigger"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 9,
       "verified": true,
       "source": "verified"
     },
@@ -4727,13 +4759,17 @@
       "vpCondition": null,
       "revealTiming": null,
       "combo": {
-        "provides": [],
+        "provides": [
+          "Companion"
+        ],
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Coin-Engine"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 2,
       "verified": true,
       "source": "verified"
     },
@@ -4764,13 +4800,22 @@
       "vpCondition": null,
       "revealTiming": null,
       "combo": {
-        "provides": [],
-        "triggers": [],
+        "provides": [
+          "Companion"
+        ],
+        "triggers": [
+          "Fate-trigger"
+        ],
         "interactive": [],
-        "trashTags": [],
-        "clusters": []
+        "trashTags": [
+          "Active-Trash"
+        ],
+        "clusters": [
+          "Fate-Synergy",
+          "Burgle-Removal"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 9,
       "verified": true,
       "source": "verified"
     },
@@ -4806,14 +4851,17 @@
           "Companion"
         ],
         "triggers": [],
-        "interactive": [],
+        "interactive": [
+          "Arrive-Choice"
+        ],
         "trashTags": [],
         "clusters": [
-          "Companion-Chain",
-          "Draw-Engine"
+          "Draw-Engine",
+          "Arrive-Choice",
+          "Skill-Threshold"
         ]
       },
-      "comboScore": 4,
+      "comboScore": 8,
       "verified": true,
       "source": "verified"
     },
@@ -4855,14 +4903,16 @@
         "triggers": [
           "Prisoner count"
         ],
-        "interactive": [],
+        "interactive": [
+          "Arrive-Choice"
+        ],
         "trashTags": [],
         "clusters": [
-          "Companion-Chain",
-          "Prisoner"
+          "Prisoner",
+          "Clank-Trigger"
         ]
       },
-      "comboScore": 7,
+      "comboScore": 9,
       "verified": true,
       "source": "verified"
     },
@@ -4894,13 +4944,22 @@
       "vpCondition": null,
       "revealTiming": null,
       "combo": {
-        "provides": [],
-        "triggers": [],
+        "provides": [
+          "Companion"
+        ],
+        "triggers": [
+          "Another Companion",
+          "Clank-trigger"
+        ],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Companion-Chain",
+          "Draw-Engine",
+          "Clank-Trigger"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 12,
       "verified": true,
       "source": "verified"
     },
@@ -4932,13 +4991,20 @@
       "vpCondition": null,
       "revealTiming": null,
       "combo": {
-        "provides": [],
-        "triggers": [],
+        "provides": [
+          "Companion"
+        ],
+        "triggers": [
+          "Another Companion"
+        ],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Companion-Chain",
+          "Draw-Engine"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 7,
       "verified": true,
       "source": "verified"
     },
@@ -4973,15 +5039,19 @@
           "Companion"
         ],
         "triggers": [],
-        "interactive": [],
+        "interactive": [
+          "Arrive-Choice"
+        ],
         "trashTags": [
-          "Trash-Other"
+          "Active-Trash"
         ],
         "clusters": [
-          "Companion-Chain"
+          "Burgle-Removal",
+          "Draw-Engine",
+          "Arrive-Choice"
         ]
       },
-      "comboScore": 2,
+      "comboScore": 10,
       "verified": true,
       "source": "verified"
     },
@@ -5016,16 +5086,17 @@
         "provides": [
           "Companion"
         ],
-        "triggers": [],
+        "triggers": [
+          "Fate-trigger"
+        ],
         "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Coin-Engine",
-          "Companion-Chain",
-          "Fate-Card"
+          "Fate-Synergy",
+          "Heal-Engine"
         ]
       },
-      "comboScore": 6,
+      "comboScore": 7,
       "verified": true,
       "source": "verified"
     },
@@ -5056,13 +5127,19 @@
       "vpCondition": null,
       "revealTiming": null,
       "combo": {
-        "provides": [],
+        "provides": [
+          "Companion",
+          "Teleport"
+        ],
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Teleport",
+          "Clank-Trigger"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 4,
       "verified": true,
       "source": "verified"
     },
@@ -5095,13 +5172,22 @@
       "vpCondition": null,
       "revealTiming": null,
       "combo": {
-        "provides": [],
+        "provides": [
+          "Companion",
+          "Tome-Acquire"
+        ],
         "triggers": [],
-        "interactive": [],
+        "interactive": [
+          "Arrive-Choice"
+        ],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Secret-Tome",
+          "Coin-Engine",
+          "Arrive-Choice"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 8,
       "verified": true,
       "source": "verified"
     },
@@ -5141,15 +5227,14 @@
         "triggers": [],
         "interactive": [],
         "trashTags": [
-          "Self-Trash",
           "Trash-Payoff"
         ],
         "clusters": [
-          "Companion-Chain",
+          "Position-Underworld",
           "Draw-Engine"
         ]
       },
-      "comboScore": 5,
+      "comboScore": 6,
       "verified": true,
       "source": "verified"
     },
@@ -5182,15 +5267,18 @@
       "combo": {
         "provides": [],
         "triggers": [],
-        "interactive": [],
+        "interactive": [
+          "Arrive-Choice"
+        ],
         "trashTags": [
-          "Trash-Other"
+          "Active-Trash"
         ],
         "clusters": [
+          "Burgle-Removal",
           "Discard-Engine"
         ]
       },
-      "comboScore": 2,
+      "comboScore": 8,
       "verified": true,
       "source": "verified"
     },
@@ -5224,17 +5312,17 @@
       "combo": {
         "provides": [],
         "triggers": [
-          "Clank-trigger",
           "Skill-threshold"
         ],
         "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Clank-Trigger",
-          "Skill-Threshold"
+          "Skill-Threshold",
+          "Coin-Engine",
+          "Clank-Trigger"
         ]
       },
-      "comboScore": 10,
+      "comboScore": 9,
       "verified": true,
       "source": "verified"
     },
@@ -5268,10 +5356,14 @@
         "provides": [],
         "triggers": [],
         "interactive": [],
-        "trashTags": [],
-        "clusters": []
+        "trashTags": [
+          "Trash-Payoff"
+        ],
+        "clusters": [
+          "Position-Cave"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 4,
       "verified": true,
       "source": "verified"
     },
@@ -5305,14 +5397,17 @@
         "provides": [
           "Teleport"
         ],
-        "triggers": [],
+        "triggers": [
+          "Skill-threshold"
+        ],
         "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Teleport"
+          "Teleport",
+          "Skill-Threshold"
         ]
       },
-      "comboScore": 2,
+      "comboScore": 7,
       "verified": true,
       "source": "verified"
     },
@@ -5351,8 +5446,8 @@
         "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Clank-Trigger",
-          "Draw-Engine"
+          "Draw-Engine",
+          "Clank-Trigger"
         ]
       },
       "comboScore": 7,
@@ -5397,10 +5492,11 @@
         "trashTags": [],
         "clusters": [
           "Artifact",
-          "Position-Cave"
+          "Position-Cave",
+          "Clank-Trigger"
         ]
       },
-      "comboScore": 7,
+      "comboScore": 9,
       "verified": true,
       "source": "verified"
     },
@@ -5437,9 +5533,12 @@
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Draw-Engine",
+          "Clank-Trigger"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 4,
       "verified": true,
       "source": "verified"
     },
@@ -5474,16 +5573,14 @@
         "triggers": [
           "Secret-Tome trigger"
         ],
-        "interactive": [
-          "Anti-Player"
-        ],
+        "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Anti-Player",
-          "Secret-Tome"
+          "Secret-Tome",
+          "Coin-Engine"
         ]
       },
-      "comboScore": 9,
+      "comboScore": 7,
       "verified": true,
       "source": "verified"
     },
@@ -5516,10 +5613,12 @@
         "provides": [],
         "triggers": [],
         "interactive": [],
-        "trashTags": [],
+        "trashTags": [
+          "Trash-Payoff"
+        ],
         "clusters": []
       },
-      "comboScore": 0,
+      "comboScore": 2,
       "verified": true,
       "source": "verified"
     },
@@ -5553,9 +5652,11 @@
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Heal-Engine"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 2,
       "verified": true,
       "source": "verified"
     },
@@ -5593,14 +5694,14 @@
         "triggers": [],
         "interactive": [],
         "trashTags": [
-          "Self-Trash",
           "Trash-Payoff"
         ],
         "clusters": [
-          "Prisoner"
+          "Prisoner",
+          "Heal-Engine"
         ]
       },
-      "comboScore": 3,
+      "comboScore": 6,
       "verified": true,
       "source": "verified"
     },
@@ -5633,12 +5734,17 @@
       "revealTiming": null,
       "combo": {
         "provides": [],
-        "triggers": [],
+        "triggers": [
+          "Harpy-trigger"
+        ],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Harpy-Synergy",
+          "Draw-Engine"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 7,
       "verified": true,
       "source": "verified"
     },
@@ -5669,15 +5775,14 @@
       "revealTiming": null,
       "combo": {
         "provides": [
-          "Secret-Tome counts-as",
-          "Secret-Tome named"
+          "Secret-Tome counts-as"
         ],
         "triggers": [],
         "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Draw-Engine",
-          "Secret-Tome"
+          "Secret-Tome",
+          "Draw-Engine"
         ]
       },
       "comboScore": 4,
@@ -5713,8 +5818,7 @@
       "revealTiming": null,
       "combo": {
         "provides": [
-          "Secret-Tome counts-as",
-          "Secret-Tome named"
+          "Secret-Tome counts-as"
         ],
         "triggers": [
           "Monkey-Idol"
@@ -5722,11 +5826,12 @@
         "interactive": [],
         "trashTags": [],
         "clusters": [
+          "Secret-Tome",
           "Monkey-Idol",
-          "Secret-Tome"
+          "Clank-Trigger"
         ]
       },
-      "comboScore": 7,
+      "comboScore": 9,
       "verified": true,
       "source": "verified"
     },
@@ -5762,10 +5867,11 @@
         "interactive": [],
         "trashTags": [],
         "clusters": [
-          "Draw-Engine"
+          "Draw-Engine",
+          "Coin-Engine"
         ]
       },
-      "comboScore": 2,
+      "comboScore": 4,
       "verified": true,
       "source": "verified"
     },
@@ -5797,13 +5903,19 @@
       "vpCondition": null,
       "revealTiming": null,
       "combo": {
-        "provides": [],
+        "provides": [
+          "Gem"
+        ],
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Gem-Synergy",
+          "Draw-Engine",
+          "Clank-Trigger"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 6,
       "verified": true,
       "source": "verified"
     },
@@ -5835,13 +5947,19 @@
       "vpCondition": null,
       "revealTiming": null,
       "combo": {
-        "provides": [],
+        "provides": [
+          "Gem"
+        ],
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Gem-Synergy",
+          "Draw-Engine",
+          "Clank-Trigger"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 6,
       "verified": true,
       "source": "verified"
     },
@@ -5878,9 +5996,13 @@
         "triggers": [],
         "interactive": [],
         "trashTags": [],
-        "clusters": []
+        "clusters": [
+          "Trophy",
+          "Artifact",
+          "Position-Underworld"
+        ]
       },
-      "comboScore": 0,
+      "comboScore": 6,
       "verified": true,
       "source": "verified"
     },
