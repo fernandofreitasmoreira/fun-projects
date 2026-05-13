@@ -365,20 +365,20 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
 
       <div class="dd-section">
         <label class="dd-lbl">Algorithm</label>
-        <div class="dd-note">Strict priority waterfall — see <em>Build progress</em> on the right. The pool of available cards is filtered down step by step; each later step only fills the budget the earlier ones left.</div>
+        <div class="dd-note">Strict priority waterfall — see <em>Build progress</em> on the right. Each floor must land in <strong>target ± 1</strong> copies; later steps respect those caps when filling.</div>
         <ol style="margin: 8px 0 0 0; padding-left: 22px; font-size: 0.78em; color: var(--text-dim); line-height: 1.55;">
           <li>All <strong>React</strong> (every copy)</li>
           <li>All <strong>Trophy</strong> (every copy)</li>
           <li>Pinned cards (📌)</li>
-          <li>≥ 20% <strong>Monsters</strong></li>
-          <li>≥ 25% <strong>Dragons</strong></li>
-          <li>≥ 7% <strong>Gems</strong></li>
-          <li>≥ 9% <strong>Devices</strong></li>
-          <li>≥ 22% <strong>Companions</strong></li>
-          <li>Max <strong>Active-Trash</strong></li>
-          <li>Max <strong>Lockpicks</strong></li>
-          <li>Max <strong>Burgle-Trash</strong></li>
-          <li>Balance averages (cost / skill / sword / boot / VP)</li>
+          <li><strong>Monsters</strong> = 20% ± 1</li>
+          <li><strong>Dragons</strong> = 25% ± 1</li>
+          <li><strong>Gems</strong> = 7% ± 1</li>
+          <li><strong>Devices</strong> = 9% ± 1</li>
+          <li><strong>Companions</strong> = 22% ± 1</li>
+          <li>Max <strong>Active-Trash</strong> (respects caps)</li>
+          <li>Max <strong>Lockpicks</strong> (respects caps)</li>
+          <li>Max <strong>Burgle-Trash</strong> (respects caps)</li>
+          <li>Balance averages (respects caps)</li>
         </ol>
       </div>
 
@@ -1744,6 +1744,17 @@ function targetsFor(total) {
 function buildDungeonDeck() {
   const total = DD.players >= 5 ? 125 : 100;
   const targets = targetsFor(total);
+  // Hard caps: each floor is target±1. Maximise / balance steps may push a
+  // count one above the target but never two.
+  const TOLERANCE = 1;
+  const max = {
+    monsters:   targets.monsters   + TOLERANCE,
+    dragons:    targets.dragons    + TOLERANCE,
+    gems:       targets.gems       + TOLERANCE,
+    devices:    targets.devices    + TOLERANCE,
+    companions: targets.companions + TOLERANCE,
+  };
+
   const pool = CARDS.filter(c =>
     !isBanned(c) && (c.category || 'DungeonDeck') === 'DungeonDeck'
   );
@@ -1761,6 +1772,16 @@ function buildDungeonDeck() {
       const c = CARDS.find(cc => cc.name === name);
       return c && predicate(c) ? sum + q : sum;
     }, 0);
+
+  // Reject candidates that would push a category beyond target+1.
+  function withinMaxima(c) {
+    if (c.type === 'Monster'   && countWhere(x => x.type === 'Monster')   >= max.monsters)   return false;
+    if (c.dragonAttack         && countWhere(x => x.dragonAttack)         >= max.dragons)    return false;
+    if (c.type === 'Gem'       && countWhere(x => x.type === 'Gem')       >= max.gems)       return false;
+    if (c.type === 'Device'    && countWhere(x => x.type === 'Device')    >= max.devices)    return false;
+    if (c.type === 'Companion' && countWhere(x => x.type === 'Companion') >= max.companions) return false;
+    return true;
+  }
 
   // Predicates
   const isActiveTrash = c => (c.combo?.trashTags || []).includes('Active-Trash');
@@ -1850,7 +1871,11 @@ function buildDungeonDeck() {
   function fillFloor(predicate, target, label) {
     let cur = countWhere(predicate);
     while (cur < target && used < total) {
-      const candidates = pool.filter(c => predicate(c) && !inFull(c));
+      // Prefer candidates that don't blow a different category's cap.
+      // Fall back to ignoring caps only if there's no other way to hit the
+      // floor we're currently filling.
+      let candidates = pool.filter(c => predicate(c) && !inFull(c) && withinMaxima(c));
+      if (!candidates.length) candidates = pool.filter(c => predicate(c) && !inFull(c));
       if (!candidates.length) break;
       rankCandidates(candidates);
       addOne(candidates[0]);
@@ -1871,7 +1896,7 @@ function buildDungeonDeck() {
   function maximise(predicate, label) {
     const startUsed = used;
     while (used < total) {
-      const candidates = pool.filter(c => predicate(c) && !inFull(c));
+      const candidates = pool.filter(c => predicate(c) && !inFull(c) && withinMaxima(c));
       if (!candidates.length) break;
       rankCandidates(candidates);
       addOne(candidates[0]);
@@ -1905,7 +1930,7 @@ function buildDungeonDeck() {
 
   const balanceStart = used;
   while (used < total) {
-    const candidates = pool.filter(c => !inFull(c));
+    const candidates = pool.filter(c => !inFull(c) && withinMaxima(c));
     if (!candidates.length) break;
     let best = null, bestDist = Infinity;
     for (const c of candidates) {
@@ -2116,13 +2141,20 @@ function validateDeck(deck, s) {
     warnings.push({ level: 'info', text: `Only ${s.teleportQty} Teleport card${s.teleportQty === 1 ? '' : 's'} — mobility may be tight.` });
   }
 
-  // Trash-Payoff orphans (cards that fire only when trashed but no Active-Trash partners)
-  // Monster floor — hard constraint, this should not normally fire after a
-  // successful build, but flag it loud if the pool is too thin to satisfy.
-  const minM = minMonstersFor(s.total);
-  if (s.typeQty.Monster < minM) {
-    warnings.push({ level: 'err', text: `Only ${s.typeQty.Monster} Monsters in the deck — the hard floor is ${minM} (20% of ${s.total}). The pool may not have enough monsters left after bans, or pinned non-monsters are eating the budget.` });
+  // Per-category range check: every floor should land in target ± 1. Both
+  // sides matter — under is the bigger problem, over usually means the pool
+  // contains too many React/Trophy/Pinned of that type.
+  const ranges = targetsFor(s.total);
+  function checkRange(label, count, target) {
+    const lo = target - 1, hi = target + 1;
+    if (count < lo) warnings.push({ level: 'err',  text: `${label}: ${count} of ${lo}-${hi} target range. Pool may be too thin (bans?) or budget eaten by mandatory cards.` });
+    else if (count > hi) warnings.push({ level: 'warn', text: `${label}: ${count} of ${lo}-${hi} target range. Cap exceeded by mandatory React/Trophy/Pinned cards of this type — consider banning a few.` });
   }
+  checkRange('Monsters',   s.typeQty.Monster,   ranges.monsters);
+  checkRange('Dragons',    s.dragonQty,         ranges.dragons);
+  checkRange('Gems',       s.typeQty.Gem,       ranges.gems);
+  checkRange('Devices',    s.typeQty.Device,    ranges.devices);
+  checkRange('Companions', s.typeQty.Companion, ranges.companions);
 
   if (s.orphanPayoff > 0) {
     warnings.push({ level: 'err', text: `${s.orphanPayoff} Trash-Payoff cop${s.orphanPayoff === 1 ? 'y has' : 'ies have'} no Active-Trash partner — they may never fire.` });
