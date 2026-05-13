@@ -362,7 +362,7 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
           <div class="dd-slider-row"><span>Fidelity to base ratios</span><span class="dd-slider-val" id="dd-w-ratio-val">50</span></div>
           <input type="range" id="dd-w-ratio" min="0" max="100" value="50">
         </div>
-        <div class="dd-note">Hard constraints: every React and every Trophy card is always included (16 + 5 copies). Pinned cards (📌) are also forced in; banned cards (🚫) are excluded.</div>
+        <div class="dd-note">Hard constraints: every React and every Trophy card is always included (16 + 5 copies); at least 20% of the deck is Monsters (20 in 100, 25 in 125); pinned cards (📌) are also forced in and banned cards (🚫) are excluded.</div>
       </div>
 
       <div class="dd-section">
@@ -1758,8 +1758,23 @@ function scoreDeck(deck, weights) {
 }
 
 // ---- Builder ----
+//
+// Hard constraint: a minimum of 20% monsters (20 in a 100-card deck, 25 in 125)
+// so encounters stay common and the dragon track keeps advancing at the
+// expected pace.
+function minMonstersFor(total) { return Math.round(total * 0.20); }
+function countMonsters(deck) {
+  let n = 0;
+  for (const [name, q] of Object.entries(deck)) {
+    const c = CARDS.find(cc => cc.name === name);
+    if (c && c.type === 'Monster') n += q;
+  }
+  return n;
+}
+
 function buildDungeonDeck() {
   const total = DD.players >= 5 ? 125 : 100;
+  const minMonsters = minMonstersFor(total);
   const weights = DD.weights;
 
   // 1. Pool excludes banned cards and non-DungeonDeck categories
@@ -1788,8 +1803,26 @@ function buildDungeonDeck() {
     if (used > total) toast(`Too many mandatory cards (${used} > ${total}) — drop some pins or expand player count`);
   }
 
-  // 3. Greedy fill — best marginal score per remaining copy
+  // 3a. Hard floor on monsters — fill monsters first until the minimum is
+  //     met (greedy by marginal score on the monster subset only).
   const remaining = pool.filter(c => !mandatory.includes(c));
+  const monsterPool = remaining.filter(c => c.type === 'Monster');
+  while (countMonsters(deck) < minMonsters && used < total) {
+    let best = null, bestGain = -Infinity;
+    for (const c of monsterPool) {
+      const cur = deck[c.name] || 0;
+      if (cur >= c.quantity) continue;
+      deck[c.name] = cur + 1;
+      const score = scoreDeck(deck, weights);
+      deck[c.name] = cur;
+      if (score > bestGain) { bestGain = score; best = c; }
+    }
+    if (!best) break;     // no more monsters available — can't satisfy the floor
+    deck[best.name] = (deck[best.name] || 0) + 1;
+    used++;
+  }
+
+  // 3b. Greedy fill — best marginal score per remaining copy
   while (used < total) {
     let best = null, bestGain = -Infinity;
     for (const c of remaining) {
@@ -1822,6 +1855,10 @@ function buildDungeonDeck() {
         if (inC.name === outName) continue;
         const inCur = deck[inC.name] || 0;
         if (inCur >= inC.quantity) continue;
+        // Don't swap a monster OUT for a non-monster IN if it would push us
+        // below the 20% monster floor.
+        if (out.type === 'Monster' && inC.type !== 'Monster'
+            && countMonsters(deck) - 1 < minMonsters) continue;
         // Perform virtual swap
         deck[outName]--; deck[inC.name] = inCur + 1;
         const sc = scoreDeck(deck, weights);
@@ -1838,23 +1875,49 @@ function buildDungeonDeck() {
     if (!improved) break;
   }
 
-  DD_BUILT = { deck, stats: deckStats(deck), score: curScore, total, generatedAt: new Date().toISOString() };
+  DD_BUILT = { deck, stats: deckStats(deck), score: curScore, total, minMonsters, generatedAt: new Date().toISOString() };
 
-  // For 5-6 players, also compute 25 extras = the next best 25 copies after the 100
+  // For 5-6 players, also split into core 100 + 25 extras.
+  // Constraint: the core must keep at least minMonstersFor(100) = 20 monsters.
   if (DD.players >= 5) {
-    // Trim deck back to 100, capture which 25 were extras
-    const sorted = inDeckMarginalRanking(deck, weights);
-    const extras = sorted.slice(0, 25);
-    const core = { ...deck };
-    extras.forEach(({ name }) => { core[name]--; if (!core[name]) delete core[name]; });
-    DD_BUILT.coreDeck = core;
-    DD_BUILT.extras = extras;
+    const minCoreMonsters = minMonstersFor(100);
+    const result = selectExtras(deck, weights, 25, minCoreMonsters);
+    DD_BUILT.coreDeck = result.core;
+    DD_BUILT.extras = result.extras;
   } else {
     DD_BUILT.coreDeck = deck;
     DD_BUILT.extras = null;
   }
 
   renderDungeonTab();
+}
+
+// Pull `count` extras out of `deck`, picking the card whose removal hurts the
+// score least each step. Never removes mandatory cards. Never removes a
+// monster if doing so would push the remaining deck below `minCoreMonsters`.
+function selectExtras(deck, weights, count, minCoreMonsters) {
+  const working = { ...deck };
+  const extras = [];
+  for (let i = 0; i < count; i++) {
+    let best = null, bestScore = -Infinity;
+    for (const [name, qty] of Object.entries(working)) {
+      if (qty <= 0) continue;
+      const c = CARDS.find(cc => cc.name === name);
+      if (!c) continue;
+      if (isMandatoryForDungeon(c) || isPinned(c)) continue;
+      // Block removing this monster if it would bring us below the core floor
+      if (c.type === 'Monster' && countMonsters(working) - 1 < minCoreMonsters) continue;
+      working[name]--;
+      const sc = scoreDeck(working, weights);
+      working[name]++;
+      if (sc > bestScore) { bestScore = sc; best = { name, c }; }
+    }
+    if (!best) break;
+    working[best.name]--;
+    if (working[best.name] === 0) delete working[best.name];
+    extras.push({ name: best.name, score: bestScore });
+  }
+  return { core: working, extras };
 }
 
 // For a built deck of 125, return copies sorted by marginal removal cost
@@ -1945,8 +2008,10 @@ function renderDungeonTab() {
   // Banner
   const reactN = CARDS.filter(c => isReactCard(c) && !isBanned(c)).reduce((a,c) => a + c.quantity, 0);
   const trophyN = CARDS.filter(c => isTrophyCard(c) && !isBanned(c)).reduce((a,c) => a + c.quantity, 0);
+  const monstersIn = s.typeQty.Monster || 0;
+  const minM = built.minMonsters ?? minMonstersFor(built.total);
   document.getElementById('dd-banner-deck').innerHTML =
-    `<strong>Dungeon Deck</strong> — ${s.total} copies / ${Object.keys(built.deck).length} unique. Always includes ${reactN} React + ${trophyN} Trophy copies. ${DD.pins.size ? `${DD.pins.size} pin(s) honoured.` : ''} ${DD.bans.size ? `${DD.bans.size} card(s) banned.` : ''}`;
+    `<strong>Dungeon Deck</strong> — ${s.total} copies / ${Object.keys(built.deck).length} unique. Always includes ${reactN} React + ${trophyN} Trophy copies, minimum ${minM} Monsters (have ${monstersIn}). ${DD.pins.size ? `${DD.pins.size} pin(s) honoured.` : ''} ${DD.bans.size ? `${DD.bans.size} card(s) banned.` : ''}`;
 
   // Core deck cards (or 100 if extras separated)
   document.getElementById('dd-deck-content').innerHTML = renderDungeonCards(built.coreDeck);
@@ -1991,6 +2056,13 @@ function validateDeck(deck, s) {
   }
 
   // Trash-Payoff orphans (cards that fire only when trashed but no Active-Trash partners)
+  // Monster floor — hard constraint, this should not normally fire after a
+  // successful build, but flag it loud if the pool is too thin to satisfy.
+  const minM = minMonstersFor(s.total);
+  if (s.typeQty.Monster < minM) {
+    warnings.push({ level: 'err', text: `Only ${s.typeQty.Monster} Monsters in the deck — the hard floor is ${minM} (20% of ${s.total}). The pool may not have enough monsters left after bans, or pinned non-monsters are eating the budget.` });
+  }
+
   if (s.orphanPayoff > 0) {
     warnings.push({ level: 'err', text: `${s.orphanPayoff} Trash-Payoff cop${s.orphanPayoff === 1 ? 'y has' : 'ies have'} no Active-Trash partner — they may never fire.` });
   }
