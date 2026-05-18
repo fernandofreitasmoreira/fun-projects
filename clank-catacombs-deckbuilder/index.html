@@ -375,6 +375,7 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
           <li><strong>Gems</strong> = 7% ± 1</li>
           <li><strong>Devices</strong> = 9% ± 1</li>
           <li><strong>Companions</strong> = 22% ± 1</li>
+          <li><strong>Lockpick generators</strong> ≥ 8 (≥ 10 in 125)</li>
           <li>Max <strong>Active-Trash</strong> (respects caps)</li>
           <li>Max <strong>Lockpicks</strong> (respects caps)</li>
           <li>Max <strong>Burgle-Trash</strong> (respects caps)</li>
@@ -1738,6 +1739,9 @@ function targetsFor(total) {
     gems:       Math.round( 7 * s),
     devices:    Math.round( 9 * s),
     companions: Math.round(22 * s),
+    // Lockpick generators floor — without enough generators in the deck,
+    // a lot of lockpick-dependent features become unplayable.
+    lockpickGivers: total >= 125 ? 10 : 8,
   };
 }
 
@@ -1786,6 +1790,13 @@ function buildDungeonDeck() {
   // Predicates
   const isActiveTrash = c => (c.combo?.trashTags || []).includes('Active-Trash');
   const isLockpick    = c => (c.mechanics || []).includes('Lockpick');
+  // Lockpick GIVERS only — cards that actually produce a lockpick. Excludes
+  // cards that only consume one (e.g. Locked Trunk, Quick Pick).
+  const isLockpickGiver = c => {
+    if ((c.combo?.provides || []).includes('Lockpick-Gen')) return true;
+    const t = ((c.text || '') + ' ' + (c.acquire || '') + ' ' + (c.arriveDanger || ''));
+    return /\btake a lockpick\b/i.test(t);
+  };
   const isBurgleTrash = c => (c.combo?.trashTags || []).includes('Burgle-Trash')
                           || (c.combo?.clusters  || []).includes('Burgle-Removal');
 
@@ -1889,6 +1900,7 @@ function buildDungeonDeck() {
   fillFloor(c => c.type === 'Gem',               targets.gems,       `${targets.gems} Gems`);
   fillFloor(c => c.type === 'Device',            targets.devices,    `${targets.devices} Devices`);
   fillFloor(c => c.type === 'Companion',         targets.companions, `${targets.companions} Companions`);
+  fillFloor(isLockpickGiver,                     targets.lockpickGivers, `${targets.lockpickGivers} Lockpick generators`);
 
   // ---- Steps 8-10: maximise these categories ----
   // Adds every available card matching the predicate (skipping ones already
