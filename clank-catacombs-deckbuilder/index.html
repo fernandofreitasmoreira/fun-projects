@@ -392,6 +392,7 @@ nav.tabs button.active { color: var(--gold); border-bottom-color: var(--gold); }
       <div class="dd-section">
         <button class="dd-rebuild" onclick="buildDungeonDeck()">Rebuild deck</button>
         <button class="dd-export" onclick="exportDungeonDeck()">Export JSON</button>
+        <button class="dd-export" onclick="exportDungeonDeckPDF()">Export PDF (print)</button>
       </div>
 
       <h2 style="margin-top:18px;">Deck summary</h2>
@@ -2051,6 +2052,240 @@ function exportDungeonDeck() {
   document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
   toast('Dungeon deck exported');
+}
+
+// ---- Export PDF (print-friendly) ----
+// Opens a new window with a print-optimised view of the built deck. The
+// browser's print dialog lets the user "Save as PDF". No external libs.
+function exportDungeonDeckPDF() {
+  if (!DD_BUILT) { toast('Build a deck first'); return; }
+  const built = DD_BUILT;
+  const stats = built.stats;
+  const B = DD_BENCHMARKS;
+  const dateStr = new Date(built.generatedAt).toLocaleString();
+  const playerLabel = DD.players >= 5 ? '5–6 players (125 cards)' : '2–4 players (100 cards)';
+
+  // Resolve image URLs to absolute (so the new window can fetch them)
+  const baseUrl = window.location.href.replace(/\/[^/]*$/, '/');
+
+  // Build the deck entries grouped by set, sorted by cost then name
+  const setOrder = ['Catacombs','Adventure','Lairs','Underworld'];
+  const groups = {};
+  Object.entries(built.coreDeck).forEach(([name, qty]) => {
+    const c = CARDS.find(cc => cc.name === name);
+    if (!c) return;
+    if (!groups[c.set]) groups[c.set] = [];
+    groups[c.set].push({ card: c, qty });
+  });
+  Object.values(groups).forEach(items => {
+    items.sort((a,b) => (a.card.costNum ?? 99) - (b.card.costNum ?? 99) || a.card.name.localeCompare(b.card.name));
+  });
+
+  // Same for extras (5-6 player deck)
+  const extrasMap = {};
+  (built.extras || []).forEach(e => { extrasMap[e.name] = (extrasMap[e.name] || 0) + 1; });
+
+  // Helpers
+  const escape = s => String(s ?? '').replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+  const fmtPct = v => `${(v * 100).toFixed(1)}%`;
+  const stepIcon = st => {
+    if (st.status === 'max')     return '+';
+    if (st.status === 'balance') return '≈';
+    if (st.status === 'core')    return '✓';
+    return st.have >= st.target ? '✓' : '⚠';
+  };
+
+  function cardRow({ card, qty }, extraQty) {
+    const stats = [
+      card.skill   != null && card.skill   !== 0 ? `<span class="stat">💡${card.skill}</span>`   : '',
+      card.swords  != null && card.swords  !== 0 ? `<span class="stat">⚔${card.swords}</span>`  : '',
+      card.boots   != null && card.boots   !== 0 ? `<span class="stat">👢${card.boots}</span>`  : '',
+      card.vp      != null && card.vp      !== 0 ? `<span class="stat">🏆${card.vp}</span>`      : '',
+      card.dragonAttack ? `<span class="stat dragon">🐲</span>` : '',
+    ].filter(Boolean).join(' ');
+    const cost = card.cost != null
+      ? (card.isMonster ? `${card.cost}⚔` : `$${card.cost}`)
+      : '—';
+    const totalQty = qty + (extraQty || 0);
+    const qtyLabel = extraQty
+      ? `×${qty}<span class="extra">+${extraQty}</span>`
+      : (qty > 1 ? `×${qty}` : '');
+    const text = card.text || card.acquire || card.arriveDanger || '';
+    const mech = (card.mechanics || []).slice(0, 4).map(m => `<span class="tag">${escape(m)}</span>`).join(' ');
+    const img = card.image ? `${baseUrl}${card.image}` : '';
+    return `
+      <div class="card-row">
+        ${img ? `<img src="${img}" alt="">` : `<div class="img-placeholder">${escape(card.name).slice(0,18)}</div>`}
+        <div class="card-info">
+          <div class="card-head">
+            <span class="name">${escape(card.name)}</span>
+            <span class="qty">${qtyLabel}</span>
+          </div>
+          <div class="card-meta">
+            <span class="type type-${card.type}">${card.type}</span>
+            <span class="cost">${cost}</span>
+            ${stats}
+          </div>
+          ${text ? `<div class="card-text">${escape(text)}</div>` : ''}
+          ${mech ? `<div class="card-mech">${mech}</div>` : ''}
+        </div>
+      </div>`;
+  }
+
+  // The full HTML body
+  const html = `<!doctype html><html><head>
+<meta charset="utf-8">
+<title>Clank! Dungeon Deck — ${escape(playerLabel)}</title>
+<style>
+  @page { size: A4; margin: 12mm 10mm; }
+  * { box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 9pt; color: #2a1810; line-height: 1.35; margin: 0; }
+  h1 { font-size: 16pt; margin: 0 0 4px; color: #b8862e; }
+  h2 { font-size: 11pt; margin: 14pt 0 4pt; color: #b8862e; border-bottom: 1px solid #d4c9b0; padding-bottom: 2pt; }
+  .subtitle { color: #6a5a4a; font-size: 9pt; margin-bottom: 8pt; }
+  .top-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
+  .panel { border: 1px solid #d4c9b0; border-radius: 3pt; padding: 6pt 8pt; background: #fbf8f0; }
+  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3pt 10pt; font-size: 8.5pt; }
+  .step { display: flex; align-items: baseline; gap: 4pt; }
+  .step .ic { color: #2a8a3a; font-weight: bold; width: 9pt; }
+  .step .ic.warn { color: #b8862e; }
+  .step .ic.miss { color: #c0392b; }
+  .step .label { flex: 1; }
+  .step .count { color: #6a5a4a; font-variant-numeric: tabular-nums; }
+  table.stats { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  table.stats td { padding: 1.5pt 4pt; border-bottom: 1px dotted #d4c9b0; }
+  table.stats td.metric { color: #6a5a4a; }
+  table.stats td.value { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  table.stats td.target { color: #9d8b6f; text-align: right; font-size: 7.5pt; font-variant-numeric: tabular-nums; }
+  table.stats td.note { color: #6a5a4a; font-size: 7.5pt; font-style: italic; }
+  .group { margin: 10pt 0 2pt; }
+  .group h3 { font-size: 10pt; margin: 6pt 0 3pt; color: #b8862e; }
+  .group h3 .meta { color: #9d8b6f; font-size: 8pt; font-weight: normal; }
+  .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4pt 8pt; }
+  .card-row { display: grid; grid-template-columns: 38pt 1fr; gap: 5pt; padding: 2pt; border: 1px solid #e6decb; border-radius: 2pt; break-inside: avoid; background: #fff; }
+  .card-row img { width: 38pt; height: 52pt; object-fit: cover; border-radius: 2pt; background: #111; }
+  .card-row .img-placeholder { width: 38pt; height: 52pt; background: #3a2d23; color: #d4a857; font-size: 6pt; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2pt; border-radius: 2pt; }
+  .card-info { font-size: 7.5pt; min-width: 0; overflow: hidden; }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4pt; }
+  .card-head .name { font-weight: 700; font-size: 8.5pt; }
+  .card-head .qty { color: #b8862e; font-weight: 600; font-size: 7.5pt; white-space: nowrap; }
+  .card-head .qty .extra { color: #5a8fa0; margin-left: 2pt; }
+  .card-meta { display: flex; gap: 4pt; flex-wrap: wrap; margin-top: 1pt; font-size: 7pt; }
+  .card-meta .type { padding: 0 3pt; border-radius: 2pt; color: #fff; font-weight: 600; font-size: 6.5pt; }
+  .card-meta .type-Catacombs, .card-meta .type-Companion { background: #4a7aa0; }
+  .card-meta .type-Monster { background: #c0392b; }
+  .card-meta .type-Device  { background: #5a3a6a; }
+  .card-meta .type-Gem     { background: #6a4a2a; }
+  .card-meta .type-Other   { background: #6a5a4a; }
+  .card-meta .cost { color: #b8862e; font-weight: 600; }
+  .card-meta .stat { color: #2a1810; }
+  .card-meta .stat.dragon { color: #c0392b; }
+  .card-text { font-size: 7pt; color: #4a3a30; margin-top: 1.5pt; line-height: 1.25; }
+  .card-mech { margin-top: 1.5pt; }
+  .tag { display: inline-block; padding: 0 2pt; border-radius: 2pt; font-size: 6pt; background: #f0ebdc; color: #6a5a4a; margin-right: 1pt; }
+  .legend { font-size: 7.5pt; color: #6a5a4a; margin-top: 8pt; }
+  .footer { font-size: 7pt; color: #9d8b6f; margin-top: 8pt; text-align: center; }
+  @media print {
+    h2 { break-after: avoid; }
+    .group, .card-row { break-inside: avoid; }
+    .panel { break-inside: avoid; }
+  }
+</style>
+</head><body>
+
+<h1>Clank! Catacombs — Dungeon Deck</h1>
+<div class="subtitle">${escape(playerLabel)} · ${stats.total} copies / ${Object.keys(built.deck).length} unique · generated ${escape(dateStr)}</div>
+
+<div class="top-grid">
+  <div class="panel">
+    <h2 style="margin-top:0;">Build progress</h2>
+    <div class="steps-grid">
+      ${built.steps.map(st => {
+        const icon = stepIcon(st);
+        const cls = icon === '✓' ? '' : icon === '⚠' ? ' warn' : icon === '✗' ? ' miss' : '';
+        const count = st.status === 'max'     ? `+${st.added} (${st.have})`
+                    : st.status === 'balance' ? `${st.have}/${st.target}`
+                    : `${st.have}/${st.target}`;
+        return `<div class="step"><span class="ic${cls}">${icon}</span><span class="label">${escape(st.label)}</span><span class="count">${count}</span></div>`;
+      }).join('')}
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0;">Deck stats &amp; benchmark comparison</h2>
+    <table class="stats">
+      <tr><td class="metric">Total cards</td><td class="value">${stats.total}</td><td class="target">target ${built.total}</td></tr>
+      <tr><td class="metric">Unique cards</td><td class="value">${Object.keys(built.deck).length}</td><td class="target">—</td></tr>
+      <tr><td class="metric">Companions</td><td class="value">${stats.typeQty.Companion} (${fmtPct(stats.typeRatio.Companion)})</td><td class="target">${fmtPct(B.types.Companion)}</td></tr>
+      <tr><td class="metric">Monsters</td><td class="value">${stats.typeQty.Monster} (${fmtPct(stats.typeRatio.Monster)})</td><td class="target">${fmtPct(B.types.Monster)}</td></tr>
+      <tr><td class="metric">Devices</td><td class="value">${stats.typeQty.Device} (${fmtPct(stats.typeRatio.Device)})</td><td class="target">${fmtPct(B.types.Device)}</td></tr>
+      <tr><td class="metric">Gems</td><td class="value">${stats.typeQty.Gem} (${fmtPct(stats.typeRatio.Gem)})</td><td class="target">${fmtPct(B.types.Gem)}</td></tr>
+      <tr><td class="metric">Other</td><td class="value">${stats.typeQty.Other} (${fmtPct(stats.typeRatio.Other)})</td><td class="target">${fmtPct(B.types.Other)}</td></tr>
+      <tr><td class="metric">Dragon attack</td><td class="value">${stats.dragonQty} (${fmtPct(stats.dragonRatio)})</td><td class="target">${fmtPct(B.dragon)}</td></tr>
+      <tr><td class="metric">Active Trash</td><td class="value">${stats.trashActiveQty}</td><td class="target">—</td></tr>
+      <tr><td class="metric">Mean cost</td><td class="value">$${stats.meanCost.toFixed(2)}</td><td class="target">$${B.meanCost.toFixed(2)}</td></tr>
+      <tr><td class="metric">Skill density</td><td class="value">${stats.skillDen.toFixed(2)}</td><td class="target">${B.skillDen.toFixed(2)}</td></tr>
+      <tr><td class="metric">Sword density</td><td class="value">${stats.swordDen.toFixed(2)}</td><td class="target">${B.swordDen.toFixed(2)}</td></tr>
+      <tr><td class="metric">Boot density</td><td class="value">${stats.bootDen.toFixed(2)}</td><td class="target">${B.bootDen.toFixed(2)}</td></tr>
+      <tr><td class="metric">VP density</td><td class="value">${stats.vpDen.toFixed(2)}</td><td class="target">${B.vpDen.toFixed(2)}</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="panel" style="margin-top:8pt;">
+  <h2 style="margin-top:0;">What the metrics mean</h2>
+  <table class="stats">
+    <tr><td class="metric" style="width:25%;"><strong>Type %</strong></td><td class="note">Share of each card category. Targets come from the retail Catacombs box (100 cards). Each floor allows ±1 copy off the target.</td></tr>
+    <tr><td class="metric"><strong>Dragon attack %</strong></td><td class="note">% of cards that trigger a dragon attack when drawn into the Dungeon Row. Higher = faster game / more pressure.</td></tr>
+    <tr><td class="metric"><strong>Active Trash</strong></td><td class="note">Cards that let you remove other cards from your deck/discard/play area. Crucial for deck thinning — without them, you can't shed your starter Burgles.</td></tr>
+    <tr><td class="metric"><strong>Mean cost</strong></td><td class="note">Average skill cost of non-monster cards. Lower means a cheaper, faster deck (more actions per turn).</td></tr>
+    <tr><td class="metric"><strong>Skill / Sword / Boot density</strong></td><td class="note">Average resource produced per non-monster card. Higher boot density = more movement; higher sword density = more combat throughput.</td></tr>
+    <tr><td class="metric"><strong>VP density</strong></td><td class="note">Average victory points per non-monster card. Higher = a deck that scores more from card play (before artifacts/gold).</td></tr>
+  </table>
+</div>
+
+<h2>Cards</h2>
+${setOrder.filter(s => groups[s]).map(setName => {
+  const items = groups[setName];
+  const uniq = items.length;
+  const tot = items.reduce((a,b) => a + b.qty, 0);
+  return `
+    <div class="group">
+      <h3>${escape(setName)} <span class="meta">· ${uniq} unique · ${tot} copies</span></h3>
+      <div class="cards-grid">
+        ${items.map(it => cardRow(it, extrasMap[it.card.name] || 0)).join('')}
+      </div>
+    </div>`;
+}).join('')}
+
+${built.extras && built.extras.length ? `
+<h2>+25 extras (5–6 players)</h2>
+<div class="cards-grid">
+  ${Object.entries(extrasMap).map(([name, qty]) => {
+    const c = CARDS.find(cc => cc.name === name);
+    return c ? cardRow({ card: c, qty }) : '';
+  }).join('')}
+</div>
+` : ''}
+
+<div class="footer">
+  Generated by the Clank! Catacombs Deck Builder (fun-projects).
+  Card text, names, and images © Renegade Games / Dire Wolf Digital. Personal use only.
+</div>
+
+${'<scr' + 'ipt>'}
+  window.addEventListener('load', () => {
+    // Slight delay so card images can load before the print dialog opens
+    setTimeout(() => window.print(), 400);
+  });
+${'<\/scr' + 'ipt>'}
+</body></html>`;
+
+  const win = window.open('', '_blank');
+  if (!win) { toast('Pop-up blocked — please allow pop-ups for this page'); return; }
+  win.document.write(html);
+  win.document.close();
+  toast('Opening print preview…');
 }
 
 // ---- Render ----
